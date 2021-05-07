@@ -7,16 +7,20 @@
 
 using namespace std;
 
-static fstream trace_stream;
+static Trace trace;
 
-void TraceInit() {
-    trace_stream.open("output/trace.log", std::ofstream::out);
+void Trace::Init() {
+    trace.trace_stream.open("output/trace.log", std::ofstream::out);
 
-    if (!trace_stream) cout << "File wasn't opened successfully.";
+    if (!trace.trace_stream) cout << "File wasn't opened successfully.";
 }
 
-void TraceMessage(string message) {
-    if (!trace_stream) return;
+void Trace::Message(string message) {
+    if (!trace.trace_stream) return;
 
-    trace_stream << message << endl;
+    trace.trace_stream << message << endl;
+}
+
+void Trace::Shutdown() {
+    if (trace.trace_stream) trace.trace_stream.close();
 }

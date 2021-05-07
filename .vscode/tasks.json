@@ -9,7 +9,7 @@
 				"-g",
 				"src\\*.cpp",
 				"-o",
-				"build\\engine.exe",
+				"build\\pEngine.exe",
 				"-I", "libraries/SDL2/include",
 				"-L", "libraries/SDL2/lib",
 				"-lmingw32",
