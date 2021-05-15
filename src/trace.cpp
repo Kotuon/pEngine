@@ -18,7 +18,8 @@ void Trace::Init() {
 void Trace::Message(string message) {
     if (!trace.trace_stream) return;
 
-    trace.trace_stream << message << endl;
+    trace.trace_stream << message;
+    cout << message;
 }
 
 void Trace::Shutdown() {
