@@ -13,6 +13,7 @@
 
 #include "trace.hpp"
 #include "engine.hpp"
+#include "graphics.hpp"
 
 using namespace std;
 
@@ -26,10 +27,12 @@ using namespace std;
 int SDL_main (int argc, char *argv[]) {
    Trace::Init();
 
+   Graphics::Initialize(argc, argv);
+
    Engine::Initialize();
 
-   Engine::Update(0.f);
-
+   Graphics::Update();
+   //Engine::Update(0.f);
    Engine::Shutdown();
 
    return 0;

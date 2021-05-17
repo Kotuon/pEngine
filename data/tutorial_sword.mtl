@@ -1,0 +1,57 @@
+# Blender MTL File: 'tutorial_sword.blend'
+# Material Count: 5
+
+newmtl Blade
+Ns 721.654975
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Ns -s 2.000000 2.000000 1.000000 C:\\Users\\Kelson\\Documents\\learn_blender\\textures\\sword\\scratches.jpg
+
+newmtl Blade_glow
+Ns 721.654975
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Ns -s 2.000000 2.000000 1.000000 C:\\Users\\Kelson\\Documents\\learn_blender\\textures\\sword\\scratches.jpg
+
+newmtl Guard
+Ns 721.654975
+Ka 1.000000 1.000000 1.000000
+Kd 0.744000 0.435134 0.172024
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Ns -s 0.500000 0.500000 1.000000 C:\\Users\\Kelson\\Documents\\learn_blender\\textures\\sword\\scratches.jpg
+
+newmtl Handle
+Ns 721.654975
+Ka 1.000000 1.000000 1.000000
+Kd 0.027019 0.027019 0.027019
+Ks 0.250000 0.250000 0.250000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Ns -s 2.000000 2.000000 1.000000 C:\\Users\\Kelson\\Documents\\learn_blender\\textures\\sword\\LeadPlate.tif
+
+newmtl Pommel_glow
+Ns 721.654975
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Ns -s 2.000000 2.000000 1.000000 C:\\Users\\Kelson\\Documents\\learn_blender\\textures\\sword\\scratches.jpg
