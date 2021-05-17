@@ -1,61 +1,48 @@
 
 #include <string>
+#include <vector>
 
-#include <glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <vec3.hpp>
+#include <vec2.hpp>
 
 #include "graphics.hpp"
 #include "trace.hpp"
+#include "model.hpp"
 
 Graphics* graphics;
+
+static Model* model;
 
 Graphics::Graphics(int width, int height) {
     screenSize.first = width;
     screenSize.second = height;
+    angleCube = 0.f;
 }
 
-bool Graphics::Initialize() {
+void Graphics::Initialize(int argc, char** argv) {
     graphics = new Graphics(800, 600);
 
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        Trace::Message("Error initializing SDL: " + string(SDL_GetError()) + "\n");
-        return false;
-    }
+    model = new Model(GL_QUADS);
+    model->Load("data/cube.obj");
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-
-    graphics->window = SDL_CreateWindow("pEngine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        graphics->screenSize.first, graphics->screenSize.second, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-
-    if (!graphics->window) {
-        Trace::Message("Window could not be created: k,ml p0" + string(SDL_GetError()) + "\n");
-        return false;
-    }
-
-    graphics->context = SDL_GL_CreateContext(graphics->window);
-
-    if (!graphics->context) {
-        Trace::Message("OpenGL context could not be created: " + string(SDL_GetError()) + "\n");
-        return false;
-    }
-
-    if (SDL_GL_SetSwapInterval(1) < 0) {
-        Trace::Message("Unable to set VSync: " + string(SDL_GetError()) + "\0");
-    }
-
-    if (!InitializeGL()) {
-        Trace::Message("Unable to intialize OpenGL.\n");
-        return false;
-    }
-
-    return true;
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE);
+    glutInitWindowSize(graphics->screenSize.first, graphics->screenSize.second);
+    glutInitWindowPosition(50, 50);
+    glutCreateWindow("pEngine");
+    glutDisplayFunc(Render);
+    glutReshapeFunc(Reshape);
+    
+    InitializeGL();
+    glutTimerFunc(0, Timer, 0);
 }
 
 bool Graphics::InitializeGL() {
     GLenum error = GL_NO_ERROR;
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    glClearColor(0.f, 0.f, 0.f, 1.f);
 
     error = glGetError();
     if (error != GL_NO_ERROR) {
@@ -63,8 +50,7 @@ bool Graphics::InitializeGL() {
         return false;
     }
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    glClearDepth(1.f);
 
     error = glGetError();
     if (error != GL_NO_ERROR) {
@@ -72,30 +58,59 @@ bool Graphics::InitializeGL() {
         return false;
     }
 
-    glClearColor(0.f, 0.f, 0.f, 1.f);
+    glEnable(GL_DEPTH_TEST);
+    
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        Trace::Message("Error intializing OpenGl. \n");
+        return false;
+    }
+
+    glDepthFunc(GL_LEQUAL);
 
     error = glGetError();
     if (error != GL_NO_ERROR) {
         Trace::Message("Error intializing OpenGl. \n");
         return false;
     }
+
+    glShadeModel(GL_SMOOTH);
+
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        Trace::Message("Error intializing OpenGl. \n");
+        return false;
+    }
+
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        Trace::Message("Error intializing OpenGl. \n");
+        return false;
+    }
+
 
     return true;
 }
 
 void Graphics::Update() {
-
+    glutMainLoop();
 }
 
 void Graphics::Render() {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
 
-    glBegin(GL_QUADS);
-        glVertex2f(-0.5f, -0.5f);
-        glVertex2f(0.5f, -0.5f);
-        glVertex2f(0.5f, 0.5f);
-        glVertex2f(-0.5f, 0.5f);
-    glEnd();
+    glLoadIdentity();
+    glTranslatef(0.f, 0.f, -7.f);
+    glRotatef(graphics->angleCube, 1.f, 1.f, 1.f);
+
+    model->Draw();
+
+   glutSwapBuffers();
+
+   graphics->angleCube += .3f;
 }
 
 void Graphics::Shutdown() {
@@ -107,4 +122,20 @@ void Graphics::Shutdown() {
 
 void Graphics::SwapWindow() {
     SDL_GL_SwapWindow(graphics->window);
+}
+
+void Graphics::Reshape(GLsizei width, GLsizei height) {
+    if (height == 0) height = 1;
+
+    GLfloat aspect = (GLfloat)width / (GLfloat)height;
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.f, aspect, 0.1f, 100.f);
+}
+
+void Graphics::Timer(int time) {
+    glutPostRedisplay();
+    glutTimerFunc(15, Timer, 0);
 }

@@ -7,7 +7,7 @@ Engine* engine;
 void Engine::Initialize() {
     engine = new Engine;
 
-    Graphics::Initialize();
+    //Graphics::Initialize();
     
     engine->isRunning = true;
 }
@@ -24,7 +24,6 @@ void Engine::Update(float) {
     }
 
     Graphics::Render();
-    Graphics::SwapWindow();
 }
 
 void Engine::Shutdown() {
