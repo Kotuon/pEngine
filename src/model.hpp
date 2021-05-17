@@ -9,12 +9,14 @@
 #include <vec3.hpp>
 #include <vec2.hpp>
 
+#include "component.hpp"
+
 using namespace std;
 using namespace glm;
 
-class Model {
+class Model : public Component {
     public:
-        Model(GLenum mode_);
+        Model(GLenum mode_ = GL_TRIANGLES);
         bool Load(const char* filename);
         void Draw();
     private:

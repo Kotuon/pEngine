@@ -10,22 +10,19 @@
 #include "graphics.hpp"
 #include "trace.hpp"
 #include "model.hpp"
+#include "object_manager.hpp"
+#include "transform.hpp"
+#include "engine.hpp"
 
 Graphics* graphics;
-
-static Model* model;
 
 Graphics::Graphics(int width, int height) {
     screenSize.first = width;
     screenSize.second = height;
-    angleCube = 0.f;
 }
 
 void Graphics::Initialize(int argc, char** argv) {
     graphics = new Graphics(800, 600);
-
-    model = new Model(GL_QUADS);
-    model->Load("data/cube.obj");
 
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE);
@@ -43,52 +40,22 @@ bool Graphics::InitializeGL() {
     GLenum error = GL_NO_ERROR;
 
     glClearColor(0.f, 0.f, 0.f, 1.f);
-
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGL. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
     glClearDepth(1.f);
-
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
     glEnable(GL_DEPTH_TEST);
-    
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
     glDepthFunc(GL_LEQUAL);
-
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
     glShadeModel(GL_SMOOTH);
-
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-    error = glGetError();
-    if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
-        return false;
-    }
+    if (!Graphics::ErrorCheck(error)) return false;
 
 
     return true;
@@ -103,10 +70,15 @@ void Graphics::Render() {
     glMatrixMode(GL_MODELVIEW);
 
     glLoadIdentity();
-    glTranslatef(0.f, 0.f, -7.f);
-    glRotatef(graphics->angleCube, 1.f, 1.f, 1.f);
+    //glTranslatef(0.f, 0.f, -7.f);
+    //glRotatef(graphics->angleCube, 1.f, 1.f, 1.f);
 
-    model->Draw();
+    for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
+        Object* object = Object_Manager::FindObject(i);
+
+        Model* model = object->GetComponent<Model>(CType::CModel);
+        model->Draw();
+    }
 
    glutSwapBuffers();
 
@@ -114,14 +86,7 @@ void Graphics::Render() {
 }
 
 void Graphics::Shutdown() {
-    SDL_DestroyWindow(graphics->window);
-    SDL_Quit();
-    
     delete graphics;
-}
-
-void Graphics::SwapWindow() {
-    SDL_GL_SwapWindow(graphics->window);
 }
 
 void Graphics::Reshape(GLsizei width, GLsizei height) {
@@ -138,4 +103,14 @@ void Graphics::Reshape(GLsizei width, GLsizei height) {
 void Graphics::Timer(int time) {
     glutPostRedisplay();
     glutTimerFunc(15, Timer, 0);
+}
+
+bool Graphics::ErrorCheck(GLenum error) {
+    error = glGetError();
+    if (error != GL_NO_ERROR) {
+        Trace::Message("Error intializing OpenGl. \n");
+        return false;
+    }
+
+    return true;
 }

@@ -28,12 +28,12 @@ int SDL_main (int argc, char *argv[]) {
    Trace::Init();
 
    Graphics::Initialize(argc, argv);
-   Graphics::Update();
-   Graphics::Shutdown();
 
-   //Engine::Initialize();
+   Engine::Initialize();
+
+   Graphics::Update();
    //Engine::Update(0.f);
-   //Engine::Shutdown();
+   Engine::Shutdown();
 
    return 0;
 }

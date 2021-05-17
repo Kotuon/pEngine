@@ -4,8 +4,10 @@
 
 #include "model.hpp"
 #include "trace.hpp"
+#include "object.hpp"
+#include "transform.hpp"
 
-Model::Model(GLenum mode_) : mode(mode_) {}
+Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_) {}
 
 bool Model::Load(const char* filename) {
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
@@ -49,12 +51,12 @@ bool Model::Load(const char* filename) {
         if (strcmp(line_header, "f") == 0) {
             Face face;
 
-            unsigned vertex_index[4], uv_index[4], normal_index[4];
-            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n", &vertex_index[0], &uv_index[0], &normal_index[0],
-                &vertex_index[1], &uv_index[1], &normal_index[1], &vertex_index[2], &uv_index[2], &normal_index[2],
-                &vertex_index[3], &uv_index[3], &normal_index[3]);
+            unsigned vertex_index[3], uv_index[3], normal_index[3];
+            int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertex_index[0], &uv_index[0], &normal_index[0],
+                &vertex_index[1], &uv_index[1], &normal_index[1], &vertex_index[2], &uv_index[2], &normal_index[2]);//,
+                //&vertex_index[3], &uv_index[3], &normal_index[3]);
             
-            if (matches != 12) {
+            if (matches != 9) {
                 Trace::Message("File is incompatible with this parser. Export using different settings.");
                 return false;
             }
@@ -62,44 +64,44 @@ bool Model::Load(const char* filename) {
             face.vertices.emplace_back(temp_vertices[vertex_index[0] - 1]);
             face.vertices.emplace_back(temp_vertices[vertex_index[1] - 1]);
             face.vertices.emplace_back(temp_vertices[vertex_index[2] - 1]);
-            face.vertices.emplace_back(temp_vertices[vertex_index[3] - 1]);
+            //face.vertices.emplace_back(temp_vertices[vertex_index[3] - 1]);
 
             face.uvs.emplace_back(temp_uvs[uv_index[0] - 1]);
             face.uvs.emplace_back(temp_uvs[uv_index[1] - 1]);
             face.uvs.emplace_back(temp_uvs[uv_index[2] - 1]);
-            face.uvs.emplace_back(temp_uvs[uv_index[3] - 1]);
+            //face.uvs.emplace_back(temp_uvs[uv_index[3] - 1]);
 
             face.normals.emplace_back(temp_normals[normal_index[0] - 1]);
             face.normals.emplace_back(temp_normals[normal_index[1] - 1]);
             face.normals.emplace_back(temp_normals[normal_index[2] - 1]);
-            face.normals.emplace_back(temp_normals[normal_index[3] - 1]);
+            //face.normals.emplace_back(temp_normals[normal_index[3] - 1]);
 
-            if (faces.size() == 0) {
+            if (faces.size() % 6 == 0) {
                 face.color[0] = 0.f;
                 face.color[1] = 1.f;
                 face.color[2] = 0.f;
             }
-            else if (faces.size() == 1) {
+            else if (faces.size() % 6 == 1) {
                 face.color[0] = 1.f;
                 face.color[1] = .5f;
                 face.color[2] = 0.f;
             }
-            else if (faces.size() == 2) {
+            else if (faces.size() % 6 == 2) {
                 face.color[0] = 1.f;
                 face.color[1] = 0.f;
                 face.color[2] = 0.f;
             }
-            else if (faces.size() == 3) {
+            else if (faces.size() % 6 == 3) {
                 face.color[0] = 1.f;
                 face.color[1] = 1.f;
                 face.color[2] = 0.f;
             }
-            else if (faces.size() == 4) {
+            else if (faces.size() % 6 == 4) {
                 face.color[0] = 0.f;
                 face.color[1] = 0.f;
                 face.color[2] = 1.f;
             }
-            else if (faces.size() == 5) {
+            else if (faces.size() % 6 == 5) {
                 face.color[0] = 1.f;
                 face.color[1] = 0.f;
                 face.color[2] = 1.f;
@@ -113,6 +115,12 @@ bool Model::Load(const char* filename) {
 }
 
 void Model::Draw() {
+    Transform* transform = GetParent()->GetComponent<Transform>(CType::CTransform);
+
+    vec3 pos = transform->GetPosition();
+    glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
+    glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
+
     glBegin(mode);
         for (unsigned i = 0; i < faces.size(); ++i) {
             glColor3f(faces[i].color[0], faces[i].color[1], faces[i].color[2]);

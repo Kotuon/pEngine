@@ -24,10 +24,10 @@ class Graphics {
         static void SwapWindow();
         static void Reshape(GLsizei width, GLsizei height);
         static void Timer(int time);
+
+        static bool ErrorCheck(GLenum error);
     private:
         pair<int, int> screenSize;
-        SDL_Window* window;
-        SDL_GLContext context;
         GLfloat angleCube;
 };
 
