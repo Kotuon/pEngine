@@ -12,6 +12,7 @@ Engine* engine;
 
 void Engine::Initialize() {
     engine = new Engine;
+    if (!Graphics::Initialize()) return;
 
     engine->isRunning = true;
 
@@ -34,6 +35,21 @@ void Engine::Update(float) {
     Object* object = Object_Manager::FindObject(0);
     Transform* transform = object->GetComponent<Transform>(CType::CTransform);
     transform->SetRotation(transform->GetRotation() + .3f);
+
+    vec3 pos = transform->GetPosition();
+
+    static bool left = true;
+    
+    if (left && pos.x > -3.f) {
+        pos.x -= .01f;
+        if (pos.x <= -3.f) left = false;
+    }
+    else {
+        pos.x += .01f;
+        if (pos.x >= 3.f) left = true;
+    }
+
+    transform->SetPosition(pos);
 }
 
 void Engine::Shutdown() {

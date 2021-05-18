@@ -121,6 +121,7 @@ void Model::Draw() {
     glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
     glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
 
+    glTranslatef(0.f, 0.f, 0.f);
     glBegin(mode);
         for (unsigned i = 0; i < faces.size(); ++i) {
             glColor3f(faces[i].color[0], faces[i].color[1], faces[i].color[2]);

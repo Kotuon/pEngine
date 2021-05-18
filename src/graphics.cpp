@@ -1,9 +1,8 @@
 
 #include <string>
 #include <vector>
+#include <cmath>
 
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <vec3.hpp>
 #include <vec2.hpp>
 
@@ -21,19 +20,30 @@ Graphics::Graphics(int width, int height) {
     screenSize.second = height;
 }
 
-void Graphics::Initialize(int argc, char** argv) {
+bool Graphics::Initialize() {
     graphics = new Graphics(800, 600);
+    glfwSetErrorCallback(ErrorCallback);
 
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE);
-    glutInitWindowSize(graphics->screenSize.first, graphics->screenSize.second);
-    glutInitWindowPosition(50, 50);
-    glutCreateWindow("pEngine");
-    glutDisplayFunc(Render);
-    glutReshapeFunc(Reshape);
+    if (!glfwInit()) {
+        Trace::Message("Could not initialize GLFW.\n");
+        return false;
+    }
+
+    graphics->window = glfwCreateWindow(graphics->screenSize.first, graphics->screenSize.second, 
+        "pEngine", nullptr, nullptr);
     
+    if (!graphics->window) {
+        Trace::Message("Error creating window.\n");
+        return false;
+    }
+
+    glfwSetWindowSizeCallback(graphics->window, Reshape);
+    glfwMakeContextCurrent(graphics->window);
+    glfwSwapInterval(1);
     InitializeGL();
-    glutTimerFunc(0, Timer, 0);
+    Reshape(nullptr, graphics->screenSize.first, graphics->screenSize.second);
+
+    return true;
 }
 
 bool Graphics::InitializeGL() {
@@ -62,16 +72,19 @@ bool Graphics::InitializeGL() {
 }
 
 void Graphics::Update() {
-    glutMainLoop();
+    while(!glfwWindowShouldClose(graphics->window)) {
+        Engine::Update(0.f);
+        Render();
+
+        glfwSwapBuffers(graphics->window);
+        glfwPollEvents();
+    }
 }
 
 void Graphics::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
-
     glLoadIdentity();
-    //glTranslatef(0.f, 0.f, -7.f);
-    //glRotatef(graphics->angleCube, 1.f, 1.f, 1.f);
 
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
         Object* object = Object_Manager::FindObject(i);
@@ -79,30 +92,34 @@ void Graphics::Render() {
         Model* model = object->GetComponent<Model>(CType::CModel);
         model->Draw();
     }
-
-   glutSwapBuffers();
-
-   graphics->angleCube += .3f;
 }
 
 void Graphics::Shutdown() {
+    glfwDestroyWindow(graphics->window);
+    glfwTerminate();
     delete graphics;
 }
 
-void Graphics::Reshape(GLsizei width, GLsizei height) {
+void Graphics::Reshape(GLFWwindow*, GLsizei width, GLsizei height) {
     if (height == 0) height = 1;
 
     GLfloat aspect = (GLfloat)width / (GLfloat)height;
     glViewport(0, 0, width, height);
 
+    const GLdouble pi = 3.1415926535897932384626433832795;
+    GLdouble fW, fH;
+
+    //fH = tan( (fovY / 2) / 180 * pi ) * zNear;
+    fH = tan( 45.f / 360 * pi ) * 0.1f;
+    fW = fH * aspect;
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(45.f, aspect, 0.1f, 100.f);
+    glFrustum( -fW, fW, -fH, fH, 0.1f, 100.f);
 }
 
-void Graphics::Timer(int time) {
-    glutPostRedisplay();
-    glutTimerFunc(15, Timer, 0);
+void Graphics::ErrorCallback(int error, const char* description) {
+    Trace::Message("Error: " + string(description) + "\n");
 }
 
 bool Graphics::ErrorCheck(GLenum error) {

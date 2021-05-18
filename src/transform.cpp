@@ -14,4 +14,4 @@ vec3 Transform::GetScale() const { return scale; }
 
 void Transform::SetRotation(float rot) { rotation = rot; }
 
-GLfloat Transform::GetRotation() const { return rotation; }
+float Transform::GetRotation() const { return rotation; }

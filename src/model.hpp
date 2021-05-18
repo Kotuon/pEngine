@@ -5,7 +5,7 @@
 #include <vector>
 #include <array>
 
-#include <freeglut.h>
+#include <GL/gl.h>
 #include <vec3.hpp>
 #include <vec2.hpp>
 
@@ -24,7 +24,7 @@ class Model : public Component {
             vector<vec3> vertices;
             vector<vec2> uvs;
             vector<vec3> normals;
-            array<GLfloat, 3> color;
+            array<float, 3> color;
         };
 
         GLenum mode;
