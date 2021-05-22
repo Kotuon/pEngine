@@ -17,6 +17,9 @@ using namespace glm;
 class Model : public Component {
     public:
         Model(GLenum mode_ = GL_TRIANGLES);
+        Model(const Model& other);
+
+        Model* Clone() const;
         bool Load(const char* filename);
         void Draw();
     private:

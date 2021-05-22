@@ -2,7 +2,15 @@
 #include "transform.hpp"
 
 Transform::Transform() : Component(CType::CTransform), 
-    position(vec3(0.f, 0.f, 0.f)), scale(vec3(0.f, 0.f, 0.f)), rotation(0.f) {}
+    position(vec3(0.f, 0.f, 0.f)), scale(vec3(1.f, 1.f, 1.f)), rotation(0.f) {}
+
+Transform::Transform(const Transform& other) : Component(CType::CTransform) { 
+    *this = other;
+}
+
+Transform* Transform::Clone() const {
+    return new Transform(*this);
+}
 
 void Transform::SetPosition(vec3 pos) { position = pos; }
 

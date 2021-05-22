@@ -23,6 +23,8 @@ class Graphics {
 
         static bool ErrorCheck(GLenum error);
         static void ErrorCallback(int error, const char* description);
+        static pair<int, int> GetScreenSize();
+        static GLFWwindow* GetWindow();
     private:
         pair<int, int> screenSize;
         GLFWwindow* window;

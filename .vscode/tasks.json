@@ -8,6 +8,7 @@
 			"args": [
                 "-m64",
 				"-g",
+                "-O0",
 				"src\\*.cpp",
 				"-o",
 				"build\\pEngine.exe",

@@ -5,6 +5,10 @@
 
 #include <vec3.hpp>
 #include <vec2.hpp>
+#include <mat4x4.hpp>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtx/transform.hpp>
 
 #include "graphics.hpp"
 #include "trace.hpp"
@@ -12,6 +16,9 @@
 #include "object_manager.hpp"
 #include "transform.hpp"
 #include "engine.hpp"
+#include "camera.hpp"
+
+using namespace glm;
 
 Graphics* graphics;
 
@@ -21,9 +28,9 @@ Graphics::Graphics(int width, int height) {
 }
 
 bool Graphics::Initialize() {
-    graphics = new Graphics(800, 600);
+    graphics = new Graphics(1920, 1080);
     glfwSetErrorCallback(ErrorCallback);
-
+    
     if (!glfwInit()) {
         Trace::Message("Could not initialize GLFW.\n");
         return false;
@@ -37,11 +44,15 @@ bool Graphics::Initialize() {
         return false;
     }
 
+    glfwSetCursorPosCallback(graphics->window, Camera::MouseUpdate);
     glfwSetWindowSizeCallback(graphics->window, Reshape);
     glfwMakeContextCurrent(graphics->window);
     glfwSwapInterval(1);
     InitializeGL();
     Reshape(nullptr, graphics->screenSize.first, graphics->screenSize.second);
+
+    glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     return true;
 }
@@ -67,16 +78,18 @@ bool Graphics::InitializeGL() {
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     if (!Graphics::ErrorCheck(error)) return false;
 
+    glEnable(GL_CULL_FACE);
+    if (!Graphics::ErrorCheck(error)) return false;
+
 
     return true;
 }
 
 void Graphics::Update() {
     while(!glfwWindowShouldClose(graphics->window)) {
-        Engine::Update(0.f);
+        Engine::Update();
         Render();
 
-        glfwSwapBuffers(graphics->window);
         glfwPollEvents();
     }
 }
@@ -84,14 +97,29 @@ void Graphics::Update() {
 void Graphics::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
+
     glLoadIdentity();
+    mat4 view = lookAt(Camera::GetPosition(), Camera::GetPosition() + Camera::GetFront(), Camera::GetUp());
+    glLoadMatrixf(&view[0][0]);
+    //glRotatef(Camera::GetYaw(), 1.f, 0.f, 0.f);
+    //glRotatef(Camera::GetPitch(), 0.f, 1.f, 0.f);
+    //glRotatef(0.f, 0.f, 0.f, 1.f);
+    //glTranslatef(Camera::GetPosition().x, Camera::GetPosition().y, Camera::GetPosition().z);
+
+
 
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
+        glPushMatrix();
+
         Object* object = Object_Manager::FindObject(i);
 
         Model* model = object->GetComponent<Model>(CType::CModel);
         model->Draw();
+
+        glPopMatrix();
     }
+
+    glfwSwapBuffers(graphics->window);
 }
 
 void Graphics::Shutdown() {
@@ -109,13 +137,12 @@ void Graphics::Reshape(GLFWwindow*, GLsizei width, GLsizei height) {
     const GLdouble pi = 3.1415926535897932384626433832795;
     GLdouble fW, fH;
 
-    //fH = tan( (fovY / 2) / 180 * pi ) * zNear;
-    fH = tan( 45.f / 360 * pi ) * 0.1f;
+    fH = tan( Camera::GetFov() / 180 * pi ) * Camera::GetNear();
     fW = fH * aspect;
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum( -fW, fW, -fH, fH, 0.1f, 100.f);
+    glFrustum( -fW, fW, -fH, fH, Camera::GetNear(), Camera::GetFar());
 }
 
 void Graphics::ErrorCallback(int error, const char* description) {
@@ -130,4 +157,12 @@ bool Graphics::ErrorCheck(GLenum error) {
     }
 
     return true;
+}
+
+pair<int, int> Graphics::GetScreenSize() {
+    return graphics->screenSize;
+}
+
+GLFWwindow* Graphics::GetWindow() {
+    return graphics->window;
 }

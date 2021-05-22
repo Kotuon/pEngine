@@ -11,6 +11,9 @@ using namespace glm;
 class Transform : public Component {
     public:
         Transform();
+        Transform(const Transform& other);
+
+        Transform* Clone() const;
 
         void SetPosition(vec3 pos);
         vec3 GetPosition() const;
