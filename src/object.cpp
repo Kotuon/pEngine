@@ -30,8 +30,9 @@ Object* Object::Clone() const {
     return new Object(*this);
 }
 
-void Object::Update(float) {
-
+void Object::Update() {
+    Physics* physics = GetComponent<Physics>(CType::CPhysics);
+    physics->Update();
 }
 
 void Object::AddComponent(Component* component) {

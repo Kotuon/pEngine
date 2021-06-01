@@ -19,3 +19,9 @@ Object* Object_Manager::FindObject(unsigned id) {
 }
 
 unsigned Object_Manager::GetSize() { return object_manager->objects.size(); }
+
+void Object_Manager::Update() {
+    for (unsigned i = 0; i < object_manager->objects.size(); ++i) {
+        object_manager->FindObject(i)->Update();
+    }
+}

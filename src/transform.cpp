@@ -13,13 +13,13 @@ Transform* Transform::Clone() const {
 }
 
 void Transform::SetPosition(vec3 pos) { position = pos; }
-
 vec3 Transform::GetPosition() const { return position; }
 
-void Transform::SetScale(vec3 sca) { scale = sca; }
+void Transform::SetOldPosition(vec3 oldPos) { oldPosition = oldPos; }
+vec3 Transform::GetOldPosition() const { return oldPosition; }
 
+void Transform::SetScale(vec3 sca) { scale = sca; }
 vec3 Transform::GetScale() const { return scale; }
 
 void Transform::SetRotation(float rot) { rotation = rot; }
-
 float Transform::GetRotation() const { return rotation; }

@@ -10,9 +10,7 @@ Camera* camera;
 
 Camera::Camera(int width, int height) : position(0.f, 0.f, 0.f), front(0.f, 0.f, -1.f),
     up(0.f, 1.f, 0.f), yaw(-90.f), pitch(0.f), last({ width / 2.f, height / 2.f }), 
-    fov(45.f), speed(1), nearV(0.1f), farV(100.f), sensitivity(0.00000005f) {}
-
-// old sens - 0.00000005f
+    fov(45.f), speed(1), nearV(0.1f), farV(100.f), sensitivity(1) {}
 
 void Camera::Initialize(int width, int height) {
     camera = new Camera(width, height);
@@ -37,11 +35,19 @@ void Camera::Update() {
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_D) == GLFW_PRESS) {
         camera->position += normalize(cross(camera->front, camera->up)) * camera->speed;
     }
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+        camera->position += camera->speed * camera->up;
+    }
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+        camera->position -= camera->speed * camera->up;
+    }
 }
 
 void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
     static bool firstMouse = true;
     pair<double, double> mousePos = { xpos, ypos };
+
+    camera->sensitivity = 0.0000000075f * Engine::GetDeltaTime();
 
     if (firstMouse) {
         camera->last = { mousePos.first, mousePos.second };
@@ -55,8 +61,8 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
 
     camera->last = { mousePos.first, mousePos.second };
 
-    offset.first *= camera->sensitivity * Engine::GetDeltaTime();
-    offset.second *= camera->sensitivity * Engine::GetDeltaTime();
+    offset.first *= camera->sensitivity;
+    offset.second *= camera->sensitivity;
 
     camera->yaw += offset.first;
     camera->pitch += offset.second;

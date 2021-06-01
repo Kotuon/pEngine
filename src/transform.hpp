@@ -18,6 +18,9 @@ class Transform : public Component {
         void SetPosition(vec3 pos);
         vec3 GetPosition() const;
 
+        void SetOldPosition(vec3 oldPos);
+        vec3 GetOldPosition() const;
+
         void SetScale(vec3 sca);
         vec3 GetScale() const;
 
@@ -25,6 +28,7 @@ class Transform : public Component {
         float GetRotation() const;
     private:
         vec3 position;
+        vec3 oldPosition;
         vec3 scale;
         float rotation;
 };

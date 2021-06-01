@@ -97,25 +97,23 @@ void Graphics::Update() {
 void Graphics::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
-
     glLoadIdentity();
-    mat4 view = lookAt(Camera::GetPosition(), Camera::GetPosition() + Camera::GetFront(), Camera::GetUp());
+
+    mat4 view = lookAt(
+        Camera::GetPosition(), 
+        Camera::GetPosition() + Camera::GetFront(), 
+        Camera::GetUp());
+
     glLoadMatrixf(&view[0][0]);
-    //glRotatef(Camera::GetYaw(), 1.f, 0.f, 0.f);
-    //glRotatef(Camera::GetPitch(), 0.f, 1.f, 0.f);
-    //glRotatef(0.f, 0.f, 0.f, 1.f);
-    //glTranslatef(Camera::GetPosition().x, Camera::GetPosition().y, Camera::GetPosition().z);
-
-
 
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
-        glPushMatrix();
 
         Object* object = Object_Manager::FindObject(i);
 
         Model* model = object->GetComponent<Model>(CType::CModel);
-        model->Draw();
 
+        glPushMatrix();
+        model->Draw();
         glPopMatrix();
     }
 

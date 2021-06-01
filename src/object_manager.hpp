@@ -14,6 +14,7 @@ class Object_Manager {
         static void AddObject(Object* object);
         static Object* FindObject(unsigned id);
         static unsigned GetSize();
+        static void Update();
     private:
         vector<Object*> objects;
 };

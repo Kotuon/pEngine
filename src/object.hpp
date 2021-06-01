@@ -23,7 +23,7 @@ class Object {
 
         Object* Clone() const;
     
-        void Update(float);
+        void Update();
 
         void AddComponent(Component* component);
 
