@@ -27,8 +27,6 @@ using namespace std;
 int SDL_main (int argc, char *argv[]) {
    Trace::Init();
 
-   Graphics::Initialize(argc, argv);
-
    Engine::Initialize();
 
    Graphics::Update();

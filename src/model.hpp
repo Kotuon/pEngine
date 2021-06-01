@@ -5,7 +5,7 @@
 #include <vector>
 #include <array>
 
-#include <freeglut.h>
+#include <GL/gl.h>
 #include <vec3.hpp>
 #include <vec2.hpp>
 
@@ -17,6 +17,9 @@ using namespace glm;
 class Model : public Component {
     public:
         Model(GLenum mode_ = GL_TRIANGLES);
+        Model(const Model& other);
+
+        Model* Clone() const;
         bool Load(const char* filename);
         void Draw();
     private:
@@ -24,7 +27,7 @@ class Model : public Component {
             vector<vec3> vertices;
             vector<vec2> uvs;
             vector<vec3> normals;
-            array<GLfloat, 3> color;
+            array<float, 3> color;
         };
 
         GLenum mode;

@@ -9,6 +9,14 @@
 
 Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_) {}
 
+Model::Model(const Model& other) : Component(CType::CModel) {
+    *this = other;
+}
+
+Model* Model::Clone() const {
+    return new Model(*this);
+}
+
 bool Model::Load(const char* filename) {
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
     vector<vec3> temp_vertices;
@@ -121,6 +129,7 @@ void Model::Draw() {
     glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
     glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
 
+    //glTranslatef(0.f, 0.f, 0.f);
     glBegin(mode);
         for (unsigned i = 0; i < faces.size(); ++i) {
             glColor3f(faces[i].color[0], faces[i].color[1], faces[i].color[2]);
@@ -128,6 +137,11 @@ void Model::Draw() {
                 glVertex3f(faces[i].vertices[j].x, 
                            faces[i].vertices[j].y, 
                            faces[i].vertices[j].z);
+            }
+
+            for (unsigned j = 0; j < faces[i].uvs.size(); ++j) {
+                glTexCoord2f(faces[i].uvs[j].x,
+                             1 - faces[i].uvs[j].x);
             }
         }
     glEnd();

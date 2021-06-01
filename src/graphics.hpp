@@ -4,31 +4,30 @@
 
 #include <utility>
 
-#define GLUT_DISABLE_ATEXIT_HACK
-#include <glut.h>
-
-#include <SDL.h>
-#include <SDL_opengl.h>
+#include <GL/gl.h>
+#define GLFW_INCLUDE_NONE
+#include <glfw3.h>
 
 using namespace std;
 
 class Graphics {
     public:
         Graphics(int width, int height);
-        static void Initialize(int argc, char** argv);
+        static bool Initialize();
         static bool InitializeGL();
         static void Update();
         static void Render();
         static void Shutdown();
 
-        static void SwapWindow();
-        static void Reshape(GLsizei width, GLsizei height);
-        static void Timer(int time);
+        static void Reshape(GLFWwindow* window_, GLsizei width, GLsizei height);
 
         static bool ErrorCheck(GLenum error);
+        static void ErrorCallback(int error, const char* description);
+        static pair<int, int> GetScreenSize();
+        static GLFWwindow* GetWindow();
     private:
         pair<int, int> screenSize;
-        GLfloat angleCube;
+        GLFWwindow* window;
 };
 
 #endif
