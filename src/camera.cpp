@@ -10,7 +10,7 @@ Camera* camera;
 
 Camera::Camera(int width, int height) : position(0.f, 0.f, 0.f), front(0.f, 0.f, -1.f),
     up(0.f, 1.f, 0.f), yaw(-90.f), pitch(0.f), last({ width / 2.f, height / 2.f }), 
-    fov(45.f), speed(1), nearV(0.1f), farV(100.f), sensitivity(1) {}
+    fov(45.f), speed(1), nearV(0.1f), farV(1000.f), sensitivity(1) {}
 
 void Camera::Initialize(int width, int height) {
     camera = new Camera(width, height);
@@ -21,7 +21,12 @@ void Camera::Update() {
         glfwSetWindowShouldClose(Graphics::GetWindow(), true);
     }
     
-    camera->speed = .00000005f * Engine::GetDeltaTime();
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        camera->speed = 300.f * Engine::GetDeltaTime();
+    }
+    else {
+        camera->speed = 150.f * Engine::GetDeltaTime();
+    }
 
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_W) == GLFW_PRESS) {
         camera->position += camera->speed * camera->front;
@@ -47,7 +52,7 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
     static bool firstMouse = true;
     pair<double, double> mousePos = { xpos, ypos };
 
-    camera->sensitivity = 0.0000000075f * Engine::GetDeltaTime();
+    camera->sensitivity = 15.f * Engine::GetDeltaTime();
 
     if (firstMouse) {
         camera->last = { mousePos.first, mousePos.second };

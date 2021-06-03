@@ -13,11 +13,16 @@ class Engine {
         static void Update();
         static void Shutdown();
         static float GetDeltaTime();
+        static float GetDt();
     private:
         bool isRunning;
         float deltaTime;
-        chrono::steady_clock::time_point startTime;
-        chrono::steady_clock::time_point oldStartTime;
+        float accumulator;
+        float time;
+        const float dt = 0.01f;
+        chrono::steady_clock::time_point currentTime;
+        chrono::steady_clock::time_point newTime;
+        chrono::steady_clock::duration timeTaken;
 };
 
 #endif

@@ -1,8 +1,9 @@
 
+#include <cmath>
+
 #include "engine.hpp"
 #include "graphics.hpp"
 #include "object_manager.hpp"
-
 #include "object.hpp"
 #include "model.hpp"
 #include "component.hpp"
@@ -17,55 +18,66 @@ void Engine::Initialize() {
     Camera::Initialize(1920, 1080);
     if (!Graphics::Initialize()) return;
 
-    engine->startTime = chrono::steady_clock::now();
-    engine->oldStartTime = chrono::steady_clock::now();
-    engine->isRunning = true;
-
     Object_Manager::Initialize();
 
-    Object* object = new Object;
+    Object* sun = new Object;
 
-    Model* model = new Model;
-    model->Load("data/cube1.obj");
-    object->AddComponent(model);
+    Model* sun_model = new Model;
+    sun_model->Load("data/sun.obj");
+    sun->AddComponent(sun_model);
 
-    Transform* transform = new Transform;
-    transform->SetPosition(vec3(0.f, 0.f, -20.f));
-    object->AddComponent(transform);
+    Transform* sun_transform = new Transform;
+    sun_transform->SetPosition(vec3(0.f, 0.f, -200.f));
+    sun->AddComponent(sun_transform);
 
-    Physics* physics = new Physics;
-    physics->SetMass(10000.f);
-    object->AddComponent(physics);
+    Physics* sun_physics = new Physics;
+    sun_physics->SetMass(1989000);
+    sun->AddComponent(sun_physics);
 
-    for (int i = 0; i < 2; ++i) {
-        Object* newObject = object->Clone();
+    Object_Manager::AddObject(sun);
 
-        int switchVar = -1 * (i % 2);
-        
-        Transform* transform = newObject->GetComponent<Transform>(CType::CTransform);
-        transform->SetPosition(vec3(i * 4 - 16, 5.f * switchVar, -20.f));
+    Object* earth = new Object;
 
-        Object_Manager::AddObject(newObject);
-    }
+    Model* earth_model = new Model;
+    earth_model->Load("data/earth.obj");
+    earth->AddComponent(earth_model);
 
-    delete object;
+    Transform* earth_transform = new Transform;
+    earth_transform->SetPosition(vec3(200.f, 0.f, -200.f));
+    earth->AddComponent(earth_transform);
+
+    Physics* earth_physics = new Physics;
+    earth_physics->SetMass(5.972f);
+    vec3 vel = { 0.f, 0.f, 257.5522277f };
+    earth_physics->SetVelocity(vel);
+    earth->AddComponent(earth_physics);
+
+    Object_Manager::AddObject(earth);
+
+    engine->currentTime = chrono::steady_clock::now();
+    engine->accumulator = 0.f;
+    engine->time = 0.f;
+    engine->isRunning = true;
+
 }
 
 void Engine::Update() {
-    engine->startTime = chrono::steady_clock::now();
-    engine->deltaTime = (engine->startTime - engine->oldStartTime).count();
-    engine->oldStartTime = engine->startTime;
-    Camera::Update();
-    // for (int i = 0; i < 10; ++i) {
-    //     Object* object = Object_Manager::FindObject(i);
-    //     //Transform* transform = object->GetComponent<Transform>(CType::CTransform);
-    //     //transform->SetRotation(transform->GetRotation() + .3f);
+    engine->newTime = chrono::steady_clock::now();
+    engine->timeTaken = engine->newTime - engine->currentTime;
+    engine->deltaTime = float(engine->timeTaken.count()) * chrono::steady_clock::period::num / chrono::steady_clock::period::den;
+    engine->currentTime = engine->newTime;
 
-    //     Physics* physics = object->GetComponent<Physics>(CType::CPhysics);
-    //     vec3 accel = { 10.f, 0.f, 0.f };
-    //     physics->SetAcceleration(accel);
-    // }
-    Object_Manager::Update();
+    engine->accumulator += engine->deltaTime;
+
+    while (engine->accumulator >= engine->dt) {
+        Camera::Update();
+
+        Physics::UpdateGravity();
+        Object_Manager::Update();
+
+        engine->accumulator -= engine->dt;
+        engine->time += engine->dt;
+    }
 }
 
 void Engine::Shutdown() {
@@ -76,4 +88,8 @@ void Engine::Shutdown() {
 
 float Engine::GetDeltaTime() {
     return engine->deltaTime;
+}
+
+float Engine::GetDt() { 
+    return engine->dt;
 }

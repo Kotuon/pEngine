@@ -30,7 +30,7 @@ int SDL_main (int argc, char *argv[]) {
    Engine::Initialize();
 
    Graphics::Update();
-   //Engine::Update(0.f);
+
    Engine::Shutdown();
 
    return 0;
