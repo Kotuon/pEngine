@@ -2,11 +2,12 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#include <chrono>
+// std includes //
+#include <chrono> // steady_clock
 
 using namespace std;
 
-class System;
+/*! Engine class */
 class Engine {
     public:
         static void Initialize();
@@ -16,16 +17,17 @@ class Engine {
         static float GetDt();
         static double GetGravConst();
     private:
-        bool isRunning;
-        float deltaTime;
-        float accumulator;
-        float time;
-        const float dt = 0.01f;
-        chrono::steady_clock::time_point currentTime;
-        chrono::steady_clock::time_point newTime;
-        chrono::steady_clock::duration timeTaken;
+        bool  isRunning;        //!< state of the main loop
+        float deltaTime;        //!< time between frames
+        float accumulator;      //!< amount of unused time for physics updates
+        float time;             //!< total time
+        const float dt = 0.01f; //!< fixed delta time for physics updates
 
-        double gravConst;
+        chrono::steady_clock::time_point currentTime; //!< current read time
+        chrono::steady_clock::time_point newTime;     //!< newest read time
+        chrono::steady_clock::duration timeTaken;     //!< time between frames
+
+        double gravConst; //!< gravitational constant (used in physics)
 };
 
 #endif
