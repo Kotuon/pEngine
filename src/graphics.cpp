@@ -27,8 +27,8 @@ Graphics::Graphics(int width, int height) {
     screenSize.second = height;
 }
 
-bool Graphics::Initialize() {
-    graphics = new Graphics(1920, 1080);
+bool Graphics::Initialize(File_Reader& settings) {
+    graphics = new Graphics(settings.Read_Int("windowWidth"), settings.Read_Int("windowHeight"));
     if (!graphics) {
         Trace::Message("Graphics was not initialized.");
         return false;

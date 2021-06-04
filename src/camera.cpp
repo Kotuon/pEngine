@@ -13,12 +13,16 @@ Camera::Camera(int width, int height) : position(0.f, 0.f, 0.f), front(0.f, 0.f,
     up(0.f, 1.f, 0.f), yaw(-90.f), pitch(0.f), last({ width / 2.f, height / 2.f }), 
     fov(45.f), speed(1), nearV(0.1f), farV(10000.f), sensitivity(1) {}
 
-bool Camera::Initialize(int width, int height) {
-    camera = new Camera(width, height);
+bool Camera::Initialize(File_Reader& settings) {
+    camera = new Camera(settings.Read_Int("windowWidth"), settings.Read_Int("windowHeight"));
     if (!camera) {
         Trace::Message("Camera was not initialized.");
         return false;
     }
+
+    camera->originalMoveSpeed = settings.Read_Float("moveSpeed");
+    camera->originalSprintSpeed = settings.Read_Float("sprintSpeed");
+    camera->originalSensitivity = settings.Read_Float("sensitivity");
 
     return true;
 }
@@ -29,10 +33,10 @@ void Camera::Update() {
     }
     
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-        camera->speed = 300.f * Engine::GetDeltaTime();
+        camera->speed = 1200.f * Engine::GetDeltaTime();
     }
     else {
-        camera->speed = 150.f * Engine::GetDeltaTime();
+        camera->speed = 600.f * Engine::GetDeltaTime();
     }
 
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_W) == GLFW_PRESS) {

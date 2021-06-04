@@ -8,12 +8,14 @@
 #define GLFW_INCLUDE_NONE
 #include <glfw3.h>
 
+#include "file_reader.hpp"
+
 using namespace std;
 
 class Graphics {
     public:
         Graphics(int width, int height);
-        static bool Initialize();
+        static bool Initialize(File_Reader& settings);
         static bool InitializeGL();
         static void Update();
         static void Render();

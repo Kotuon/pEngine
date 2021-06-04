@@ -8,6 +8,7 @@
 Object::Object() {}
 
 Object::Object(const Object& other) {
+    SetName(other.GetName());
     Transform* transform = other.GetComponent<Transform>(CType::CTransform);
     if (transform) {
         Transform* newTransform = new Transform(*transform);

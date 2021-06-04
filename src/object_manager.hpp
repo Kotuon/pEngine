@@ -5,18 +5,19 @@
 #include <vector>
 
 #include "object.hpp"
+#include "file_reader.hpp"
 
 using namespace std;
 
 class Object_Manager {
     public:
-        static bool Initialize();
+        static bool Initialize(File_Reader& preset);
         static void AddObject(Object* object);
         static Object* FindObject(unsigned id);
         static unsigned GetSize();
         static void Update();
         static void Shutdown();
-        void ReadList();
+        void ReadList(File_Reader& preset);
     private:
         vector<Object*> objects;
 };

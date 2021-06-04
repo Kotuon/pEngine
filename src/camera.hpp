@@ -6,13 +6,15 @@
 
 #include <vec3.hpp>
 
+#include "file_reader.hpp"
+
 using namespace std;
 using namespace glm;
 
 class Camera {
     public:
         Camera(int width, int height);
-        static bool Initialize(int width, int height);
+        static bool Initialize(File_Reader& settings);
         static void Update();
         static void MouseUpdate(GLFWwindow* window, double xpos, double ypos);
         static void Shutdown();
@@ -40,6 +42,9 @@ class Camera {
         float nearV;
         float farV;
         float sensitivity;
+        float originalMoveSpeed;
+        float originalSprintSpeed;
+        float originalSensitivity;
 };
 
 #endif

@@ -22,21 +22,18 @@ void Engine::Initialize() {
         return;
     }
 
-    if (!Camera::Initialize(1920, 1080)) return;
-    if (!Graphics::Initialize()) return;
-    if (!Object_Manager::Initialize()) return;
+    File_Reader settings("settings");
+    File_Reader preset("preset/" + settings.Read_String("preset"));
+    engine->gravConst = preset.Read_Double("gravConst");
 
-    // Object* sun = new Object("sun");
-    // Object_Manager::AddObject(sun);
-
-    // Object* earth = new Object("earth");
-    // Object_Manager::AddObject(earth);
+    if (!Camera::Initialize(settings)) return;
+    if (!Graphics::Initialize(settings)) return;
+    if (!Object_Manager::Initialize(preset)) return;
 
     engine->currentTime = chrono::steady_clock::now();
     engine->accumulator = 0.f;
     engine->time = 0.f;
     engine->isRunning = true;
-
 }
 
 void Engine::Update() {
@@ -71,4 +68,8 @@ float Engine::GetDeltaTime() {
 
 float Engine::GetDt() { 
     return engine->dt;
+}
+
+double Engine::GetGravConst() {
+    return engine->gravConst;
 }

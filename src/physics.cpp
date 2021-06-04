@@ -75,7 +75,7 @@ void Physics::UpdateGravity() {
             double distance = sqrt(pow(double(otherPosition.x - position.x), 2.0) + 
                 pow(double(otherPosition.y - position.y), 2.0) +
                 pow(double(otherPosition.z - position.z), 2.0));
-            double magnitude = physics->G * ((physics->mass * otherPhysics->mass)) / pow(distance, 2.0);
+            double magnitude = Engine::GetGravConst() * ((physics->mass * otherPhysics->mass)) / pow(distance, 2.0);
 
             vec3 direction = otherPosition - position;
             vec3 normDirection = normalize(direction);

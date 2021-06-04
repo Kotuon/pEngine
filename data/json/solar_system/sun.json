@@ -1,0 +1,10 @@
+{
+    "name" : "sun",
+    "modelToLoad" : "ball",
+    "position" : [ 0.0, 0.0, -2000.0 ],
+    "scale" : [ 1392.0, 1392.0, 1392.0 ],
+    "rotation" : 0.0,
+    "acceleration" : [ 0.0, 0.0, 0.0 ],
+    "velocity" : [ 0.0, 0.0, 0.0 ],
+    "mass" : 1988500.0
+}

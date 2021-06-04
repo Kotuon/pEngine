@@ -21,6 +21,10 @@ class File_Reader {
         vec3 Read_Vec3(string valueName);
         bool Read_Bool(string valueName);
         float Read_Float(string valueName);
+        double Read_Double(string valueName);
+
+        string Read_Object_Name(string valueName);
+        vec3 Read_Object_Position(string valueName);
 
     private:
         Json::Value root;

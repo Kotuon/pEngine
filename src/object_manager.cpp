@@ -1,11 +1,11 @@
 
 #include "object_manager.hpp"
 #include "trace.hpp"
-#include "file_reader.hpp"
+#include "transform.hpp"
 
 static Object_Manager* object_manager = nullptr;
 
-bool Object_Manager::Initialize() {
+bool Object_Manager::Initialize(File_Reader& preset) {
     object_manager = new Object_Manager;
 
     if (!object_manager) {
@@ -14,8 +14,7 @@ bool Object_Manager::Initialize() {
     }
 
     object_manager->objects.reserve(100);
-
-    object_manager->ReadList();
+    object_manager->ReadList(preset);
 
     return true;
 }
@@ -49,16 +48,21 @@ void Object_Manager::Shutdown() {
     delete object_manager;
 }
 
-void Object_Manager::ReadList() {
-    File_Reader reader("object_list");
+void Object_Manager::ReadList(File_Reader& preset) {
     unsigned object_num = 0;
 
     while (true) {
-        string object_name = reader.Read_String("object_" + to_string(object_num));
+        string object_name = preset.Read_Object_Name("object_" + to_string(object_num));
         if (object_name.compare("") == 0) break;
 
         Object* object = new Object(object_name);
+
+        vec3 position = preset.Read_Object_Position("object_" + to_string(object_num));
+        Transform* transform = object->GetComponent<Transform>(CType::CTransform);
+        transform->SetPosition(position);
+
         AddObject(object);
+
         ++object_num;
     }
 }

@@ -39,9 +39,6 @@ class Physics : public Component {
         vec3 forces;
         vec3 velocity;
         float mass;
-        double G = 6.67;
-        //double G = 0.000667;
-        //double G = 6.67 * pow(10.f, -11.f);
 };
 
 #endif

@@ -1,0 +1,8 @@
+{
+    "preset"       : "solar_system",
+    "moveSpeed"    : 600.0,
+    "sprintSpeed"  : 1200.0,
+    "sensitivity"  : 15.0,
+    "windowWidth"  : 1920,
+    "windowHeight" : 1080
+}

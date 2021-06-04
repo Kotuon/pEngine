@@ -14,6 +14,7 @@ class Engine {
         static void Shutdown();
         static float GetDeltaTime();
         static float GetDt();
+        static double GetGravConst();
     private:
         bool isRunning;
         float deltaTime;
@@ -23,6 +24,8 @@ class Engine {
         chrono::steady_clock::time_point currentTime;
         chrono::steady_clock::time_point newTime;
         chrono::steady_clock::duration timeTaken;
+
+        double gravConst;
 };
 
 #endif

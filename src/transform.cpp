@@ -30,8 +30,6 @@ void Transform::SetRotation(float rot) { rotation = rot; }
 float Transform::GetRotation() const { return rotation; }
 
 void Transform::Read(File_Reader& reader) {
-    SetPosition(reader.Read_Vec3("position"));
-    SetPosition(reader.Read_Vec3("oldPosition"));
     SetScale(reader.Read_Vec3("scale"));
     SetRotation(reader.Read_Float("rotation"));
 }

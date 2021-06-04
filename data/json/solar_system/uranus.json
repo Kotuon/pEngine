@@ -1,0 +1,9 @@
+{
+    "name" : "uranus",
+    "modelToLoad" : "ball",
+    "scale" : [ 51.118, 51.118, 51.118 ],
+    "rotation" : 0.0,
+    "acceleration" : [ 0.0, 0.0, 0.0 ],
+    "velocity" : [ 0.0, 0.0, 55.7688456565 ],
+    "mass" : 86.8
+}

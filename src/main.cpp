@@ -9,8 +9,10 @@
  * 
  */
 
+// Library includes //
 #include <SDL.h>
 
+// Engine includes //
 #include "trace.hpp"
 #include "engine.hpp"
 #include "graphics.hpp"
@@ -25,15 +27,16 @@ using namespace std;
  * @return int 
  */
 int SDL_main (int argc, char *argv[]) {
-   Trace::Initialize();
+      // Initializing systems
+    Trace::Initialize();
+    Engine::Initialize();
 
-   Engine::Initialize();
+      // Engine update loop
+    Graphics::Update();
 
-   Graphics::Update();
+      // Shuting down systems
+    Engine::Shutdown();
+    Trace::Shutdown();
 
-   Engine::Shutdown();
-
-   Trace::Shutdown();
-
-   return 0;
+    return 0;
 }
