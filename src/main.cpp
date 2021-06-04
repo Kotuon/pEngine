@@ -25,13 +25,15 @@ using namespace std;
  * @return int 
  */
 int SDL_main (int argc, char *argv[]) {
-   Trace::Init();
+   Trace::Initialize();
 
    Engine::Initialize();
 
    Graphics::Update();
 
    Engine::Shutdown();
+
+   Trace::Shutdown();
 
    return 0;
 }

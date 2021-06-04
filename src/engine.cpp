@@ -1,5 +1,6 @@
 
 #include <cmath>
+#include <string>
 
 #include "engine.hpp"
 #include "graphics.hpp"
@@ -10,49 +11,26 @@
 #include "transform.hpp"
 #include "camera.hpp"
 #include "physics.hpp"
+#include "file_reader.hpp"
 
-Engine* engine;
+static Engine* engine = nullptr;
 
 void Engine::Initialize() {
     engine = new Engine;
-    Camera::Initialize(1920, 1080);
+    if (!engine) {
+        Trace::Message("Engine was not initialized.\n");
+        return;
+    }
+
+    if (!Camera::Initialize(1920, 1080)) return;
     if (!Graphics::Initialize()) return;
+    if (!Object_Manager::Initialize()) return;
 
-    Object_Manager::Initialize();
+    // Object* sun = new Object("sun");
+    // Object_Manager::AddObject(sun);
 
-    Object* sun = new Object;
-
-    Model* sun_model = new Model;
-    sun_model->Load("data/sun.obj");
-    sun->AddComponent(sun_model);
-
-    Transform* sun_transform = new Transform;
-    sun_transform->SetPosition(vec3(0.f, 0.f, -200.f));
-    sun->AddComponent(sun_transform);
-
-    Physics* sun_physics = new Physics;
-    sun_physics->SetMass(1989000);
-    sun->AddComponent(sun_physics);
-
-    Object_Manager::AddObject(sun);
-
-    Object* earth = new Object;
-
-    Model* earth_model = new Model;
-    earth_model->Load("data/earth.obj");
-    earth->AddComponent(earth_model);
-
-    Transform* earth_transform = new Transform;
-    earth_transform->SetPosition(vec3(200.f, 0.f, -200.f));
-    earth->AddComponent(earth_transform);
-
-    Physics* earth_physics = new Physics;
-    earth_physics->SetMass(5.972f);
-    vec3 vel = { 0.f, 0.f, 257.5522277f };
-    earth_physics->SetVelocity(vel);
-    earth->AddComponent(earth_physics);
-
-    Object_Manager::AddObject(earth);
+    // Object* earth = new Object("earth");
+    // Object_Manager::AddObject(earth);
 
     engine->currentTime = chrono::steady_clock::now();
     engine->accumulator = 0.f;
@@ -69,8 +47,8 @@ void Engine::Update() {
 
     engine->accumulator += engine->deltaTime;
 
+    Camera::Update();
     while (engine->accumulator >= engine->dt) {
-        Camera::Update();
 
         Physics::UpdateGravity();
         Object_Manager::Update();
@@ -81,8 +59,9 @@ void Engine::Update() {
 }
 
 void Engine::Shutdown() {
-    Camera::Shutdown();
+    Object_Manager::Shutdown();
     Graphics::Shutdown();
+    Camera::Shutdown();
     delete engine;
 }
 

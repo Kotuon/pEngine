@@ -17,6 +17,12 @@ Physics::Physics(const Physics& other) : Component(CType::CPhysics) {
     *this = other;
 }
 
+Physics::Physics(File_Reader& reader) : Component(CType::CPhysics),
+    acceleration(vec3(0.f, 0.f, 0.f)), forces(vec3(0.f, 0.f, 0.f)), 
+    velocity(vec3(0.f, 0.f, 0.f)), mass(1.f) {
+    Read(reader);
+}
+
 Physics* Physics::Clone() const {
     return new Physics(*this);
 }
@@ -78,4 +84,10 @@ void Physics::UpdateGravity() {
             physics->AddForce(force);
         }
     }
+}
+
+void Physics::Read(File_Reader& reader) {
+    SetAcceleration(reader.Read_Vec3("acceleration"));
+    SetVelocity(reader.Read_Vec3("velocity"));
+    SetMass(reader.Read_Float("mass"));
 }

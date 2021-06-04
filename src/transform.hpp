@@ -5,6 +5,7 @@
 #include <vec3.hpp>
 
 #include "component.hpp"
+#include "file_reader.hpp"
 
 using namespace glm;
 
@@ -12,7 +13,7 @@ class Transform : public Component {
     public:
         Transform();
         Transform(const Transform& other);
-
+        Transform(File_Reader& reader);
         Transform* Clone() const;
 
         void SetPosition(vec3 pos);
@@ -26,6 +27,8 @@ class Transform : public Component {
 
         void SetRotation(float rot);
         float GetRotation() const;
+
+        void Read(File_Reader& reader);
     private:
         vec3 position;
         vec3 oldPosition;

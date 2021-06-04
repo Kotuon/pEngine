@@ -20,6 +20,7 @@ class Object {
     public:
         Object();
         Object(const Object& other);
+        Object(string filename);
 
         Object* Clone() const;
     
@@ -51,9 +52,15 @@ class Object {
 
         void SetId(unsigned id_);
         unsigned GetId() const;
+
+        void SetName(string name_);
+        string GetName() const;
+
+        void ReadObject(string objectFilename);
     private:
         unordered_map<CType, Component*> components;
         unsigned id;
+        string name;
 };
 
 #endif

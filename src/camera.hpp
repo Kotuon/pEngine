@@ -12,7 +12,7 @@ using namespace glm;
 class Camera {
     public:
         Camera(int width, int height);
-        static void Initialize(int width, int height);
+        static bool Initialize(int width, int height);
         static void Update();
         static void MouseUpdate(GLFWwindow* window, double xpos, double ypos);
         static void Shutdown();

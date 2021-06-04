@@ -3,6 +3,7 @@
 #include "transform.hpp"
 #include "physics.hpp"
 #include "model.hpp"
+#include "file_reader.hpp"
 
 Object::Object() {}
 
@@ -26,6 +27,10 @@ Object::Object(const Object& other) {
     }
 }
 
+Object::Object(string filename) {
+    ReadObject(filename);
+}
+
 Object* Object::Clone() const {
     return new Object(*this);
 }
@@ -41,5 +46,22 @@ void Object::AddComponent(Component* component) {
 }
 
 void Object::SetId(unsigned id_) { id = id_; }
-
 unsigned Object::GetId() const { return id; }
+
+void Object::SetName(string name_) { name = name_; }
+string Object::GetName() const { return name; }
+
+void Object::ReadObject(string objectFilename) {
+    File_Reader object_reader(objectFilename);
+
+    SetName(object_reader.Read_String("name"));
+    
+    Model* object_model = new Model(object_reader);
+    AddComponent(object_model);
+    
+    Transform* object_transform = new Transform(object_reader);
+    AddComponent(object_transform);
+    
+    Physics* object_physics = new Physics(object_reader);
+    AddComponent(object_physics);
+}

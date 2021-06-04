@@ -1,6 +1,5 @@
 
 #include <cstdio>
-#include <string>
 
 #include "model.hpp"
 #include "trace.hpp"
@@ -13,19 +12,25 @@ Model::Model(const Model& other) : Component(CType::CModel) {
     *this = other;
 }
 
+Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode(mode_) {
+    Read(reader);
+}
+
 Model* Model::Clone() const {
     return new Model(*this);
 }
 
-bool Model::Load(const char* filename) {
+bool Model::Load(string filename) {
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
     vector<vec3> temp_vertices;
     vector<vec2> temp_uvs;
     vector<vec3> temp_normals;
+
+    string fileToOpen = "data/models/" + string(filename) + ".obj";
     
-    FILE* file = fopen(filename, "r");
+    FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
-        Trace::Message("File was not successfully opened.");
+        Trace::Message("File '" + filename + "' was not successfully opened.\n");
         return false;
     }
 
@@ -126,12 +131,15 @@ void Model::Draw() {
     Transform* transform = GetParent()->GetComponent<Transform>(CType::CTransform);
 
     vec3 pos = transform->GetPosition();
+    vec3 scale = transform->GetScale();
     glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
+    glScalef(scale.x, scale.y, scale.z);
     glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
 
     //glTranslatef(0.f, 0.f, 0.f);
     glBegin(mode);
         for (unsigned i = 0; i < faces.size(); ++i) {
+            
             glColor3f(faces[i].color[0], faces[i].color[1], faces[i].color[2]);
             for (unsigned j = 0; j < faces[i].vertices.size(); ++j) {
                 glVertex3f(faces[i].vertices[j].x, 
@@ -145,4 +153,8 @@ void Model::Draw() {
             }
         }
     glEnd();
+}
+
+void Model::Read(File_Reader reader) {
+    Load(reader.Read_String("modelToLoad"));
 }

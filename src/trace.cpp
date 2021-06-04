@@ -9,7 +9,7 @@ using namespace std;
 
 static Trace trace;
 
-void Trace::Init() {
+void Trace::Initialize() {
     trace.trace_stream.open("output/trace.log", std::ofstream::out);
 
     if (!trace.trace_stream) cout << "File wasn't opened successfully.";

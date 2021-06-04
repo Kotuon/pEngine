@@ -9,7 +9,7 @@ using namespace std;
 
 class Trace {
     public:
-        static void Init();
+        static void Initialize();
         static void Message(string message);
         static void Shutdown();
     private:

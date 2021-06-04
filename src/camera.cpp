@@ -5,15 +5,22 @@
 #include "camera.hpp"
 #include "graphics.hpp"
 #include "engine.hpp"
+#include "trace.hpp"
 
-Camera* camera;
+static Camera* camera = nullptr;
 
 Camera::Camera(int width, int height) : position(0.f, 0.f, 0.f), front(0.f, 0.f, -1.f),
     up(0.f, 1.f, 0.f), yaw(-90.f), pitch(0.f), last({ width / 2.f, height / 2.f }), 
-    fov(45.f), speed(1), nearV(0.1f), farV(1000.f), sensitivity(1) {}
+    fov(45.f), speed(1), nearV(0.1f), farV(10000.f), sensitivity(1) {}
 
-void Camera::Initialize(int width, int height) {
+bool Camera::Initialize(int width, int height) {
     camera = new Camera(width, height);
+    if (!camera) {
+        Trace::Message("Camera was not initialized.");
+        return false;
+    }
+
+    return true;
 }
 
 void Camera::Update() {
@@ -92,7 +99,8 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
 }
 
 void Camera::Shutdown() {
-    delete camera;
+    if (camera)
+        delete camera;
 }
 
 vec3& Camera::GetPosition() {

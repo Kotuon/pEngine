@@ -5,6 +5,7 @@
 #include <vec3.hpp>
 
 #include "component.hpp"
+#include "file_reader.hpp"
 
 using namespace glm;
 
@@ -12,6 +13,7 @@ class Physics : public Component {
     public:
         Physics();
         Physics(const Physics& other);
+        Physics(File_Reader& reader);
         Physics* Clone() const;
 
         void SetAcceleration(vec3 accel);
@@ -30,6 +32,8 @@ class Physics : public Component {
         void Update();
 
         static void UpdateGravity();
+
+        void Read(File_Reader& reader);
     private:
         vec3 acceleration;
         vec3 forces;

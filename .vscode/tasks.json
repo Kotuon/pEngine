@@ -10,6 +10,7 @@
 				"-g",
                 "-O0",
 				"src\\*.cpp",
+                "libraries\\JSONCPP\\include\\*.cpp",
 				"-o",
 				"build\\pEngine.exe",
 				"-I", "libraries/SDL2/include",
@@ -17,12 +18,16 @@
                 "-I", "libraries/GLM",
                 "-I", "libraries/GLFW/include",
                 "-L", "libraries/GLFW/lib",
+                "-I", "libraries/JSONCPP/include/json",
+                "-I", "libraries/JSONCPP/include",
+                "-L", "libraries/JSONCPP/lib",
 				"-lmingw32",
 				"-lSDL2main",
 				"-lSDL2",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
+                "-ljsoncpp"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

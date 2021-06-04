@@ -20,7 +20,7 @@
 
 using namespace glm;
 
-Graphics* graphics;
+static Graphics* graphics = nullptr;
 
 Graphics::Graphics(int width, int height) {
     screenSize.first = width;
@@ -29,6 +29,11 @@ Graphics::Graphics(int width, int height) {
 
 bool Graphics::Initialize() {
     graphics = new Graphics(1920, 1080);
+    if (!graphics) {
+        Trace::Message("Graphics was not initialized.");
+        return false;
+    }
+
     glfwSetErrorCallback(ErrorCallback);
     
     if (!glfwInit()) {
@@ -121,6 +126,8 @@ void Graphics::Render() {
 }
 
 void Graphics::Shutdown() {
+    if (!graphics) return;
+
     glfwDestroyWindow(graphics->window);
     glfwTerminate();
     delete graphics;
