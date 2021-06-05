@@ -115,7 +115,7 @@ void Graphics::Render() {
 
         Object* object = Object_Manager::FindObject(i);
 
-        Model* model = object->GetComponent<Model>(CType::CModel);
+        Model* model = object->GetComponent<Model>();
 
         glPushMatrix();
         model->Draw();
@@ -157,7 +157,7 @@ void Graphics::ErrorCallback(int error, const char* description) {
 bool Graphics::ErrorCheck(GLenum error) {
     error = glGetError();
     if (error != GL_NO_ERROR) {
-        Trace::Message("Error intializing OpenGl. \n");
+        Trace::Message("Error initializing OpenGl. \n");
         return false;
     }
 

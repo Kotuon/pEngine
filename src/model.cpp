@@ -67,7 +67,6 @@ bool Model::Load(string filename) {
             unsigned vertex_index[3], uv_index[3], normal_index[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertex_index[0], &uv_index[0], &normal_index[0],
                 &vertex_index[1], &uv_index[1], &normal_index[1], &vertex_index[2], &uv_index[2], &normal_index[2]);//,
-                //&vertex_index[3], &uv_index[3], &normal_index[3]);
             
             if (matches != 9) {
                 Trace::Message("File is incompatible with this parser. Export using different settings.");
@@ -77,17 +76,14 @@ bool Model::Load(string filename) {
             face.vertices.emplace_back(temp_vertices[vertex_index[0] - 1]);
             face.vertices.emplace_back(temp_vertices[vertex_index[1] - 1]);
             face.vertices.emplace_back(temp_vertices[vertex_index[2] - 1]);
-            //face.vertices.emplace_back(temp_vertices[vertex_index[3] - 1]);
 
             face.uvs.emplace_back(temp_uvs[uv_index[0] - 1]);
             face.uvs.emplace_back(temp_uvs[uv_index[1] - 1]);
             face.uvs.emplace_back(temp_uvs[uv_index[2] - 1]);
-            //face.uvs.emplace_back(temp_uvs[uv_index[3] - 1]);
 
             face.normals.emplace_back(temp_normals[normal_index[0] - 1]);
             face.normals.emplace_back(temp_normals[normal_index[1] - 1]);
             face.normals.emplace_back(temp_normals[normal_index[2] - 1]);
-            //face.normals.emplace_back(temp_normals[normal_index[3] - 1]);
 
             if (faces.size() % 6 == 0) {
                 face.color[0] = 0.f;
@@ -128,7 +124,7 @@ bool Model::Load(string filename) {
 }
 
 void Model::Draw() {
-    Transform* transform = GetParent()->GetComponent<Transform>(CType::CTransform);
+    Transform* transform = GetParent()->GetComponent<Transform>();
 
     vec3 pos = transform->GetPosition();
     vec3 scale = transform->GetScale();
@@ -136,7 +132,6 @@ void Model::Draw() {
     glScalef(scale.x, scale.y, scale.z);
     glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
 
-    //glTranslatef(0.f, 0.f, 0.f);
     glBegin(mode);
         for (unsigned i = 0; i < faces.size(); ++i) {
             
@@ -157,4 +152,8 @@ void Model::Draw() {
 
 void Model::Read(File_Reader reader) {
     Load(reader.Read_String("modelToLoad"));
+}
+
+CType Model::GetCType() {
+    return CType::CModel;
 }

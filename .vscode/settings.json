@@ -41,5 +41,13 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "chrono": "cpp"
-    }
+    },
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "cpp"
+    ]
 }

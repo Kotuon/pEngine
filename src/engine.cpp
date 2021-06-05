@@ -14,18 +14,18 @@
 #include <string>
 
 // Engine includes
-  // System includes
+  // System //
 #include "engine.hpp"
 #include "graphics.hpp"
-  // Object inclues //
+  // Object //
 #include "object_manager.hpp"
 #include "object.hpp"
-  // Component includes //
+  // Component //
 #include "component.hpp"
 #include "model.hpp"
 #include "physics.hpp"
 #include "transform.hpp"
-  // Misc includes //
+  // Misc //
 #include "camera.hpp"
 #include "file_reader.hpp"
 
@@ -88,7 +88,7 @@ void Engine::Update() {
 }
 
 /**
- * @brief Shutsdown systems and then engine
+ * @brief Shutdown systems and then engine
  * 
  * @return void
  */
