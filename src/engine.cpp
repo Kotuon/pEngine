@@ -29,12 +29,12 @@
 #include "camera.hpp"
 #include "file_reader.hpp"
 
-  // Engine object
-static Engine* engine = nullptr;
+static Engine* engine = nullptr; //!< Engine object
 
 /**
  * @brief Initializes the engine and the systems in the engine
  * 
+ * @return void
  */
 void Engine::Initialize() {
       // Initializing engine
@@ -65,6 +65,7 @@ void Engine::Initialize() {
  * @brief Updates object and camera. Object updates have a fixed time step,
  *        camera updates have variable time step
  * 
+ * @return void
  */
 void Engine::Update() {
       // Calculating dt
@@ -89,6 +90,7 @@ void Engine::Update() {
 /**
  * @brief Shutsdown systems and then engine
  * 
+ * @return void
  */
 void Engine::Shutdown() {
     Object_Manager::Shutdown();
