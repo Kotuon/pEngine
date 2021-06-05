@@ -1,3 +1,13 @@
+/**
+ * @file engine.hpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-06-04
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 #ifndef ENGINE_HPP
 #define ENGINE_HPP

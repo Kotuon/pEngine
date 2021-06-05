@@ -8,7 +8,7 @@
 			"args": [
                 "-m64",
 				"-g",
-                "-O0",
+                "-O2",
 				"src\\*.cpp",
                 "libraries\\JSONCPP\\include\\*.cpp",
 				"-o",
