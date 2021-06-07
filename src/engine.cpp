@@ -23,6 +23,7 @@
   // Component //
 #include "component.hpp"
 #include "model.hpp"
+#include "model_data_manager.hpp"
 #include "physics.hpp"
 #include "transform.hpp"
   // Misc //
@@ -50,6 +51,7 @@ void Engine::Initialize() {
     engine->gravConst = preset.Read_Double("gravConst");
 
       // Initializing sub systems
+    if (!Model_Data_Manager::Initialize()) return;
     if (!Camera::Initialize(settings)) return;
     if (!Graphics::Initialize(settings)) return;
     if (!Object_Manager::Initialize(preset)) return;
@@ -96,6 +98,7 @@ void Engine::Shutdown() {
     Object_Manager::Shutdown();
     Graphics::Shutdown();
     Camera::Shutdown();
+    Model_Data_Manager::Shutdown();
     delete engine;
 }
 
