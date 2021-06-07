@@ -18,8 +18,10 @@ class Model_Data {
         Model_Data();
         Model_Data(const Model_Data& other);
 
-        bool Load(string filename);
+        bool Load(string filename_);
         void Draw() const;
+
+        string GetFilename() const;
     private:
         struct Face {
             vector<vec3> vertices;
@@ -28,6 +30,7 @@ class Model_Data {
             array<float, 3> color;
         }; 
         vector<Face> faces;
+        string filename;
 };
 
 #endif

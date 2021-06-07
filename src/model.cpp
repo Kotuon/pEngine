@@ -5,6 +5,7 @@
 #include "trace.hpp"
 #include "object.hpp"
 #include "transform.hpp"
+#include "model_data_manager.hpp"
 
 Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr) {}
 
@@ -21,12 +22,8 @@ Model* Model::Clone() const {
     return new Model(*this);
 }
 
-bool Model::Load(string filename) {
-    if (data)
-        delete data;
-
-    data = new Model_Data;
-    return data->Load(filename);
+void Model::Load(string filename) {
+    data = Model_Data_Manager::Get(filename);
 }
 
 void Model::Draw() {

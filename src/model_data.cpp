@@ -15,7 +15,8 @@ Model_Data::Model_Data(const Model_Data& other) {
     }
 }
 
-bool Model_Data::Load(string filename) {
+bool Model_Data::Load(string filename_) {
+    filename = filename_;
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
     vector<vec3> temp_vertices;
     vector<vec2> temp_uvs;
@@ -129,4 +130,8 @@ void Model_Data::Draw() const {
             glTexCoord2f(uv.x, 1 - uv.y);
         }
     }
+}
+
+string Model_Data::GetFilename() const {
+    return filename;
 }

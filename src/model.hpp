@@ -24,7 +24,7 @@ class Model : public Component {
         Model(File_Reader& reader, GLenum mode_ = GL_TRIANGLES);
         Model* Clone() const;
 
-        bool Load(string filename);
+        void Load(string filename);
         void Draw();
 
         void Read(File_Reader reader);
