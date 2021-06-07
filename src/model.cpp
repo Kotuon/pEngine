@@ -133,18 +133,15 @@ void Model::Draw() {
     glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
 
     glBegin(mode);
-        for (unsigned i = 0; i < faces.size(); ++i) {
+        for (Face& face : faces) {
             
-            glColor3f(faces[i].color[0], faces[i].color[1], faces[i].color[2]);
-            for (unsigned j = 0; j < faces[i].vertices.size(); ++j) {
-                glVertex3f(faces[i].vertices[j].x, 
-                           faces[i].vertices[j].y, 
-                           faces[i].vertices[j].z);
+            glColor3f(face.color[0], face.color[1], face.color[2]);
+            for (vec3 vert : face.vertices) {
+                glVertex3f(vert.x, vert.y, vert.z);
             }
 
-            for (unsigned j = 0; j < faces[i].uvs.size(); ++j) {
-                glTexCoord2f(faces[i].uvs[j].x,
-                             1 - faces[i].uvs[j].x);
+            for (vec2 uv : face.uvs) {
+                glTexCoord2f(uv.x, 1 - uv.y);
             }
         }
     glEnd();
