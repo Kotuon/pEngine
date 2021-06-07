@@ -27,6 +27,8 @@ class Model : public Component {
         void Draw();
 
         void Read(File_Reader reader);
+
+        static CType GetCType();
     private:
         struct Face {
             vector<vec3> vertices;

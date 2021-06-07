@@ -1,14 +1,27 @@
+/**
+ * @file transform.hpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-06-05
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
+// std includes //
 #include <vec3.hpp>
 
+// Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
 
 using namespace glm;
 
+/*! Transform class */
 class Transform : public Component {
     public:
         Transform();
@@ -29,11 +42,13 @@ class Transform : public Component {
         float GetRotation() const;
 
         void Read(File_Reader& reader);
+
+        static CType GetCType();
     private:
-        vec3 position;
-        vec3 oldPosition;
-        vec3 scale;
-        float rotation;
+        vec3 position;    //!< Position of object
+        vec3 oldPosition; //!< Previous position of object
+        vec3 scale;       //!< Scale of object
+        float rotation;   //!< Rotation of object
 };
 
 #endif

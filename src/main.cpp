@@ -9,9 +9,6 @@
  * 
  */
 
-// Library includes //
-#include <SDL.h>
-
 // Engine includes //
 #include "trace.hpp"
 #include "engine.hpp"
@@ -26,7 +23,7 @@ using namespace std;
  * @param argv 
  * @return int 
  */
-int SDL_main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) {
       // Initializing systems
     Trace::Initialize();
     Engine::Initialize();
