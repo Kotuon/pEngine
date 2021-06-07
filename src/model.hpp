@@ -12,6 +12,7 @@
 
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "model_data.hpp"
 
 using namespace std;
 using namespace glm;
@@ -30,15 +31,8 @@ class Model : public Component {
 
         static CType GetCType();
     private:
-        struct Face {
-            vector<vec3> vertices;
-            vector<vec2> uvs;
-            vector<vec3> normals;
-            array<float, 3> color;
-        };
-
         GLenum mode;
-        vector<Face> faces;
+        Model_Data* data;
 };
 
 #endif
