@@ -19,10 +19,13 @@
                 "-I", "libraries/JSONCPP/include/json",
                 "-I", "libraries/JSONCPP/include",
                 "-L", "libraries/JSONCPP/lib",
+                "-I", "libraries/GLEW/include",
+                "-L", "libraries/GLEW/lib",
 				"-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
+                "-lglew32",
                 "-ljsoncpp"
 			],
 			"options": {

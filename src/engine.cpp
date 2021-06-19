@@ -103,6 +103,21 @@ void Engine::Shutdown() {
 }
 
 /**
+ * @brief Resets the objects in the engine
+ * 
+ * @return void
+ */
+void Engine::Restart() {
+      // Removing all current objects
+    Object_Manager::Shutdown();
+
+      // Initializing object manager
+    File_Reader settings("settings");
+    File_Reader preset("preset/" + settings.Read_String("preset"));
+    if (!Object_Manager::Initialize(preset)) return;
+}
+
+/**
  * @brief Returns delta time (variable)
  * 
  * @return float Variable delta time

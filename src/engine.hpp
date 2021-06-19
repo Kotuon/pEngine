@@ -23,6 +23,7 @@ class Engine {
         static void Initialize();
         static void Update();
         static void Shutdown();
+        static void Restart();
         static float GetDeltaTime();
         static float GetDt();
         static double GetGravConst();

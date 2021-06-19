@@ -34,6 +34,7 @@
   // Misc //
 #include "camera.hpp"
 #include "trace.hpp"
+#include "shader.hpp"
 
 using namespace glm;
 
@@ -135,13 +136,20 @@ bool Graphics::InitializeGL() {
  *        input, and rendering. This is the main update function for the engine
  * 
  * @return void
- */
+ */ 
 void Graphics::Update() {
     while(!glfwWindowShouldClose(graphics->window)) {
+          // Run updates
         Engine::Update();
         Render();
-
         glfwPollEvents();
+
+          // Check for restart
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS) {
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_RELEASE) {
+                Engine::Restart();
+            }
+        }
     }
 }
 
@@ -153,6 +161,7 @@ void Graphics::Update() {
 void Graphics::Render() {
       // Setting up graphics system for rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
