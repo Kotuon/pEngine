@@ -1,9 +1,9 @@
 {
-    "name" : "venus",
-    "modelToLoad" : "ball",
-    "scale" : [ 12.104, 12.104, 12.104 ],
-    "rotation" : 0.0,
+    "name"         : "venus",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 12.104, 12.104, 12.104 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 94.0266869792 ],
-    "mass" : 4.87
+    "velocity"     : [ 0.0, 0.0, 94.0266869792 ],
+    "mass"         : 4.87
 }

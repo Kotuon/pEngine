@@ -20,6 +20,7 @@ class Component {
     public:
         /*! Types of components */
         enum CType {
+            CBehavior,
             CModel,
             CPhysics,
             CTransform,

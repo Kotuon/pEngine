@@ -1,5 +1,5 @@
 {
-    "preset"       : "solar_system",
+    "preset"       : "solar_system", // solar_system, particle_array
     "moveSpeed"    : 600.0,
     "sprintSpeed"  : 1200.0,
     "sensitivity"  : 15.0,

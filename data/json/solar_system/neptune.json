@@ -1,9 +1,9 @@
 {
-    "name" : "neptune",
-    "modelToLoad" : "ball",
-    "scale" : [ 49.528, 49.528, 49.528 ],
-    "rotation" : 0.0,
+    "name"         : "neptune",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 49.528, 49.528, 49.528 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 47.4651664464 ],
-    "mass" : 102.0
+    "velocity"     : [ 0.0, 0.0, 47.4651664464 ],
+    "mass"         : 102.0
 }

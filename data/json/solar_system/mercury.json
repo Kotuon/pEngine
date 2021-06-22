@@ -1,9 +1,9 @@
 {
-    "name" : "mercury",
-    "modelToLoad" : "ball",
-    "scale" : [ 4.879, 4.879, 4.879 ],
-    "rotation" : 0.0,
+    "name"         : "mercury",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 4.879, 4.879, 4.879 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 95.6437707224 ],
-    "mass" : 0.330
+    "velocity"     : [ 0.0, 0.0, 95.6437707224 ],
+    "mass"         : 0.330
 }

@@ -1,9 +1,9 @@
 {
-    "name" : "jupiter",
-    "modelToLoad" : "ball",
-    "scale" : [ 142.984, 142.984, 142.984 ],
-    "rotation" : 0.0,
+    "name"         : "jupiter",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 142.984, 142.984, 142.984 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 78.1692266321 ],
-    "mass" : 1898.0
+    "velocity"     : [ 0.0, 0.0, 78.1692266321 ],
+    "mass"         : 1898.0
 }

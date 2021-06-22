@@ -1,9 +1,9 @@
 {
-    "name" : "saturn",
-    "modelToLoad" : "ball",
-    "scale" : [ 120.536, 120.536, 120.536 ],
-    "rotation" : 0.0,
+    "name"         : "saturn",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 120.536, 120.536, 120.536 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 68.5138005078 ],
-    "mass" : 568.0
+    "velocity"     : [ 0.0, 0.0, 68.5138005078 ],
+    "mass"         : 568.0
 }

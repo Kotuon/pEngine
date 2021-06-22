@@ -1,5 +1,5 @@
 {
-    "gravConst" : 6.67,
+    "gravConst" : 0.0,
     "object_0"  : { "objectName": "solar_system/sun"    , "position" : [ 0.0   , 0.0, -2000.0 ] },
     "object_1"  : { "objectName": "solar_system/mercury", "position" : [ 1449.9, 0.0, -2000.0 ] },
     "object_2"  : { "objectName": "solar_system/venus"  , "position" : [ 1500.2, 0.0, -2000.0 ] },

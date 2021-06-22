@@ -1,9 +1,9 @@
 {
-    "name" : "earth",
-    "modelToLoad" : "ball",
-    "scale" : [ 12.756, 12.756, 12.756 ],
-    "rotation" : 0.0,
+    "name"         : "earth",
+    "modelToLoad"  : "ball",
+    "scale"        : [ 12.756, 12.756, 12.756 ],
+    "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity" : [ 0.0, 0.0, 92.755541212 ],
-    "mass" : 5.97
+    "velocity"     : [ 0.0, 0.0, 92.755541212 ],
+    "mass"         : 5.97
 }
