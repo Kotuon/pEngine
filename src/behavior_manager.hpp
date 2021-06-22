@@ -1,3 +1,13 @@
+/**
+ * @file behavior_manager.hpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-06-22
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 #ifndef BEHAVIOR_MANAGER_HPP
 #define BEHAVIOR_MANAGER_HPP
@@ -11,6 +21,7 @@
 
 using namespace std;
 
+/*! Behavior_Manager class */
 class Behavior_Manager {
     public:
         static bool Initialize();
@@ -19,7 +30,7 @@ class Behavior_Manager {
     private:
         void GravityBetweenObjects(Object*);
     private:
-        vector<function<void (Object*)>> behaviorFunctions;
+        vector<function<void (Object*)>> behaviorFunctions; //!< List of function pointers for behaviors
 };
 
 #endif
