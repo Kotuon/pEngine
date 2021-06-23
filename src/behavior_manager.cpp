@@ -57,14 +57,33 @@ void Behavior_Manager::Shutdown() {
  */
 void Behavior_Manager::UseBehaviors(Object* object, vector<int>& behaviorList) {
     for (int behavior : behaviorList) {
+        if (behavior == -1) continue;
+
         behavior_manager->behaviorFunctions[behavior](object);
     }
 }
 
 /**
+ * @brief Finds the index of a behavior
+ * 
+ * @param behaviorName Name of the behavior to be found
+ * @return int 
+ */
+int Behavior_Manager::FindBehaviorIndex(string behaviorName) {
+      // Finding index of behavior
+    auto result = behavior_manager->ListOfBehaviors.find(behaviorName);
+
+      // Returning if found or -1 if not found
+    if (result == behavior_manager->ListOfBehaviors.end()) return -1;
+    return result->second;
+}
+
+/**
  * @brief Calls Physics function to calculate gravity between all the objects
  * 
+ * @param object Object to set gravity for
  */
-void Behavior_Manager::GravityBetweenObjects(Object*) {
-    Physics::UpdateGravity();
+void Behavior_Manager::GravityBetweenObjects(Object* object) {
+    Physics* object_physics = object->GetComponent<Physics>();
+    object_physics->UpdateGravity();
 }

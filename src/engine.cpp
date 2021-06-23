@@ -53,8 +53,8 @@ void Engine::Initialize() {
     if (!Model_Data_Manager::Initialize()) return;
     if (!Camera::Initialize(settings)) return;
     if (!Graphics::Initialize(settings)) return;
-    if (!Object_Manager::Initialize(preset)) return;
     if (!Behavior_Manager::Initialize()) return;
+    if (!Object_Manager::Initialize(preset)) return;
 
       // Setting up variables used for dt
     engine->currentTime = chrono::steady_clock::now();
@@ -77,13 +77,10 @@ void Engine::Update() {
     engine->currentTime = engine->newTime;
     engine->accumulator += engine->deltaTime;
 
-    vector<int> testBeh = { 0 };
     Camera::Update();
       // Only called when it is time (fixed time step)
     while (engine->accumulator >= engine->dt) {
           // Update objects
-        //Physics::UpdateGravity();
-        Behavior_Manager::UseBehaviors(nullptr, testBeh);
         Object_Manager::Update();
           // Update dt related variables
         engine->accumulator -= engine->dt;
@@ -100,8 +97,8 @@ void Engine::Shutdown() {
     if (!engine) return;
     
       // Shutdown sub systems
-    Behavior_Manager::Shutdown();
     Object_Manager::Shutdown();
+    Behavior_Manager::Shutdown();
     Graphics::Shutdown();
     Camera::Shutdown();
     Model_Data_Manager::Shutdown();

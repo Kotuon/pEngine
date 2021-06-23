@@ -44,7 +44,7 @@ class Physics : public Component {
 
         void Update();
 
-        static void UpdateGravity();
+        void UpdateGravity();
 
         void Read(File_Reader& reader);
 

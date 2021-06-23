@@ -14,6 +14,7 @@
 
 // std includes //
 #include <vector>
+#include <unordered_map>
 #include <functional>
 
 // Engine includes //
@@ -27,10 +28,15 @@ class Behavior_Manager {
         static bool Initialize();
         static void Shutdown();
         static void UseBehaviors(Object* object, vector<int>& behaviorList);
+        static int FindBehaviorIndex(string behaviorName);
     private:
-        void GravityBetweenObjects(Object*);
+        void GravityBetweenObjects(Object* object);
     private:
         vector<function<void (Object*)>> behaviorFunctions; //!< List of function pointers for behaviors
+
+    const unordered_map<string, int> ListOfBehaviors { //!< List of the possible behaviors
+        { "GravityBetweenObjects", 0 }
+    };
 };
 
 #endif

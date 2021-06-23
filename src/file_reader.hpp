@@ -39,6 +39,8 @@ class File_Reader {
         string Read_Object_Name(string valueName);
         vec3 Read_Object_Position(string valueName);
 
+        string Read_Behavior_Name(string valueName);
+
     private:
         Json::Value root; //!< Holds the data of the json file
 };

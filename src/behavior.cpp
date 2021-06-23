@@ -61,7 +61,15 @@ void Behavior::Update() {
  * @param reader Data from file
  */
 void Behavior::Read(File_Reader& reader) {
+    unsigned behavior_num = 0;
 
+    while (true) {
+    string behavior_name = reader.Read_Behavior_Name("behavior_" + to_string(behavior_num));
+        if (behavior_name.compare("") == 0) break;
+
+        behaviorList.emplace_back(Behavior_Manager::FindBehaviorIndex(behavior_name));
+        ++behavior_num;
+    }
 }
 
 /**

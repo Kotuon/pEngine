@@ -151,43 +151,35 @@ void Physics::Update() {
 /**
  * @brief Calculates the gravitational pull each object has on each other
  * 
- * @return void
  */
 void Physics::UpdateGravity() {
+      // Gets the needed components for the current object
+    Object* object = GetParent();
+    Transform* transform = object->GetComponent<Transform>();
+    Physics* physics = object->GetComponent<Physics>();
+    vec3 position = transform->GetPosition();
+
       // For each object
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
-          // Gets the needed components for the current object
-        Object* object = Object_Manager::FindObject(i);
-        Transform* transform = object->GetComponent<Transform>();
-        Physics* physics = object->GetComponent<Physics>();
-        vec3 position = transform->GetPosition();
-
-          // For every other object
-        for (unsigned j = 0; j < Object_Manager::GetSize(); ++j) {
-            if (i == j) continue;
-
-              // Gets needed components for the object being checked
-            Object* other = Object_Manager::FindObject(j);
-            Physics* otherPhysics = other->GetComponent<Physics>();
-            Transform* otherTransform = other->GetComponent<Transform>();
-            vec3 otherPosition = otherTransform->GetPosition();
-
-              // Finding the distance between the objects
-            double distance = sqrt(pow(double(otherPosition.x - position.x), 2.0) + 
-                pow(double(otherPosition.y - position.y), 2.0) +
-                pow(double(otherPosition.z - position.z), 2.0));
-              // Calculating the force the objects apply on each other
-            double magnitude = Engine::GetGravConst() * ((physics->mass * otherPhysics->mass)) / pow(distance, 2.0);
-
-              // Getting the direction (normalized)
-            vec3 direction = otherPosition - position;
-            vec3 normDirection = normalize(direction);
-              // Applying gravitational force to normalized direction
-            vec3 force = normDirection * float(magnitude);
-
-              // Adding the gravitational force to the forces on object
-            physics->AddForce(force);
-        }
+        if (i == object->GetId()) continue;
+          // Gets needed components for the object being checked
+        Object* other = Object_Manager::FindObject(i);
+        Physics* otherPhysics = other->GetComponent<Physics>();
+        Transform* otherTransform = other->GetComponent<Transform>();
+        vec3 otherPosition = otherTransform->GetPosition();
+          // Finding the distance between the objects
+        double distance = sqrt(pow(double(otherPosition.x - position.x), 2.0) + 
+            pow(double(otherPosition.y - position.y), 2.0) +
+            pow(double(otherPosition.z - position.z), 2.0));
+          // Calculating the force the objects apply on each other
+        double magnitude = Engine::GetGravConst() * ((physics->mass * otherPhysics->mass)) / pow(distance, 2.0);
+          // Getting the direction (normalized)
+        vec3 direction = otherPosition - position;
+        vec3 normDirection = normalize(direction);
+          // Applying gravitational force to normalized direction
+        vec3 force = normDirection * float(magnitude);
+          // Adding the gravitational force to the forces on object
+        physics->AddForce(force);
     }
 }
 

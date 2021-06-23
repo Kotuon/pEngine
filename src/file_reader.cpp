@@ -27,7 +27,7 @@ File_Reader::File_Reader(string filename) {
 }
 
 /**
- * @brief Reads the json file data into the root varaible
+ * @brief Reads the json file data into the root variable
  * 
  * @param filename Name of the file to be read
  */
@@ -115,7 +115,7 @@ bool File_Reader::Read_Bool(string valueName) {
  * @return float Value that was read
  */
 float File_Reader::Read_Float(string valueName) {
-      // Checking if the value is a doubel (has decimal)
+      // Checking if the value is a double (has decimal)
     if (!root[valueName].isDouble()) {
         Trace::Message("Error reading float: " + valueName + "\n");
         return false;
@@ -166,4 +166,19 @@ vec3 File_Reader::Read_Object_Position(string valueName) {
         return vec3(0.f, 0.f, 0.f);
     }
     return vec3(root[valueName]["position"][0].asFloat(), root[valueName]["position"][1].asFloat(), root[valueName]["position"][2].asFloat());
+}
+
+/**
+ * @brief Reads the name of the behavior
+ * 
+ * @param valueName Behavior to read
+ * @return string Name of the behavior
+ */
+string File_Reader::Read_Behavior_Name(string valueName) {
+      // Checking if the value is a string
+    if (!root["behaviors"][valueName].isString()) {
+        Trace::Message("Error reading string: " + valueName + "\n");
+        return string("");
+    }
+    return root["behaviors"][valueName].asString();
 }

@@ -5,5 +5,6 @@
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],
     "velocity"     : [ 0.0, 0.0, 94.0266869792 ],
-    "mass"         : 4.87
+    "mass"         : 4.87,
+    "behaviors"    : { "behavior_0" : "GravityBetweenObjects" }
 }

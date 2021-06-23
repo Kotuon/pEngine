@@ -13,9 +13,10 @@
   // Object //
 #include "object.hpp"
   // Component //
-#include "transform.hpp"
-#include "physics.hpp"
+#include "behavior.hpp"
 #include "model.hpp"
+#include "physics.hpp"
+#include "transform.hpp"
   // Misc //
 #include "file_reader.hpp"
 
@@ -33,11 +34,11 @@ Object::Object() {}
 Object::Object(const Object& other) {
     SetName(other.GetName());
 
-      // Copying transform component
-    Transform* transform = other.GetComponent<Transform>();
-    if (transform) {
-        Transform* newTransform = new Transform(*transform);
-        AddComponent(newTransform);
+      // Copying Behavior component
+    Behavior* behavior = other.GetComponent<Behavior>();
+    if (behavior) {
+        Behavior* newBehavior = new Behavior(*behavior);
+        AddComponent(newBehavior);
     }
 
       // Copying Model component
@@ -52,6 +53,13 @@ Object::Object(const Object& other) {
     if (physics) {
         Physics* newPhysics = new Physics(*physics);
         AddComponent(newPhysics);
+    }
+
+      // Copying transform component
+    Transform* transform = other.GetComponent<Transform>();
+    if (transform) {
+        Transform* newTransform = new Transform(*transform);
+        AddComponent(newTransform);
     }
 }
 
@@ -78,6 +86,8 @@ Object* Object::Clone() const {
  * 
  */
 void Object::Update() {
+    Behavior* behavior = GetComponent<Behavior>();
+    behavior->Update();
     Physics* physics = GetComponent<Physics>();
     physics->Update();
 }
@@ -131,15 +141,19 @@ void Object::ReadObject(string objectFilename) {
 
     SetName(object_reader.Read_String("name"));
 
+      // Reading Behavior component form file
+    Behavior* object_behavior = new Behavior(object_reader);
+    AddComponent(object_behavior);
+
       // Reading Model component from file
     Model* object_model = new Model(object_reader);
     AddComponent(object_model);
     
-      // Reading Transform component from file
-    Transform* object_transform = new Transform(object_reader);
-    AddComponent(object_transform);
-    
       // Reading Physics component from file
     Physics* object_physics = new Physics(object_reader);
     AddComponent(object_physics);
+    
+      // Reading Transform component from file
+    Transform* object_transform = new Transform(object_reader);
+    AddComponent(object_transform);
 }
