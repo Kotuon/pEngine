@@ -103,19 +103,39 @@ void Behavior_Manager::Idle(Object* object) {
     Behavior* behavior = object->GetComponent<Behavior>();
     Physics* physics = object->GetComponent<Physics>();
     Transform* transform = object->GetComponent<Transform>();
-    
-    if (physics->GetVelocity() == vec3(0.f, 0.f, 0.f)) {
-        vec3 direction = normalize(Random::random_vec3(-100.f, 100.f));
-        vec3 forceToApply = ApplyForce(direction, behavior);
 
-        physics->AddForce(forceToApply);
-        Trace::Message("Idle force applied.\n");
+      // Check if the object is not moving
+    if (physics->GetVelocity() == vec3(0.f, 0.f, 0.f)) {
+        LaunchObject(normalize(Random::random_vec3(-100.f, 100.f)), object);
+        return;
+    }
+
+      // Check if the object is in its idle area
+    float distanceFromStart = distance(transform->GetPosition(), behavior->GetStartPos());
+    float combinedRadius = transform->GetScale().x + behavior->GetIdleRadius();
+    if (distanceFromStart > combinedRadius) {
+        LaunchObject(normalize(behavior->GetStartPos() - transform->GetPosition()),
+            object);
+        return;
+    }
+
+    if (length(physics->GetVelocity()) < behavior->GetMaxVelocity()) {
+        LaunchObject(normalize(physics->GetVelocity()), object);
     }
 }
 
 vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior* behavior) {
-    direction += behavior->GetDirVariation();
+    direction = normalize(direction + behavior->GetDirVariation());
     direction *= (behavior->GetPushForce() + behavior->GetPushVariation());
 
     return direction;
+}
+
+void Behavior_Manager::LaunchObject(vec3 direction, Object* object) {
+    Behavior* behavior = object->GetComponent<Behavior>();
+    Physics* physics = object->GetComponent<Physics>();
+
+    vec3 forceToApply = ApplyForce(direction, behavior);
+
+    physics->AddForce(forceToApply);
 }

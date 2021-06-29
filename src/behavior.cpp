@@ -12,6 +12,7 @@
 // Engine includes //
 #include "behavior_manager.hpp"
 #include "behavior.hpp"
+#include "random.hpp"
 
 /**
  * @brief Creates an empty Behavior object
@@ -96,6 +97,14 @@ vec3 Behavior::GetStartPos() const {
     return startPos;
 }
 
+float Behavior::GetMaxVelocity() const {
+    return maxVelocity;
+}
+
+float Behavior::GetIdleRadius() const {
+    return idleRadius;
+}
+
 /**
  * @brief Returns strength of force
  * 
@@ -111,7 +120,7 @@ float Behavior::GetPushForce() const {
  * @return float 
  */
 float Behavior::GetDirVariation() const {
-    return dirVariation;
+    return Random::random_float(-dirVariation, dirVariation);
 }
 
 /**
@@ -120,7 +129,7 @@ float Behavior::GetDirVariation() const {
  * @return float 
  */
 float Behavior::GetPushVariation() const {
-    return pushVariation;
+    return Random::random_float(-pushVariation, pushVariation);
 }
 
 /**

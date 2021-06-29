@@ -16,6 +16,7 @@ class Random {
         static bool Initialize();
         static void Shutdown();
         static vec3 random_vec3(float low, float high);
+        static float random_float(float low, float high);
     private:
     random_device rd;
 };
