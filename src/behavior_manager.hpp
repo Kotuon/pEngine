@@ -19,23 +19,28 @@
 
 // Engine includes //
 #include "object.hpp"
+#include "behavior.hpp"
 
 using namespace std;
 
 /*! Behavior_Manager class */
 class Behavior_Manager {
-    public:
+    public: // Public functions
         static bool Initialize();
         static void Shutdown();
         static void UseBehaviors(Object* object, vector<int>& behaviorList);
         static int FindBehaviorIndex(string behaviorName);
-    private:
+    private: // Behavior functions
         void GravityBetweenObjects(Object* object);
-    private:
+        void Idle(Object* object);
+    private: // Helper functions
+        static vec3 ApplyForce(vec3 direction, Behavior* behavior);
+    private: // Member variables
         vector<function<void (Object*)>> behaviorFunctions; //!< List of function pointers for behaviors
 
     const unordered_map<string, int> ListOfBehaviors { //!< List of the possible behaviors
-        { "GravityBetweenObjects", 0 }
+        { "GravityBetweenObjects", 0 },
+        { "Idle", 1 }
     };
 };
 

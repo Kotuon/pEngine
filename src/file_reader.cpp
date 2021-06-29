@@ -118,7 +118,7 @@ float File_Reader::Read_Float(string valueName) {
       // Checking if the value is a double (has decimal)
     if (!root[valueName].isDouble()) {
         Trace::Message("Error reading float: " + valueName + "\n");
-        return false;
+        return 0.f;
     }
     return root[valueName].asFloat();
 }

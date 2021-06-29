@@ -28,6 +28,7 @@
   // Misc //
 #include "camera.hpp"
 #include "file_reader.hpp"
+#include "random.hpp"
 
 static Engine* engine = nullptr; //!< Engine object
 
@@ -55,6 +56,7 @@ void Engine::Initialize() {
     if (!Graphics::Initialize(settings)) return;
     if (!Behavior_Manager::Initialize()) return;
     if (!Object_Manager::Initialize(preset)) return;
+    if (!Random::Initialize()) return;
 
       // Setting up variables used for dt
     engine->currentTime = chrono::steady_clock::now();
@@ -97,6 +99,7 @@ void Engine::Shutdown() {
     if (!engine) return;
     
       // Shutdown sub systems
+    Random::Shutdown();
     Object_Manager::Shutdown();
     Behavior_Manager::Shutdown();
     Graphics::Shutdown();

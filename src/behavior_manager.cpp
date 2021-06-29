@@ -9,10 +9,16 @@
  * 
  */
 
+// Library includes //
+#include <glm.hpp>
+#include <vec3.hpp>
+
 // Engine includes //
 #include "behavior_manager.hpp"
 #include "trace.hpp"
 #include "physics.hpp"
+#include "transform.hpp"
+#include "random.hpp"
 
 static Behavior_Manager* behavior_manager = nullptr; //!< Behavior_Manager object
 
@@ -32,6 +38,11 @@ bool Behavior_Manager::Initialize() {
     function<void (Object*)> gravFunc = bind(&Behavior_Manager::GravityBetweenObjects, 
         behavior_manager, placeholders::_1);
     behavior_manager->behaviorFunctions.emplace_back(gravFunc);
+
+    function<void (Object*)> idleFunc = bind(&Behavior_Manager::Idle, 
+        behavior_manager, placeholders::_1);
+    behavior_manager->behaviorFunctions.emplace_back(idleFunc);
+
     return true;
 }
 
@@ -86,4 +97,25 @@ int Behavior_Manager::FindBehaviorIndex(string behaviorName) {
 void Behavior_Manager::GravityBetweenObjects(Object* object) {
     Physics* object_physics = object->GetComponent<Physics>();
     object_physics->UpdateGravity();
+}
+
+void Behavior_Manager::Idle(Object* object) {
+    Behavior* behavior = object->GetComponent<Behavior>();
+    Physics* physics = object->GetComponent<Physics>();
+    Transform* transform = object->GetComponent<Transform>();
+    
+    if (physics->GetVelocity() == vec3(0.f, 0.f, 0.f)) {
+        vec3 direction = normalize(Random::random_vec3(-100.f, 100.f));
+        vec3 forceToApply = ApplyForce(direction, behavior);
+
+        physics->AddForce(forceToApply);
+        Trace::Message("Idle force applied.\n");
+    }
+}
+
+vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior* behavior) {
+    direction += behavior->GetDirVariation();
+    direction *= (behavior->GetPushForce() + behavior->GetPushVariation());
+
+    return direction;
 }

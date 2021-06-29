@@ -131,7 +131,7 @@ float Physics::GetMass() const { return mass; }
  */
 void Physics::Update() {
       // Finding the acceleration of the object using F=ma
-    acceleration = (forces) / mass;
+    acceleration = forces / mass;
 
       // Updating velocity
     vec3 oldVel = velocity;

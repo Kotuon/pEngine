@@ -1,9 +1,15 @@
 {
-    "name"         : "particle",
-    "modelToLoad"  : "ball",
-    "scale"        : [ 10.0, 10.0, 10.0 ],
-    "rotation"     : 0.0,
-    "acceleration" : [ 0.0, 0.0, 0.0 ],
-    "velocity"     : [ 0.0, 0.0, 0.0 ],
-    "mass"         : 10.0
+    "name"          : "particle",
+    "modelToLoad"   : "ball",
+    "scale"         : [ 5.0, 5.0, 5.0 ],
+    "rotation"      : 0.0,
+    "acceleration"  : [ 0.0, 0.0, 0.0 ],
+    "velocity"      : [ 0.0, 0.0, 0.0 ],
+    "mass"          : 1.0,
+    "behaviors"     : { "behavior_0" : "Idle" },
+    "maxVelocity"   : 100.0,
+    "idleRadius"    : 5.0,
+    "pushForce"     : 100.0,
+    "dirVariation"  : 0.0,
+    "pushVariation" : 0.0
 }

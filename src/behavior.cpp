@@ -70,6 +70,57 @@ void Behavior::Read(File_Reader& reader) {
         behaviorList.emplace_back(Behavior_Manager::FindBehaviorIndex(behavior_name));
         ++behavior_num;
     }
+
+    maxVelocity = reader.Read_Float("maxVelocity");
+    idleRadius = reader.Read_Float("idleRadius");
+    pushForce = reader.Read_Float("pushForce");
+    dirVariation = reader.Read_Float("dirVariation");
+    pushVariation = reader.Read_Float("pushVariation");
+}
+
+/**
+ * @brief Sets the start position of the object
+ * 
+ * @param startPos_ Start position of the object
+ */
+void Behavior::SetStartPos(vec3 startPos_) {
+    startPos = startPos_;
+}
+
+/**
+ * @brief Returns the start position of the object
+ * 
+ * @return vec3 
+ */
+vec3 Behavior::GetStartPos() const {
+    return startPos;
+}
+
+/**
+ * @brief Returns strength of force
+ * 
+ * @return float 
+ */
+float Behavior::GetPushForce() const {
+    return pushForce;
+}
+
+/**
+ * @brief Returns the variation of an object's direction
+ * 
+ * @return float 
+ */
+float Behavior::GetDirVariation() const {
+    return dirVariation;
+}
+
+/**
+ * @brief Returns the variation of an object's push force
+ * 
+ * @return float 
+ */
+float Behavior::GetPushVariation() const {
+    return pushVariation;
 }
 
 /**
