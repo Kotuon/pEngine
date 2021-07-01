@@ -29,3 +29,10 @@ vec3 Random::random_vec3(float low, float high) {
     vec3 result_vec3 = { dist(gen), dist(gen), dist(gen) };
     return result_vec3;
 }
+
+float Random::random_float(float low, float high) {
+    mt19937 gen(random->rd());
+    uniform_real_distribution<> dist(low, high);
+
+    return dist(gen);
+}

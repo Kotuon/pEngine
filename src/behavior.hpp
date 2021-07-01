@@ -40,6 +40,8 @@ class Behavior : public Component {
         void SetStartPos(vec3 startPos_);
         vec3 GetStartPos() const;
 
+        float GetMaxVelocity() const;
+        float GetIdleRadius() const;
         float GetPushForce() const;
         float GetDirVariation() const;
         float GetPushVariation() const;

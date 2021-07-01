@@ -35,6 +35,7 @@ class Behavior_Manager {
         void Idle(Object* object);
     private: // Helper functions
         static vec3 ApplyForce(vec3 direction, Behavior* behavior);
+        static void LaunchObject(vec3 direction, Object* object);
     private: // Member variables
         vector<function<void (Object*)>> behaviorFunctions; //!< List of function pointers for behaviors
 
