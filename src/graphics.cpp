@@ -95,6 +95,8 @@ bool Graphics::Initialize(File_Reader& settings) {
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+    //if (!Shader::Initialize()) return false;
+    
     return true;
 }
 
@@ -161,6 +163,7 @@ void Graphics::Update() {
 void Graphics::Render() {
       // Setting up graphics system for rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //Shader::Update();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -196,6 +199,7 @@ void Graphics::Render() {
 void Graphics::Shutdown() {
     if (!graphics) return;
 
+    //Shader::Shutdown();
       // Shutting down opengl
     glfwDestroyWindow(graphics->window);
     glfwTerminate();
