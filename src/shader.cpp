@@ -118,11 +118,14 @@ void Shader::LoadShader(string vertexPath, string fragmentPath) {
     shader->program = glCreateProgram();
     glAttachShader(shader->program, vertShader);
     glAttachShader(shader->program, fragShader);
-    glLinkProgram(shader->program);
 
       // Cleanup
-    glDetachShader(shader->program, vertShader);
-    glDetachShader(shader->program, fragShader);
     glDeleteShader(vertShader);
     glDeleteShader(fragShader);
+
+      // Setting up program
+    glLinkProgram(shader->program);
+    glUseProgram(shader->program);
 }
+
+GLuint Shader::GetProgram() { return shader->program; }

@@ -14,11 +14,13 @@
 #include <cstring>
 
 // Library includes //
+#include <glew.h>
 #include <GL/gl.h>
 
 // Engine includes //
 #include "model_data.hpp"
 #include "trace.hpp"
+#include "shader.hpp"
 
 /**
  * @brief Default constructor
@@ -164,7 +166,7 @@ bool Model_Data::Load(string filename_) {
  * @brief Draws the faces
  * 
  */
-void Model_Data::Draw() const {
+void Model_Data::Draw(Transform* transform) const {
     for (const Face& face : faces) {
           // Setting color of face
         glColor3f(face.color[0], face.color[1], face.color[2]);
@@ -176,6 +178,27 @@ void Model_Data::Draw() const {
         for (vec2 uv : face.uvs) {
             glTexCoord2f(uv.x, 1 - uv.y);
         }
+
+        // GLuint vao;
+        // glGenVertexArrays(1, &vao);
+        // glBindVertexArray(vao);
+        
+        // GLuint vbo;
+        // glGenBuffers(1, &vbo);
+        // glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        // glBufferData(GL_ARRAY_BUFFER, sizeof(face.vertices.data()), face.vertices.data(), GL_DYNAMIC_DRAW);
+
+        // GLuint position_attribute = glGetAttribLocation(Shader::GetProgram(), "position");
+        // GLuint scale_attribute = glGetAttribLocation(Shader::GetProgram(), "scale");
+
+        // glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        // glVertexAttribPointer(scale_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+        // glEnableVertexAttribArray(position_attribute);
+        // glEnableVertexAttribArray(scale_attribute);
+
+        // glBindVertexArray(vao);
+        // glDrawArrays(GL_TRIANGLES, 0, face.vertices.size());
     }
 }
 

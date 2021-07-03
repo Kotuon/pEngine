@@ -83,7 +83,7 @@ void Model::Draw() {
 
       // Drawing the model
     glBegin(mode);
-    data->Draw();
+    data->Draw(transform);
     glEnd();
 }
 

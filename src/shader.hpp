@@ -29,6 +29,8 @@ class Shader {
 
         static string ReadFile(string filename);
         static void LoadShader(string vertexPath, string fragmentPath);
+
+        static GLuint GetProgram();
     private:
         GLuint program; //!< Program id for the engine
 };

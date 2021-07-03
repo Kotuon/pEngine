@@ -21,6 +21,9 @@
 #include <vec3.hpp>
 #include <vec2.hpp>
 
+// Engine includes //
+#include "transform.hpp"
+
 using namespace std;
 using namespace glm;
 
@@ -31,7 +34,7 @@ class Model_Data {
         Model_Data(const Model_Data& other);
 
         bool Load(string filename_);
-        void Draw() const;
+        void Draw(Transform* transform) const;
 
         string GetFilename() const;
     private:

@@ -15,6 +15,7 @@
 #include <cmath>
 
 // Library includes //
+#include <glew.h>
 #include <vec3.hpp>
 #include <vec2.hpp>
 #include <mat4x4.hpp>
@@ -91,11 +92,14 @@ bool Graphics::Initialize(File_Reader& settings) {
     InitializeGL();
     Reshape(nullptr, graphics->windowSize.first, graphics->windowSize.second);
 
+    glewExperimental = GL_TRUE;
+    glewInit();
+
       // Setting up input for keyboard and mouse using glfw library
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    //if (!Shader::Initialize()) return false;
+    if (!Shader::Initialize()) return false;
     
     return true;
 }
@@ -199,7 +203,7 @@ void Graphics::Render() {
 void Graphics::Shutdown() {
     if (!graphics) return;
 
-    //Shader::Shutdown();
+    Shader::Shutdown();
       // Shutting down opengl
     glfwDestroyWindow(graphics->window);
     glfwTerminate();
