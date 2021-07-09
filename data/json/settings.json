@@ -1,8 +1,8 @@
 {
-    "preset"       : "particle_array", // solar_system, particle_array
-    "moveSpeed"    : 100.0,
-    "sprintSpeed"  : 300.0,
-    "sensitivity"  : 15.0,
+    "preset"       : "plane", // solar_system, particle_array, plane
+    "moveSpeed"    : 10.0,
+    "sprintSpeed"  : 30.0,
+    "sensitivity"  : 150.0,
     "windowWidth"  : 1920,
     "windowHeight" : 1080
 }

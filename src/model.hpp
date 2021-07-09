@@ -39,7 +39,7 @@ class Model : public Component {
         Model* Clone() const;
 
         void Load(string filename);
-        void Draw();
+        void Draw(mat4 projection, mat4 view);
 
         void Read(File_Reader reader);
 

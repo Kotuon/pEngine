@@ -20,6 +20,8 @@
 // Library includes //
 #include <vec3.hpp>
 #include <vec2.hpp>
+#include <mat4x4.hpp>
+#include <GL/gl.h>
 
 // Engine includes //
 #include "transform.hpp"
@@ -34,7 +36,7 @@ class Model_Data {
         Model_Data(const Model_Data& other);
 
         bool Load(string filename_);
-        void Draw(Transform* transform) const;
+        void Draw(Transform* transform, mat4 projection, mat4 view);
 
         string GetFilename() const;
     private:
@@ -46,7 +48,9 @@ class Model_Data {
             array<float, 3> color; //!< Colors of the model
         }; 
         vector<Face> faces; //!< Faces of the model
+        vector<float> vertices;
         string filename;    //!< Name of the file for the model
+        GLuint vertexbuffer;   //!< Buffer for drawing
 };
 
 #endif

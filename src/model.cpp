@@ -71,20 +71,9 @@ void Model::Load(string filename) {
  * @brief Draw the model
  * 
  */
-void Model::Draw() {
+void Model::Draw(mat4 projection, mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
-
-      // Setting position and scale of model using transform of the object
-    vec3 pos = transform->GetPosition();
-    vec3 scale = transform->GetScale();
-    glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
-    glScalef(scale.x, scale.y, scale.z);
-    glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
-
-      // Drawing the model
-    glBegin(mode);
-    data->Draw(transform);
-    glEnd();
+    data->Draw(transform, projection, view);
 }
 
 /**

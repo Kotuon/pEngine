@@ -35,7 +35,7 @@ bool Shader::Initialize() {
         return false;
     }
 
-    LoadShader("src/shaders/transform.vert", "src/shaders/white.frag");
+    LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
     return true;
 }
 
@@ -126,6 +126,9 @@ void Shader::LoadShader(string vertexPath, string fragmentPath) {
       // Setting up program
     glLinkProgram(shader->program);
     glUseProgram(shader->program);
+
+    shader->matrixId = glGetUniformLocation(shader->program, "MVP");
 }
 
 GLuint Shader::GetProgram() { return shader->program; }
+GLuint Shader::GetMatrixId() { return shader->matrixId; }

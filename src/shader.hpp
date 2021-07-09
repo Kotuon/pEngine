@@ -31,8 +31,10 @@ class Shader {
         static void LoadShader(string vertexPath, string fragmentPath);
 
         static GLuint GetProgram();
+        static GLuint GetMatrixId();
     private:
-        GLuint program; //!< Program id for the engine
+        GLuint program;  //!< Program id for the engine
+        GLuint matrixId; //!< MVP matrix id
 };
 
 #endif

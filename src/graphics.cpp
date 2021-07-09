@@ -40,6 +40,7 @@
 using namespace glm;
 
 static Graphics* graphics = nullptr; //!< Graphics object
+static GLuint vertexbuffer;
 
 /**
  * @brief Creates Graphics object with given window size
@@ -85,12 +86,10 @@ bool Graphics::Initialize(File_Reader& settings) {
 
       // Setting up callback functions
     glfwSetCursorPosCallback(graphics->window, Camera::MouseUpdate);
-    glfwSetWindowSizeCallback(graphics->window, Reshape);
 
     glfwMakeContextCurrent(graphics->window);
-    glfwSwapInterval(1);
+    //glfwSwapInterval(1);
     InitializeGL();
-    Reshape(nullptr, graphics->windowSize.first, graphics->windowSize.second);
 
     glewExperimental = GL_TRUE;
     glewInit();
@@ -98,6 +97,10 @@ bool Graphics::Initialize(File_Reader& settings) {
       // Setting up input for keyboard and mouse using glfw library
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    GLuint VertexArrayID;
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
 
     if (!Shader::Initialize()) return false;
     
@@ -167,10 +170,10 @@ void Graphics::Update() {
 void Graphics::Render() {
       // Setting up graphics system for rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Shader::Update();
+    Shader::Update();
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    mat4 projection = perspective(radians(Camera::GetFov()), (float)graphics->windowSize.first / 
+        (float)graphics->windowSize.second, Camera::GetNear(), Camera::GetFar());
 
       // Getting the view matrix of the camera
     mat4 view = lookAt(
@@ -178,18 +181,12 @@ void Graphics::Render() {
         Camera::GetPosition() + Camera::GetFront(), 
         Camera::GetUp());
 
-      // Updating the view matrix of the camera in the graphics system
-    glLoadMatrixf(&view[0][0]);
-
       // Rendering all of the objects
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
         Object* object = Object_Manager::FindObject(i);
 
         Model* model = object->GetComponent<Model>();
-
-        glPushMatrix();
-        model->Draw();
-        glPopMatrix();
+        model->Draw(projection, view);
     }
 
     glfwSwapBuffers(graphics->window);
@@ -210,32 +207,6 @@ void Graphics::Shutdown() {
       // Deleting graphics object
     delete graphics;
     graphics = nullptr;
-}
-
-/**
- * @brief Reshape callback for if the window changes size
- * 
- * @param width Width of the window
- * @param height Height of the window
- * @return void
- */
-void Graphics::Reshape(GLFWwindow*, GLsizei width, GLsizei height) {
-    if (height == 0) height = 1;
-
-      // Updating viewport
-    GLfloat aspect = (GLfloat)width / (GLfloat)height;
-    glViewport(0, 0, width, height);
-
-    const GLdouble pi = 3.1415926535897932384626433832795;
-    GLdouble fW, fH;
-
-      // Updating camera
-    fH = tan( Camera::GetFov() / 180 * pi ) * Camera::GetNear();
-    fW = fH * aspect;
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glFrustum( -fW, fW, -fH, fH, Camera::GetNear(), Camera::GetFar());
 }
 
 /**

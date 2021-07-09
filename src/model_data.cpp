@@ -15,7 +15,9 @@
 
 // Library includes //
 #include <glew.h>
-#include <GL/gl.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtx/transform.hpp>
 
 // Engine includes //
 #include "model_data.hpp"
@@ -113,6 +115,18 @@ bool Model_Data::Load(string filename_) {
             face.vertices.emplace_back(temp_vertices[vertex_index[1] - 1]);
             face.vertices.emplace_back(temp_vertices[vertex_index[2] - 1]);
 
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).z);
+
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).z);
+
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).z);
+
               // Setting uvs for current face
             face.uvs.emplace_back(temp_uvs[uv_index[0] - 1]);
             face.uvs.emplace_back(temp_uvs[uv_index[1] - 1]);
@@ -159,6 +173,10 @@ bool Model_Data::Load(string filename_) {
         }
     }
 
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+
     return true;
 }
 
@@ -166,40 +184,28 @@ bool Model_Data::Load(string filename_) {
  * @brief Draws the faces
  * 
  */
-void Model_Data::Draw(Transform* transform) const {
-    for (const Face& face : faces) {
-          // Setting color of face
-        glColor3f(face.color[0], face.color[1], face.color[2]);
-          // Drawing vertices of face
-        for (vec3 vert : face.vertices) {
-            glVertex3f(vert.x, vert.y, vert.z);
-        }
-          // Setting uvs for face
-        for (vec2 uv : face.uvs) {
-            glTexCoord2f(uv.x, 1 - uv.y);
-        }
+void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
+    mat4 model = mat4(1.f);
+    model = translate(model, transform->GetPosition());
+    model = scale(model, transform->GetScale());
 
-        // GLuint vao;
-        // glGenVertexArrays(1, &vao);
-        // glBindVertexArray(vao);
-        
-        // GLuint vbo;
-        // glGenBuffers(1, &vbo);
-        // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        // glBufferData(GL_ARRAY_BUFFER, sizeof(face.vertices.data()), face.vertices.data(), GL_DYNAMIC_DRAW);
+    mat4 MVP = projection * view * model;
+    glUniformMatrix4fv(Shader::GetMatrixId(), 1, GL_FALSE, &MVP[0][0]);
 
-        // GLuint position_attribute = glGetAttribLocation(Shader::GetProgram(), "position");
-        // GLuint scale_attribute = glGetAttribLocation(Shader::GetProgram(), "scale");
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glVertexAttribPointer(
+        0,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
 
-        // glVertexAttribPointer(position_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        // glVertexAttribPointer(scale_attribute, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+    glDisableVertexAttribArray(0);
 
-        // glEnableVertexAttribArray(position_attribute);
-        // glEnableVertexAttribArray(scale_attribute);
-
-        // glBindVertexArray(vao);
-        // glDrawArrays(GL_TRIANGLES, 0, face.vertices.size());
-    }
 }
 
 /**

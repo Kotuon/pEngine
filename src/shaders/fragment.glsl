@@ -7,6 +7,6 @@ void main(){
 
 	// Output color = color specified in the vertex shader, 
 	// interpolated between all 3 surrounding vertices
-	color = vec4(1.0, 0.0, 0.0, 1.0);
+	color = vec3(1.0, 0.0, 0.0);
 
 }
