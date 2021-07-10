@@ -1,7 +1,8 @@
 {
     "name"          : "particle",
     "modelToLoad"   : "ball",
-    "scale"         : [ 5.0, 5.0, 5.0 ],
+    "textureToLoad" : "uvmap.DDS",
+    "scale"         : [ 3.0, 3.0, 3.0 ],
     "rotation"      : 0.0,
     "acceleration"  : [ 0.0, 0.0, 0.0 ],
     "velocity"      : [ 0.0, 0.0, 0.0 ],

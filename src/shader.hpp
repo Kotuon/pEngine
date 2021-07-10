@@ -18,12 +18,15 @@
 // Library includes //
 #include <GL/gl.h>
 
+// Engine includes //
+#include "file_reader.hpp"
+
 using namespace std;
 
 /*! Shader class */
 class Shader {
     public:
-        static bool Initialize();
+        static bool Initialize(File_Reader& settings);
         static void Update();
         static void Shutdown();
 
@@ -32,9 +35,15 @@ class Shader {
 
         static GLuint GetProgram();
         static GLuint GetMatrixId();
+        static GLuint GetViewMatrixId();
+        static GLuint GetModelMatrixId();
+        static GLuint GetLightId();
     private:
-        GLuint program;  //!< Program id for the engine
-        GLuint matrixId; //!< MVP matrix id
+        GLuint program;       //!< Program id for the engine
+        GLuint matrixId;      //!< MVP matrix id
+        GLuint viewMatrixId;  //!< View matrix id
+        GLuint modelMatrixId; //!< Model matrix id
+        GLuint lightId;       //!< Light id for world
 };
 
 #endif

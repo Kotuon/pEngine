@@ -41,7 +41,8 @@ bool Model_Data_Manager::Initialize() {
  * @param filename Name of file containing model data
  * @return Model_Data* Model data either read or gotten from list
  */
-Model_Data* Model_Data_Manager::Get(string filename) {
+Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
+    string filename = reader.Read_String("modelToLoad");
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {
         if (model_data->GetFilename().compare(filename) == 0) {
@@ -51,7 +52,7 @@ Model_Data* Model_Data_Manager::Get(string filename) {
 
       // Creates new Model_Data object, then adds it to list
     Model_Data* data = new Model_Data;
-    data->Load(filename);
+    data->Load(reader);
     model_data_manager->models.emplace_back(data);
 
     return data;

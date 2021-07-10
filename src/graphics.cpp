@@ -98,11 +98,10 @@ bool Graphics::Initialize(File_Reader& settings) {
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
     glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    GLuint VertexArrayID;
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
+    glGenVertexArrays(1, &graphics->vertexArrayId);
+    glBindVertexArray(graphics->vertexArrayId);
 
-    if (!Shader::Initialize()) return false;
+    if (!Shader::Initialize(settings)) return false;
     
     return true;
 }
@@ -201,6 +200,7 @@ void Graphics::Shutdown() {
     if (!graphics) return;
 
     Shader::Shutdown();
+    glDeleteVertexArrays(1, &graphics->vertexArrayId);
       // Shutting down opengl
     glfwDestroyWindow(graphics->window);
     glfwTerminate();

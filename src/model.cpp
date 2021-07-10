@@ -63,8 +63,8 @@ Model* Model::Clone() const {
  * 
  * @param filename 
  */
-void Model::Load(string filename) {
-    data = Model_Data_Manager::Get(filename);
+void Model::Load(File_Reader& reader) {
+    data = Model_Data_Manager::Get(reader);
 }
 
 /**
@@ -81,8 +81,9 @@ void Model::Draw(mat4 projection, mat4 view) {
  * 
  * @param reader File that contains the name of the model's file
  */
-void Model::Read(File_Reader reader) {
-    Load(reader.Read_String("modelToLoad"));
+void Model::Read(File_Reader& reader) {
+    //Load(reader.Read_String("modelToLoad"));
+    Load(reader);
 }
 
 /**

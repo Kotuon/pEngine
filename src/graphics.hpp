@@ -42,6 +42,7 @@ class Graphics {
     private:
         pair<int, int> windowSize; //!< Size of the window
         GLFWwindow* window; //!< Window for application
+        GLuint vertexArrayId;
 };
 
 #endif

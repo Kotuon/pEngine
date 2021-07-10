@@ -35,22 +35,24 @@ class Model_Data {
         Model_Data();
         Model_Data(const Model_Data& other);
 
-        bool Load(string filename_);
+        ~Model_Data();
+
+        bool Load(File_Reader& reader);
         void Draw(Transform* transform, mat4 projection, mat4 view);
 
         string GetFilename() const;
+
+        static GLuint LoadDDS(string filename);
     private:
-        /*! Face struct */
-        struct Face {
-            vector<vec3> vertices; //!< Vertices of the model
-            vector<vec2> uvs;      //!< UVS of the model
-            vector<vec3> normals;  //!< Normals of the model
-            array<float, 3> color; //!< Colors of the model
-        }; 
-        vector<Face> faces; //!< Faces of the model
-        vector<float> vertices;
-        string filename;    //!< Name of the file for the model
-        GLuint vertexbuffer;   //!< Buffer for drawing
+        vector<float> vertices; //!< Contains vertices of model
+        vector<float> normals;  //!< Contains normals of model
+        vector<float> uvs;      //!< Contains uv data of model
+        string filename;        //!< Name of the file for the model
+        GLuint vertexbuffer;    //!< Vertex buffer of model
+        GLuint normalbuffer;    //!< Normal buffer of model
+        GLuint uvbuffer;        //!< UV buffer of model
+        GLuint texture;
+        GLuint textureId;
 };
 
 #endif

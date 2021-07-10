@@ -28,14 +28,16 @@ static Shader* shader = nullptr; //!< Shader object
  * @return true 
  * @return false 
  */
-bool Shader::Initialize() {
+bool Shader::Initialize(File_Reader& settings) {
     shader = new Shader;
     if (!shader) {
         Trace::Message("Shader failed to initialize.\n");
         return false;
     }
 
-    LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
+    //LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
+    LoadShader("src/shaders/" + settings.Read_String("vertexShader") + ".glsl", 
+        "src/shaders/" + settings.Read_String("fragShader") + ".glsl");
     return true;
 }
 
@@ -45,7 +47,6 @@ bool Shader::Initialize() {
  * @return void
  */
 void Shader::Update() {
-    //LoadShader("src/shaders/transform.vert", "src/shaders/white.frag");
     glUseProgram(shader->program);
 }
 
@@ -56,6 +57,8 @@ void Shader::Update() {
  */
 void Shader::Shutdown() {
     if (!shader) return;
+
+    glDeleteProgram(shader->program);
 
     delete shader;
     shader = nullptr;
@@ -128,7 +131,13 @@ void Shader::LoadShader(string vertexPath, string fragmentPath) {
     glUseProgram(shader->program);
 
     shader->matrixId = glGetUniformLocation(shader->program, "MVP");
+    shader->viewMatrixId = glGetUniformLocation(shader->program, "V");
+    shader->modelMatrixId = glGetUniformLocation(shader->program, "M");
+    shader->lightId = glGetUniformLocation(shader->program, "LightPosition_worldspace");
 }
 
 GLuint Shader::GetProgram() { return shader->program; }
 GLuint Shader::GetMatrixId() { return shader->matrixId; }
+GLuint Shader::GetViewMatrixId() { return shader->viewMatrixId; }
+GLuint Shader::GetModelMatrixId() { return shader->modelMatrixId; }
+GLuint Shader::GetLightId() { return shader->lightId; }

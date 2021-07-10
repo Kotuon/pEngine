@@ -38,10 +38,10 @@ class Model : public Component {
         Model(File_Reader& reader, GLenum mode_ = GL_TRIANGLES);
         Model* Clone() const;
 
-        void Load(string filename);
+        void Load(File_Reader& reader);
         void Draw(mat4 projection, mat4 view);
 
-        void Read(File_Reader reader);
+        void Read(File_Reader& reader);
 
         static CType GetCType();
     private:

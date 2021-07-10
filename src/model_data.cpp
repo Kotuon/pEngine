@@ -36,9 +36,26 @@ Model_Data::Model_Data() {}
  * @param other 
  */
 Model_Data::Model_Data(const Model_Data& other) {
-    for (const Face& otherFace : other.faces) {
-        faces.emplace_back(otherFace);
+    for (float vert : other.vertices) {
+        vertices.emplace_back(vert);
     }
+    for (float norm : other.normals) {
+        normals.emplace_back(norm);
+    }
+    for (float uv : other.uvs) {
+        uvs.emplace_back(uv);
+    }
+
+    vertexbuffer = other.vertexbuffer;
+    normalbuffer = other.normalbuffer;
+    uvbuffer = other.uvbuffer;
+}
+
+Model_Data::~Model_Data() {
+    glDeleteBuffers(1, &vertexbuffer);
+    glDeleteBuffers(1, &uvbuffer);
+    glDeleteBuffers(1, &normalbuffer);
+    glDeleteTextures(1, &texture);
 }
 
 /**
@@ -48,7 +65,8 @@ Model_Data::Model_Data(const Model_Data& other) {
  * @return true 
  * @return false 
  */
-bool Model_Data::Load(string filename_) {
+bool Model_Data::Load(File_Reader& reader) {
+    string filename_ = reader.Read_String("modelToLoad");
       // Setting the name of the file (used in model_data_manager)
     filename = filename_;
 
@@ -97,8 +115,6 @@ bool Model_Data::Load(string filename_) {
         }
 
         if (strcmp(line_header, "f") == 0) {
-            Face face;
-
               // Connecting face to previous read vertices, uvs, and normals
             unsigned vertex_index[3], uv_index[3], normal_index[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertex_index[0], &uv_index[0], &normal_index[0],
@@ -111,10 +127,6 @@ bool Model_Data::Load(string filename_) {
             }
 
               // Setting vertices for current face
-            face.vertices.emplace_back(temp_vertices[vertex_index[0] - 1]);
-            face.vertices.emplace_back(temp_vertices[vertex_index[1] - 1]);
-            face.vertices.emplace_back(temp_vertices[vertex_index[2] - 1]);
-
             vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).x);
             vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).y);
             vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).z);
@@ -128,54 +140,44 @@ bool Model_Data::Load(string filename_) {
             vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).z);
 
               // Setting uvs for current face
-            face.uvs.emplace_back(temp_uvs[uv_index[0] - 1]);
-            face.uvs.emplace_back(temp_uvs[uv_index[1] - 1]);
-            face.uvs.emplace_back(temp_uvs[uv_index[2] - 1]);
+            uvs.emplace_back((temp_uvs[uv_index[0] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[0] - 1]).y);
+
+            uvs.emplace_back((temp_uvs[uv_index[1] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[1] - 1]).y);
+            
+            uvs.emplace_back((temp_uvs[uv_index[2] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[2] - 1]).y);
 
               // Setting normals for current face
-            face.normals.emplace_back(temp_normals[normal_index[0] - 1]);
-            face.normals.emplace_back(temp_normals[normal_index[1] - 1]);
-            face.normals.emplace_back(temp_normals[normal_index[2] - 1]);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).z);
 
-              // Setting colors of the faces
-            if (faces.size() % 6 == 0) {
-                face.color[0] = 0.f;
-                face.color[1] = 1.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 1) {
-                face.color[0] = 1.f;
-                face.color[1] = .5f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 2) {
-                face.color[0] = 1.f;
-                face.color[1] = 0.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 3) {
-                face.color[0] = 1.f;
-                face.color[1] = 1.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 4) {
-                face.color[0] = 0.f;
-                face.color[1] = 0.f;
-                face.color[2] = 1.f;
-            }
-            else if (faces.size() % 6 == 5) {
-                face.color[0] = 1.f;
-                face.color[1] = 0.f;
-                face.color[2] = 1.f;
-            }
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).z);
 
-            faces.emplace_back(face);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).z);
         }
     }
+
+    texture = Model_Data::LoadDDS("data/textures/" + reader.Read_String("textureToLoad"));
+    textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
 
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &uvbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(float), &uvs[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &normalbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
 
     return true;
 }
@@ -191,6 +193,15 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
 
     mat4 MVP = projection * view * model;
     glUniformMatrix4fv(Shader::GetMatrixId(), 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(Shader::GetModelMatrixId(), 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(Shader::GetViewMatrixId(), 1, GL_FALSE, &view[0][0]);
+
+    vec3 lightPos = vec3(4, 4, 0);
+    glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(textureId, 0);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -202,9 +213,34 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
         0,
         (void*)0
     );
+    
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glVertexAttribPointer(
+        1,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
+    
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+    glVertexAttribPointer(
+        2,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
 
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
 
 }
 
@@ -215,4 +251,89 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
  */
 string Model_Data::GetFilename() const {
     return filename;
+}
+
+#define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
+#define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
+#define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
+GLuint Model_Data::LoadDDS(string imagepath) {
+    unsigned char header[124];
+
+    FILE *fp;
+
+      // Opening the file
+    fp = fopen(imagepath.c_str(), "rb");
+    if (fp == nullptr)
+        return 0;
+
+      // Making sure it is a dds
+    char filecode[4];
+    fread(filecode, 1, 4, fp);
+    if (strncmp(filecode, "DDS ", 4) != 0) {
+        fclose(fp);
+        return 0;
+    }
+
+      // Getting the surface description
+    fread(&header, 124, 1, fp); 
+
+    unsigned int height      = *(unsigned int*)&(header[8 ]);
+    unsigned int width         = *(unsigned int*)&(header[12]);
+    unsigned int linearSize     = *(unsigned int*)&(header[16]);
+    unsigned int mipMapCount = *(unsigned int*)&(header[24]);
+    unsigned int fourCC      = *(unsigned int*)&(header[80]);
+
+    unsigned char * buffer;
+    unsigned int bufsize;
+
+    bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
+    buffer = (unsigned char*)malloc(bufsize * sizeof(unsigned char));
+    fread(buffer, 1, bufsize, fp);
+
+      // Close the file
+    fclose(fp);
+
+    unsigned int components  = (fourCC == FOURCC_DXT1) ? 3 : 4; 
+    unsigned int format;
+    switch(fourCC) { 
+        case FOURCC_DXT1: 
+            format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT; 
+            break; 
+        case FOURCC_DXT3: 
+            format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT; 
+            break; 
+        case FOURCC_DXT5: 
+            format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT; 
+            break; 
+        default: 
+            free(buffer); 
+            return 0; 
+    }
+
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1);	
+    
+    unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16; 
+    unsigned int offset = 0;
+
+    for (unsigned int level = 0; level < mipMapCount && (width || height); ++level) { 
+        unsigned int size = ((width+3)/4)*((height+3)/4)*blockSize; 
+        glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height,  
+            0, size, buffer + offset); 
+     
+        offset += size; 
+        width  /= 2; 
+        height /= 2; 
+
+        if(width < 1) width = 1;
+        if(height < 1) height = 1;
+
+    } 
+
+    free(buffer); 
+
+    return textureID;
 }

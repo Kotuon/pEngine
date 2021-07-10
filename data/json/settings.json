@@ -1,8 +1,10 @@
 {
-    "preset"       : "plane", // solar_system, particle_array, plane
+    "preset"       : "particle_array", // solar_system, particle_array, plane
     "moveSpeed"    : 10.0,
     "sprintSpeed"  : 30.0,
     "sensitivity"  : 150.0,
     "windowWidth"  : 1920,
-    "windowHeight" : 1080
+    "windowHeight" : 1080,
+    "vertexShader" : "vertex",
+    "fragShader"   : "fragment"
 }
