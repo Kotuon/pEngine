@@ -42,6 +42,9 @@ class Model : public Component {
         void Draw(mat4 projection, mat4 view);
 
         void Read(File_Reader& reader);
+        void SwitchModel(string modelName);
+
+        string GetModelName() const;
 
         static CType GetCType();
     private:

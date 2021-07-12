@@ -45,7 +45,7 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
     string filename = reader.Read_String("modelToLoad");
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {
-        if (model_data->GetFilename().compare(filename) == 0) {
+        if (model_data->GetModelName().compare(filename) == 0) {
             return model_data;
         }
     }
@@ -53,6 +53,22 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
       // Creates new Model_Data object, then adds it to list
     Model_Data* data = new Model_Data;
     data->Load(reader);
+    model_data_manager->models.emplace_back(data);
+
+    return data;
+}
+
+Model_Data* Model_Data_Manager::Get(string modelName, string textureName) {
+      // Checks name of file against other model data objects
+    for (Model_Data* model_data : model_data_manager->models) {
+        if (model_data->GetModelName().compare(modelName) == 0) {
+            return model_data;
+        }
+    }
+
+      // Creates new Model_Data object, then adds it to list
+    Model_Data* data = new Model_Data;
+    data->Load(modelName, textureName);
     model_data_manager->models.emplace_back(data);
 
     return data;

@@ -1,13 +1,16 @@
 
 // Library includes //
+#include <imgui.h>
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_internal.h"
+#include "ImGuiFileDialog.h"
 #include <vec3.hpp>
 
 // Engine includes //
 #include "editor.hpp"
 #include "graphics.hpp"
+#include "model.hpp"
 #include "object_manager.hpp"
 #include "physics.hpp"
 #include "trace.hpp"
@@ -123,6 +126,7 @@ void Editor::Display_Components() {
 
         Display_Transform(object);
         Display_Physics(object);
+        Display_Model(object);
     }
 
     ImGui::End();
@@ -132,8 +136,30 @@ void Editor::Display_Behavior(Object*) {
 
 }
 
-void Editor::Display_Model(Object*) {
+void Editor::Display_Model(Object* object) {
+    Model* model = object->GetComponent<Model>();
+    string modelName = model->GetModelName();
 
+    if (ImGui::TreeNode("Model")) {
+        if (ImGui::Button(modelName.c_str())) {
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".obj", "./data/models/");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
+            if (ImGuiFileDialog::Instance()->IsOk()) {
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();;
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+
+                Trace::Message(filePathName + "\n");
+                Trace::Message(filePath + "\n");
+                model->SwitchModel(filePathName);
+            }
+
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImGui::TreePop();
+    }
 }
 
 void Editor::Display_Physics(Object* object) {

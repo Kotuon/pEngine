@@ -1,6 +1,6 @@
 {
     "name"         : "mars",
-    "modelToLoad"  : "ball",
+    "modelToLoad"  : "ball.obj",
     "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 6.792, 6.792, 6.792 ],
     "rotation"     : 0.0,

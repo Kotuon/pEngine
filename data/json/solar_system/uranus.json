@@ -1,6 +1,6 @@
 {
     "name"         : "uranus",
-    "modelToLoad"  : "ball",
+    "modelToLoad"  : "ball.obj",
     "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 51.118, 51.118, 51.118 ],
     "rotation"     : 0.0,

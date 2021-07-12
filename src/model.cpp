@@ -86,6 +86,16 @@ void Model::Read(File_Reader& reader) {
     Load(reader);
 }
 
+void Model::SwitchModel(string modelName) {
+    string textureName = data->GetTextureName();
+
+    data = Model_Data_Manager::Get(modelName, textureName);
+}
+
+string Model::GetModelName() const {
+    return data->GetModelName();
+}
+
 /**
  * @brief Gets the CType of Model (used in Object::GetComponent<>())
  * 

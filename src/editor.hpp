@@ -2,9 +2,6 @@
 #ifndef EDITOR_HPP
 #define EDITOR_HPP
 
-// Library includes //
-#include <imgui.h>
-
 // Engine includes //
 #include "object.hpp"
 

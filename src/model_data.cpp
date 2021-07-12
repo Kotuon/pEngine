@@ -66,9 +66,19 @@ Model_Data::~Model_Data() {
  * @return false 
  */
 bool Model_Data::Load(File_Reader& reader) {
-    string filename_ = reader.Read_String("modelToLoad");
+    string modelName_ = reader.Read_String("modelToLoad");
+    string textureName_ = reader.Read_String("textureToLoad");
+
+    return Read(modelName_, textureName_);
+}
+
+bool Model_Data::Load(string modelName_, string textureName_) {
+    return Read(modelName_, textureName_);
+}
+
+bool Model_Data::Read(string modelName_, string textureName_) {
       // Setting the name of the file (used in model_data_manager)
-    filename = filename_;
+    modelName = modelName_;
 
       // Creating variables for reading
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
@@ -77,10 +87,10 @@ bool Model_Data::Load(File_Reader& reader) {
     vector<vec3> temp_normals;
 
       // Opening the file
-    string fileToOpen = "data/models/" + string(filename) + ".obj";
+    string fileToOpen = "data/models/" + modelName;
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
-        Trace::Message("File '" + filename + "' was not successfully opened.\n");
+        Trace::Message("File '" + modelName + "' was not successfully opened.\n");
         return false;
     }
 
@@ -164,7 +174,8 @@ bool Model_Data::Load(File_Reader& reader) {
         }
     }
 
-    texture = Model_Data::LoadDDS("data/textures/" + reader.Read_String("textureToLoad"));
+    textureName = textureName_;
+    texture = Model_Data::LoadDDS("data/textures/" + textureName);
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
 
     glGenBuffers(1, &vertexbuffer);
@@ -249,8 +260,12 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
  * 
  * @return string Name of the file that contains model data
  */
-string Model_Data::GetFilename() const {
-    return filename;
+string Model_Data::GetModelName() const {
+    return modelName;
+}
+
+string Model_Data::GetTextureName() const {
+    return textureName;
 }
 
 #define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII

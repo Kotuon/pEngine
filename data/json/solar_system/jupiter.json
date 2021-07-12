@@ -1,6 +1,6 @@
 {
     "name"         : "jupiter",
-    "modelToLoad"  : "ball",
+    "modelToLoad"  : "ball.obj",
     "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 142.984, 142.984, 142.984 ],
     "rotation"     : 0.0,
