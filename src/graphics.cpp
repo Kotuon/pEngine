@@ -34,6 +34,7 @@
 #include "transform.hpp"
   // Misc //
 #include "camera.hpp"
+#include "editor.hpp"
 #include "trace.hpp"
 #include "shader.hpp"
 
@@ -96,7 +97,7 @@ bool Graphics::Initialize(File_Reader& settings) {
 
       // Setting up input for keyboard and mouse using glfw library
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
-    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     glGenVertexArrays(1, &graphics->vertexArrayId);
     glBindVertexArray(graphics->vertexArrayId);
@@ -151,7 +152,7 @@ void Graphics::Update() {
         Engine::Update();
         Render();
         glfwPollEvents();
-
+        
           // Check for restart
         if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS) {
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_RELEASE) {
@@ -187,6 +188,8 @@ void Graphics::Render() {
         Model* model = object->GetComponent<Model>();
         model->Draw(projection, view);
     }
+
+    Editor::Render();
 
     glfwSwapBuffers(graphics->window);
 }

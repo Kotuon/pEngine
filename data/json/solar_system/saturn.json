@@ -1,6 +1,7 @@
 {
     "name"         : "saturn",
     "modelToLoad"  : "ball",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 120.536, 120.536, 120.536 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

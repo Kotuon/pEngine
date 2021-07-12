@@ -59,6 +59,7 @@ class Camera {
         float originalMoveSpeed;   //!< Initial move speed (speed gets change by delta time)
         float originalSprintSpeed; //!< Initial sprint speed
         float originalSensitivity; //!< Original mouse sensitivity 
+        bool canMoveMouse;
 };
 
 #endif

@@ -1,6 +1,7 @@
 {
     "name"         : "earth",
     "modelToLoad"  : "ball",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 12.756, 12.756, 12.756 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

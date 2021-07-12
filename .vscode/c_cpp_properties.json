@@ -4,12 +4,14 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "libraries/SDL2/include",
                 "C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/include",
                 "libraries/GLM",
                 "libraries/GLFW/include",
+                "libraries/GLFW/include/GLFW",
                 "libraries/JSONCPP/include/json",
-                "libraries/GLEW/include"
+                "libraries/GLEW/include",
+                "libraries/GLEW/include/GL",
+                "libraries/imgui"
             ],
             "defines": [
                 "_DEBUG",

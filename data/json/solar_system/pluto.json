@@ -1,6 +1,7 @@
 {
     "name"         : "pluto",
     "modelToLoad"  : "ball",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 2.370, 2.370, 2.370 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "Engine",
+			"label": "Rebuild",
 			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
 			"args": [
                 "-m64",
@@ -11,22 +11,27 @@
                 "-O2",
 				"src\\*.cpp",
                 "libraries\\JSONCPP\\include\\*.cpp",
+                "libraries\\imgui\\*.cpp",
 				"-o",
-				"build\\pEngine.exe",
+				"output\\pEngine.exe",
                 "-I", "libraries/GLM",
                 "-I", "libraries/GLFW/include",
+                "-I", "libraries/GLFW/include/GLFW",
                 "-L", "libraries/GLFW/lib",
                 "-I", "libraries/JSONCPP/include/json",
                 "-I", "libraries/JSONCPP/include",
                 "-L", "libraries/JSONCPP/lib",
                 "-I", "libraries/GLEW/include",
+                "-I", "libraries/GLEW/include/GL",
                 "-L", "libraries/GLEW/lib",
+                "-I", "libraries/imgui",
 				"-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
                 "-lglew32",
-                "-ljsoncpp"
+                "-ljsoncpp",
+                "-limm32"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

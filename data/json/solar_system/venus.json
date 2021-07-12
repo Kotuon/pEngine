@@ -1,6 +1,7 @@
 {
     "name"         : "venus",
     "modelToLoad"  : "ball",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 12.104, 12.104, 12.104 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

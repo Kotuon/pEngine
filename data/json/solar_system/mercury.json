@@ -1,6 +1,7 @@
 {
     "name"         : "mercury",
     "modelToLoad"  : "ball",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 4.879, 4.879, 4.879 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

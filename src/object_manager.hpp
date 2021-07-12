@@ -31,6 +31,7 @@ class Object_Manager {
         static void Update();
         static void Shutdown();
         void ReadList(File_Reader& preset);
+        void CheckName(Object* object);
     private:
         vector<Object*> objects; //!< Current objects being tracked by the engine
 };

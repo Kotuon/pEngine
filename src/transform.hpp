@@ -31,15 +31,18 @@ class Transform : public Component {
 
         void SetPosition(vec3 pos);
         vec3 GetPosition() const;
+        vec3& GetPosition();
 
         void SetOldPosition(vec3 oldPos);
         vec3 GetOldPosition() const;
 
         void SetScale(vec3 sca);
         vec3 GetScale() const;
+        vec3& GetScale();
 
-        void SetRotation(float rot);
-        float GetRotation() const;
+        void SetRotation(vec3 rot);
+        vec3 GetRotation() const;
+        vec3& GetRotation();
 
         void Read(File_Reader& reader);
 
@@ -48,7 +51,7 @@ class Transform : public Component {
         vec3 position;    //!< Position of object
         vec3 oldPosition; //!< Previous position of object
         vec3 scale;       //!< Scale of object
-        float rotation;   //!< Rotation of object
+        vec3 rotation;    //!< Rotation of object
 };
 
 #endif

@@ -61,6 +61,8 @@ void Transform::SetPosition(vec3 pos) { position = pos; }
  */
 vec3 Transform::GetPosition() const { return position; }
 
+vec3& Transform::GetPosition() { return position; }
+
 /**
  * @brief Sets old position of object
  * 
@@ -89,19 +91,23 @@ void Transform::SetScale(vec3 sca) { scale = sca; }
  */
 vec3 Transform::GetScale() const { return scale; }
 
+vec3& Transform::GetScale() { return scale; }
+
 /**
  * @brief Sets rotation of object
  * 
  * @param rot 
  */
-void Transform::SetRotation(float rot) { rotation = rot; }
+void Transform::SetRotation(vec3 rot) { rotation = rot; }
 
 /**
  * @brief Returns rotation of object
  * 
  * @return float 
  */
-float Transform::GetRotation() const { return rotation; }
+vec3 Transform::GetRotation() const { return rotation; }
+
+vec3& Transform::GetRotation() { return rotation; }
 
 /**
  * @brief Reads data for Transform object from file
@@ -110,7 +116,7 @@ float Transform::GetRotation() const { return rotation; }
  */
 void Transform::Read(File_Reader& reader) {
     SetScale(reader.Read_Vec3("scale"));
-    SetRotation(reader.Read_Float("rotation"));
+    //SetRotation(reader.Read_Float("rotation"));
 }
 
 /**

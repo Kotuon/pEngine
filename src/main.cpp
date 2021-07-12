@@ -31,7 +31,7 @@ int main (int argc, char *argv[]) {
       // Engine update loop
     Graphics::Update();
 
-      // Shuting down systems
+      // Shutting down systems
     Engine::Shutdown();
     Trace::Shutdown();
 

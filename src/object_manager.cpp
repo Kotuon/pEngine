@@ -49,6 +49,7 @@ bool Object_Manager::Initialize(File_Reader& preset) {
 void Object_Manager::AddObject(Object* object) {
       // Tells object its location in object_manager object list
     object->SetId(object_manager->objects.size());
+    object_manager->CheckName(object);
     object_manager->objects.emplace_back(object);
 }
 
@@ -129,4 +130,15 @@ void Object_Manager::ReadList(File_Reader& preset) {
 
         ++object_num;
     }
+}
+
+void Object_Manager::CheckName(Object* object) {
+    int objWithName = 0;
+    for (Object* objToCheck : object_manager->objects) {
+        if (objToCheck->GetName().find(object->GetName()) != string::npos)
+            ++ objWithName;
+    }
+
+    if (objWithName > 0) 
+        object->SetName(object->GetName() + "_" + to_string(objWithName));
 }

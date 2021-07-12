@@ -27,6 +27,7 @@
 #include "physics.hpp"
   // Misc //
 #include "camera.hpp"
+#include "editor.hpp"
 #include "file_reader.hpp"
 #include "random.hpp"
 
@@ -57,6 +58,7 @@ void Engine::Initialize() {
     if (!Behavior_Manager::Initialize()) return;
     if (!Object_Manager::Initialize(preset)) return;
     if (!Random::Initialize()) return;
+    if (!Editor::Initialize()) return;
 
       // Setting up variables used for dt
     engine->currentTime = chrono::steady_clock::now();
@@ -79,6 +81,7 @@ void Engine::Update() {
     engine->currentTime = engine->newTime;
     engine->accumulator += engine->deltaTime;
 
+    Editor::Update();
     Camera::Update();
       // Only called when it is time (fixed time step)
     while (engine->accumulator >= engine->dt) {
@@ -99,6 +102,7 @@ void Engine::Shutdown() {
     if (!engine) return;
     
       // Shutdown sub systems
+    Editor::Shutdown();
     Random::Shutdown();
     Object_Manager::Shutdown();
     Behavior_Manager::Shutdown();
