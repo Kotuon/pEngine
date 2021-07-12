@@ -30,6 +30,7 @@
 #include "editor.hpp"
 #include "file_reader.hpp"
 #include "random.hpp"
+#include "texture_manager.hpp"
 
 static Engine* engine = nullptr; //!< Engine object
 
@@ -46,13 +47,18 @@ void Engine::Initialize() {
         return;
     }
 
+    engine->lightPower = 1000.f;
+    engine->lightPos = vec3(4, 4, 0);
       // Reading settings from json
-    File_Reader settings("settings");
-    File_Reader preset("preset/" + settings.Read_String("preset"));
+    File_Reader settings("settings.json");
+    engine->presetName = settings.Read_String("preset");
+    
+    File_Reader preset("preset/" + engine->presetName);
     engine->gravConst = preset.Read_Double("gravConst");
 
       // Initializing sub systems
     if (!Model_Data_Manager::Initialize()) return;
+    if (!Texture_Manager::Initialize()) return;
     if (!Camera::Initialize(settings)) return;
     if (!Graphics::Initialize(settings)) return;
     if (!Behavior_Manager::Initialize()) return;
@@ -108,6 +114,7 @@ void Engine::Shutdown() {
     Behavior_Manager::Shutdown();
     Graphics::Shutdown();
     Camera::Shutdown();
+    Texture_Manager::Shutdown();
     Model_Data_Manager::Shutdown();
 
       // Delete engine object
@@ -125,8 +132,22 @@ void Engine::Restart() {
     Object_Manager::Shutdown();
 
       // Initializing object manager
-    File_Reader settings("settings");
-    File_Reader preset("preset/" + settings.Read_String("preset"));
+    File_Reader settings("settings.json");
+    engine->presetName = settings.Read_String("preset");
+
+    File_Reader preset("preset/" + engine->presetName);
+    if (!Object_Manager::Initialize(preset)) return;
+}
+
+void Engine::Restart(string presetName) {
+      // Removing all current objects
+    Object_Manager::Shutdown();
+
+      // Initializing object manager
+    File_Reader settings("settings.json");
+    engine->presetName = presetName;
+
+    File_Reader preset("preset/" + engine->presetName);
     if (!Object_Manager::Initialize(preset)) return;
 }
 
@@ -153,6 +174,14 @@ float Engine::GetDt() {
  * 
  * @return double Gravitational constant
  */
-double Engine::GetGravConst() {
+double& Engine::GetGravConst() {
     return engine->gravConst;
 }
+
+string Engine::GetPresetName() {
+    return engine->presetName;
+}
+
+float& Engine::GetLightPower() { return engine->lightPower; }
+
+vec3& Engine::GetLightPos() { return engine->lightPos; }

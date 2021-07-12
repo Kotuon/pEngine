@@ -1,5 +1,5 @@
 {
-    "preset"       : "particle_array", // solar_system, particle_array, plane
+    "preset"       : "particle_array.json", // solar_system, particle_array, plane
     "moveSpeed"    : 10.0,
     "sprintSpeed"  : 30.0,
     "sensitivity"  : 150.0,

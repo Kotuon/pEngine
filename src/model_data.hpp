@@ -29,6 +29,8 @@
 using namespace std;
 using namespace glm;
 
+class Model;
+
 /*! Model_Data class */
 class Model_Data {
     public:
@@ -38,16 +40,14 @@ class Model_Data {
         ~Model_Data();
 
         bool Load(File_Reader& reader);
-        bool Load(string modelName, string textureName);
+        bool Load(string modelName_);
 
-        bool Read(string modelName_, string textureName_);
+        bool Read(string modelName_);
 
-        void Draw(Transform* transform, mat4 projection, mat4 view);
+        void Draw(Model* parent, Transform* transform, mat4 projection, mat4 view);
 
         string GetModelName() const;
         string GetTextureName() const;
-
-        static GLuint LoadDDS(string filename);
     private:
         vector<float> vertices; //!< Contains vertices of model
         vector<float> normals;  //!< Contains normals of model
@@ -56,9 +56,6 @@ class Model_Data {
         GLuint vertexbuffer;    //!< Vertex buffer of model
         GLuint normalbuffer;    //!< Normal buffer of model
         GLuint uvbuffer;        //!< UV buffer of model
-        string textureName;
-        GLuint texture;
-        GLuint textureId;
 };
 
 #endif

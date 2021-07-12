@@ -15,8 +15,9 @@ class Editor {
         void Display_Dockspace();
         void Display_Scene();
         void Display_Components();
+        void Display_World_Settings();
+        void Display_Camera_Settings();
 
-        void Display_Behavior(Object* object);
         void Display_Model(Object* object);
         void Display_Physics(Object* object);
         void Display_Transform(Object* object);

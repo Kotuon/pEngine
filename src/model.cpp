@@ -20,6 +20,8 @@
 #include "model_data_manager.hpp"
 #include "transform.hpp"
   // Misc //
+#include "texture.hpp"
+#include "texture_manager.hpp"
 #include "trace.hpp"
 
 /**
@@ -65,6 +67,7 @@ Model* Model::Clone() const {
  */
 void Model::Load(File_Reader& reader) {
     data = Model_Data_Manager::Get(reader);
+    texture = Texture_Manager::Get(reader);
 }
 
 /**
@@ -73,7 +76,7 @@ void Model::Load(File_Reader& reader) {
  */
 void Model::Draw(mat4 projection, mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
-    data->Draw(transform, projection, view);
+    data->Draw(this, transform, projection, view);
 }
 
 /**
@@ -82,18 +85,27 @@ void Model::Draw(mat4 projection, mat4 view) {
  * @param reader File that contains the name of the model's file
  */
 void Model::Read(File_Reader& reader) {
-    //Load(reader.Read_String("modelToLoad"));
     Load(reader);
 }
 
 void Model::SwitchModel(string modelName) {
-    string textureName = data->GetTextureName();
+    data = Model_Data_Manager::Get(modelName);
+}
 
-    data = Model_Data_Manager::Get(modelName, textureName);
+void Model::SwitchTexture(string textureName) {
+    texture = Texture_Manager::Get(textureName);
 }
 
 string Model::GetModelName() const {
     return data->GetModelName();
+}
+
+string Model::GetTextureName() const {
+    return texture->GetTextureName();
+}
+
+Texture* Model::GetTexture() const {
+    return texture;
 }
 
 /**

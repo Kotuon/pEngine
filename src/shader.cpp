@@ -134,6 +134,7 @@ void Shader::LoadShader(string vertexPath, string fragmentPath) {
     shader->viewMatrixId = glGetUniformLocation(shader->program, "V");
     shader->modelMatrixId = glGetUniformLocation(shader->program, "M");
     shader->lightId = glGetUniformLocation(shader->program, "LightPosition_worldspace");
+    shader->lightPowerId = glGetUniformLocation(shader->program, "LightPower");
 }
 
 GLuint Shader::GetProgram() { return shader->program; }
@@ -141,3 +142,4 @@ GLuint Shader::GetMatrixId() { return shader->matrixId; }
 GLuint Shader::GetViewMatrixId() { return shader->viewMatrixId; }
 GLuint Shader::GetModelMatrixId() { return shader->modelMatrixId; }
 GLuint Shader::GetLightId() { return shader->lightId; }
+GLuint Shader::GetLightPowerId() { return shader->lightPowerId; }

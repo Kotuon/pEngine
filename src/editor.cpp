@@ -8,7 +8,9 @@
 #include <vec3.hpp>
 
 // Engine includes //
+#include "camera.hpp"
 #include "editor.hpp"
+#include "engine.hpp"
 #include "graphics.hpp"
 #include "model.hpp"
 #include "object_manager.hpp"
@@ -57,6 +59,8 @@ void Editor::Update() {
     editor->Display_Dockspace();
     editor->Display_Scene();
     editor->Display_Components();
+    editor->Display_World_Settings();
+    editor->Display_Camera_Settings();
 }
 
 void Editor::Render() {
@@ -132,27 +136,92 @@ void Editor::Display_Components() {
     ImGui::End();
 }
 
-void Editor::Display_Behavior(Object*) {
+void Editor::Display_World_Settings() {
+    ImGui::Begin("World Settings");
+    string presetName = Engine::GetPresetName();
 
+    ImGui::Text("Presets"); ImGui::SameLine(120);
+    if (ImGui::Button(presetName.c_str())) {
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".json", "./data/json/preset/");
+    }
+
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
+        if (ImGuiFileDialog::Instance()->IsOk()) {
+            string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+            Engine::Restart(filePathName);
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+
+    ImGui::PushItemWidth(141);
+
+    ImGui::Text("Light Power");
+    ImGui::SameLine(120); ImGui::InputFloat("##1", &Engine::GetLightPower());
+
+    ImGui::Text("Light Position");
+    ImGui::PushItemWidth(50);
+    ImGui::SameLine(120); ImGui::InputFloat("x##4", &Engine::GetLightPos().x);
+    ImGui::SameLine(195); ImGui::InputFloat("y##4", &Engine::GetLightPos().y);
+    ImGui::SameLine(270); ImGui::InputFloat("z##4", &Engine::GetLightPos().z);
+    ImGui::PopItemWidth();
+
+    ImGui::Text("Grav Const");
+    ImGui::SameLine(120); ImGui::InputDouble("##5", &Engine::GetGravConst());
+
+    ImGui::PopItemWidth();
+
+    ImGui::End();
+}
+
+void Editor::Display_Camera_Settings() {
+    ImGui::Begin("Camera Settings");
+
+    ImGui::PushItemWidth(137);
+
+    ImGui::Text("Move Speed");
+    ImGui::SameLine(100); ImGui::InputFloat("##2", &Camera::GetOriginalMoveSpeed());
+
+    ImGui::Text("Sprint Speed");
+    ImGui::SameLine(100); ImGui::InputFloat("##3", &Camera::GetOriginalSprintSpeed());
+
+    ImGui::Text("Sensitivity");
+    ImGui::SameLine(100); ImGui::InputFloat("##4", &Camera::GetOriginalSensitivity());
+
+    ImGui::PopItemWidth();
+
+    ImGui::End();
 }
 
 void Editor::Display_Model(Object* object) {
     Model* model = object->GetComponent<Model>();
     string modelName = model->GetModelName();
+    string textureName = model->GetTextureName();
 
     if (ImGui::TreeNode("Model")) {
+        ImGui::Text("Model"); ImGui::SameLine(100);
         if (ImGui::Button(modelName.c_str())) {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".obj", "./data/models/");
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##1", "Choose File", ".obj", "./data/models/");
         }
 
-        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##1")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();;
-                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
-
-                Trace::Message(filePathName + "\n");
-                Trace::Message(filePath + "\n");
+                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 model->SwitchModel(filePathName);
+            }
+
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImGui::Text("Texture"); ImGui::SameLine(100);
+        if (ImGui::Button(textureName.c_str())) {
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##2", "Choose File", ".dds,.DDS", "./data/textures/");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##2")) {
+            if (ImGuiFileDialog::Instance()->IsOk()) {
+                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                model->SwitchTexture(filePathName);
             }
 
             ImGuiFileDialog::Instance()->Close();

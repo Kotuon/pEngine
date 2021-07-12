@@ -1,4 +1,4 @@
 {
     "gravConst" : 0.0,
-    "object_0"  : { "objectName": "plane/test", "position" : [ 0.0, 0.0, -10.0 ] }
+    "object_0"  : { "objectName": "plane/test.json", "position" : [ 0.0, 0.0, -10.0 ] }
 }

@@ -248,3 +248,15 @@ float Camera::GetYaw() {
 float Camera::GetPitch() {
     return camera->pitch;
 }
+
+float& Camera::GetOriginalMoveSpeed() {
+    return camera->originalMoveSpeed;
+}
+
+float& Camera::GetOriginalSprintSpeed() {
+    return camera->originalSprintSpeed;
+}
+
+float& Camera::GetOriginalSensitivity() {
+    return camera->originalSensitivity;
+}

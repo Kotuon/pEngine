@@ -14,8 +14,13 @@
 
 // std includes //
 #include <chrono> // steady_clock
+#include <string>
+
+// Library includes //
+#include <vec3.hpp>
 
 using namespace std;
+using namespace glm;
 
 /*! Engine class */
 class Engine {
@@ -24,9 +29,13 @@ class Engine {
         static void Update();
         static void Shutdown();
         static void Restart();
+        static void Restart(string presetName);
         static float GetDeltaTime();
         static float GetDt();
-        static double GetGravConst();
+        static double& GetGravConst();
+        static string GetPresetName();
+        static float& GetLightPower();
+        static vec3& GetLightPos();
     private:
         bool  isRunning;        //!< state of the main loop
         float deltaTime;        //!< time between frames
@@ -39,6 +48,10 @@ class Engine {
         chrono::steady_clock::duration timeTaken;     //!< time between frames
 
         double gravConst; //!< gravitational constant (used in physics)
+        string presetName;
+        float lightPower;
+
+        vec3 lightPos;
 };
 
 #endif

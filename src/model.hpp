@@ -26,6 +26,7 @@
 #include "component.hpp"
 #include "file_reader.hpp"
 #include "model_data.hpp"
+#include "texture.hpp"
 
 using namespace std;
 using namespace glm;
@@ -43,13 +44,18 @@ class Model : public Component {
 
         void Read(File_Reader& reader);
         void SwitchModel(string modelName);
+        void SwitchTexture(string textureName);
 
         string GetModelName() const;
+        string GetTextureName() const;
+
+        Texture* GetTexture() const;
 
         static CType GetCType();
     private:
         GLenum mode;      //!< Draw mode (Default is GL_TRIANGLES)
         Model_Data* data; //!< Data about the faces of the model
+        Texture* texture;
 };
 
 #endif

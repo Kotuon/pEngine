@@ -20,6 +20,8 @@
 #include <gtx/transform.hpp>
 
 // Engine includes //
+#include "engine.hpp"
+#include "model.hpp"
 #include "model_data.hpp"
 #include "trace.hpp"
 #include "shader.hpp"
@@ -55,7 +57,6 @@ Model_Data::~Model_Data() {
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteBuffers(1, &uvbuffer);
     glDeleteBuffers(1, &normalbuffer);
-    glDeleteTextures(1, &texture);
 }
 
 /**
@@ -67,16 +68,15 @@ Model_Data::~Model_Data() {
  */
 bool Model_Data::Load(File_Reader& reader) {
     string modelName_ = reader.Read_String("modelToLoad");
-    string textureName_ = reader.Read_String("textureToLoad");
 
-    return Read(modelName_, textureName_);
+    return Read(modelName_);
 }
 
-bool Model_Data::Load(string modelName_, string textureName_) {
-    return Read(modelName_, textureName_);
+bool Model_Data::Load(string modelName_) {
+    return Read(modelName_);
 }
 
-bool Model_Data::Read(string modelName_, string textureName_) {
+bool Model_Data::Read(string modelName_) {
       // Setting the name of the file (used in model_data_manager)
     modelName = modelName_;
 
@@ -174,10 +174,6 @@ bool Model_Data::Read(string modelName_, string textureName_) {
         }
     }
 
-    textureName = textureName_;
-    texture = Model_Data::LoadDDS("data/textures/" + textureName);
-    textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
-
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
@@ -197,7 +193,7 @@ bool Model_Data::Read(string modelName_, string textureName_) {
  * @brief Draws the faces
  * 
  */
-void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
+void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4 view) {
     mat4 model = mat4(1.f);
     model = translate(model, transform->GetPosition());
     model = scale(model, transform->GetScale());
@@ -207,12 +203,11 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
     glUniformMatrix4fv(Shader::GetModelMatrixId(), 1, GL_FALSE, &model[0][0]);
     glUniformMatrix4fv(Shader::GetViewMatrixId(), 1, GL_FALSE, &view[0][0]);
 
-    vec3 lightPos = vec3(4, 4, 0);
+    vec3 lightPos = Engine::GetLightPos();
     glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
+    glUniform1f(Shader::GetLightPowerId(), Engine::GetLightPower());
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glUniform1i(textureId, 0);
+    parent->GetTexture()->Display();
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -262,93 +257,4 @@ void Model_Data::Draw(Transform* transform, mat4 projection, mat4 view) {
  */
 string Model_Data::GetModelName() const {
     return modelName;
-}
-
-string Model_Data::GetTextureName() const {
-    return textureName;
-}
-
-#define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
-#define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
-#define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
-GLuint Model_Data::LoadDDS(string imagepath) {
-    unsigned char header[124];
-
-    FILE *fp;
-
-      // Opening the file
-    fp = fopen(imagepath.c_str(), "rb");
-    if (fp == nullptr)
-        return 0;
-
-      // Making sure it is a dds
-    char filecode[4];
-    fread(filecode, 1, 4, fp);
-    if (strncmp(filecode, "DDS ", 4) != 0) {
-        fclose(fp);
-        return 0;
-    }
-
-      // Getting the surface description
-    fread(&header, 124, 1, fp); 
-
-    unsigned int height      = *(unsigned int*)&(header[8 ]);
-    unsigned int width         = *(unsigned int*)&(header[12]);
-    unsigned int linearSize     = *(unsigned int*)&(header[16]);
-    unsigned int mipMapCount = *(unsigned int*)&(header[24]);
-    unsigned int fourCC      = *(unsigned int*)&(header[80]);
-
-    unsigned char * buffer;
-    unsigned int bufsize;
-
-    bufsize = mipMapCount > 1 ? linearSize * 2 : linearSize;
-    buffer = (unsigned char*)malloc(bufsize * sizeof(unsigned char));
-    fread(buffer, 1, bufsize, fp);
-
-      // Close the file
-    fclose(fp);
-
-    unsigned int components  = (fourCC == FOURCC_DXT1) ? 3 : 4; 
-    unsigned int format;
-    switch(fourCC) { 
-        case FOURCC_DXT1: 
-            format = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT; 
-            break; 
-        case FOURCC_DXT3: 
-            format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT; 
-            break; 
-        case FOURCC_DXT5: 
-            format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT; 
-            break; 
-        default: 
-            free(buffer); 
-            return 0; 
-    }
-
-    GLuint textureID;
-    glGenTextures(1, &textureID);
-
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glPixelStorei(GL_UNPACK_ALIGNMENT,1);	
-    
-    unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16; 
-    unsigned int offset = 0;
-
-    for (unsigned int level = 0; level < mipMapCount && (width || height); ++level) { 
-        unsigned int size = ((width+3)/4)*((height+3)/4)*blockSize; 
-        glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height,  
-            0, size, buffer + offset); 
-     
-        offset += size; 
-        width  /= 2; 
-        height /= 2; 
-
-        if(width < 1) width = 1;
-        if(height < 1) height = 1;
-
-    } 
-
-    free(buffer); 
-
-    return textureID;
 }

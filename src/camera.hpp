@@ -44,6 +44,10 @@ class Camera {
 
         static float GetYaw();
         static float GetPitch();
+
+        static float& GetOriginalMoveSpeed();
+        static float& GetOriginalSprintSpeed();
+        static float& GetOriginalSensitivity();
     private:
         vec3 position;             //!< Position of camera
         vec3 front;                //!< Direction of camera

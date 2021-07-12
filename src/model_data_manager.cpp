@@ -25,7 +25,7 @@ bool Model_Data_Manager::Initialize() {
       // Initializing model_data_manager
     model_data_manager = new Model_Data_Manager;
     if (!model_data_manager) {
-        Trace::Message("Model Data Manager was not initialized.");
+        Trace::Message("Model Data Manager was not initialized.\n");
         return false;
     }
     
@@ -58,7 +58,7 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
     return data;
 }
 
-Model_Data* Model_Data_Manager::Get(string modelName, string textureName) {
+Model_Data* Model_Data_Manager::Get(string modelName) {
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {
         if (model_data->GetModelName().compare(modelName) == 0) {
@@ -68,7 +68,7 @@ Model_Data* Model_Data_Manager::Get(string modelName, string textureName) {
 
       // Creates new Model_Data object, then adds it to list
     Model_Data* data = new Model_Data;
-    data->Load(modelName, textureName);
+    data->Load(modelName);
     model_data_manager->models.emplace_back(data);
 
     return data;

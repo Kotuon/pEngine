@@ -38,12 +38,14 @@ class Shader {
         static GLuint GetViewMatrixId();
         static GLuint GetModelMatrixId();
         static GLuint GetLightId();
+        static GLuint GetLightPowerId();
     private:
         GLuint program;       //!< Program id for the engine
         GLuint matrixId;      //!< MVP matrix id
         GLuint viewMatrixId;  //!< View matrix id
         GLuint modelMatrixId; //!< Model matrix id
         GLuint lightId;       //!< Light id for world
+        GLuint lightPowerId;
 };
 
 #endif
