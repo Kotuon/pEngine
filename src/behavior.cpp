@@ -97,10 +97,20 @@ vec3 Behavior::GetStartPos() const {
     return startPos;
 }
 
+/**
+ * @brief Returns max velocity of object
+ * 
+ * @return float 
+ */
 float Behavior::GetMaxVelocity() const {
     return maxVelocity;
 }
 
+/**
+ * @brief Returns the idle radius of the object
+ * 
+ * @return float 
+ */
 float Behavior::GetIdleRadius() const {
     return idleRadius;
 }

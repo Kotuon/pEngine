@@ -1,3 +1,13 @@
+/**
+ * @file texture.hpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-07-14
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 #pragma once
 #ifndef TEXTURE_HPP
@@ -11,6 +21,7 @@
 
 using namespace std;
 
+/*! Texture class */
 class Texture {
     public:
         ~Texture();
@@ -21,10 +32,10 @@ class Texture {
     private:
         static GLuint LoadDDS(string filename);
     private:
-        string textureName;
-        GLuint textureNum;
-        GLuint textureId;
-        bool hasBeenSet;
+        string textureName; //!< Name of texture
+        GLuint textureNum;  //!< Loaded texture data id
+        GLuint textureId;   //!< Textures buffer id
+        bool hasBeenSet;    //!< Whether there is a texture or not
 };
 
 #endif

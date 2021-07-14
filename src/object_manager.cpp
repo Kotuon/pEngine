@@ -133,6 +133,12 @@ void Object_Manager::ReadList(File_Reader& preset) {
     }
 }
 
+/**
+ * @brief Checks if the name of the given object is already being used. If it is
+ *        being used it applies a number to the back.
+ * 
+ * @param object 
+ */
 void Object_Manager::CheckName(Object* object) {
     int objWithName = 0;
     for (Object* objToCheck : object_manager->objects) {

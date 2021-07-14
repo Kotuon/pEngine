@@ -1,3 +1,13 @@
+/**
+ * @file texture.cpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-07-14
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 // Library includes //
 #include <glew.h>
@@ -6,10 +16,19 @@
 #include "shader.hpp"
 #include "texture.hpp"
 
+/**
+ * @brief Deletes texture data
+ * 
+ */
 Texture::~Texture() {
     glDeleteTextures(1, &textureNum);
 }
 
+/**
+ * @brief Loads in texture with given filename
+ * 
+ * @param textureName_ Filename of texture
+ */
 void Texture::Load(string textureName_) {
     textureName = textureName_;
     textureNum = Texture::LoadDDS("data/textures/" + textureName);
@@ -17,6 +36,10 @@ void Texture::Load(string textureName_) {
     hasBeenSet = true;
 }
 
+/**
+ * @brief Setup texture for drawing
+ * 
+ */
 void Texture::Display() {
     if (!hasBeenSet) return;
 
@@ -25,17 +48,29 @@ void Texture::Display() {
     glUniform1i(textureId, 0);
 }
 
-string Texture::GetTextureName() const {
-    return textureName;
-}
+/**
+ * @brief Returns texture name
+ * 
+ * @return string 
+ */
+string Texture::GetTextureName() const { return textureName; }
 
-GLuint Texture::GetTextureNum() const {
-    return textureNum;
-}
+/**
+ * @brief Returns texture data id
+ * 
+ * @return GLuint 
+ */
+GLuint Texture::GetTextureNum() const { return textureNum; }
 
-#define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
-#define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
-#define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
+#define FOURCC_DXT1 0x31545844 //!< Equivalent to "DXT1" in ASCII
+#define FOURCC_DXT3 0x33545844 //!< Equivalent to "DXT3" in ASCII
+#define FOURCC_DXT5 0x35545844 //!< Equivalent to "DXT5" in ASCII
+/**
+ * @brief Loads in the given dds file
+ * 
+ * @param imagepath DDS filename
+ * @return GLuint 
+ */
 GLuint Texture::LoadDDS(string imagepath) {
     unsigned char header[124];
 

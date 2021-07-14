@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef TRANSFORM_HPP
 #define TRANSFORM_HPP
 
@@ -31,6 +32,12 @@ class Transform : public Component {
 
         void SetPosition(vec3 pos);
         vec3 GetPosition() const;
+
+        /**
+         * @brief Returns position reference
+         * 
+         * @return vec3& 
+         */
         vec3& GetPosition();
 
         void SetOldPosition(vec3 oldPos);
@@ -38,10 +45,22 @@ class Transform : public Component {
 
         void SetScale(vec3 sca);
         vec3 GetScale() const;
+
+        /**
+         * @brief Returns scale reference
+         * 
+         * @return vec3& 
+         */
         vec3& GetScale();
 
         void SetRotation(vec3 rot);
         vec3 GetRotation() const;
+
+        /**
+         * @brief Returns rotation reference
+         * 
+         * @return vec3& 
+         */
         vec3& GetRotation();
 
         void Read(File_Reader& reader);

@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef CAMERA_HPP
 #define CAMERA_HPP
 

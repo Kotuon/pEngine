@@ -63,7 +63,7 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
  *        a pointer to that data. If no it reads it in and adds it to the model
  *        list
  * 
- * @param modelName File_Reader object containing model data
+ * @param modelName Filename of the model to get
  * @return Model_Data* Model data either read or gotten from list
  */
 Model_Data* Model_Data_Manager::Get(string modelName) {

@@ -132,8 +132,6 @@ void Object::SetName(string name_) { name = name_; }
  */
 string Object::GetName() const { return name; }
 
-string Object::GetName() { return name; }
-
 /**
  * @brief Reads object from file. This includes the components of an object
  * 
