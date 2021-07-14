@@ -12,10 +12,7 @@
 #include "editor.hpp"
 #include "engine.hpp"
 #include "graphics.hpp"
-#include "model.hpp"
 #include "object_manager.hpp"
-#include "physics.hpp"
-#include "trace.hpp"
 #include "transform.hpp"
 
 using namespace glm;
@@ -55,6 +52,13 @@ void Editor::Update() {
     ImGui::NewFrame();
 
     ImGui::ShowDemoWindow();
+
+    if (!ImGui::GetIO().WantCaptureKeyboard) {
+        editor->takeKeyboardInput = true;
+    }
+    else {
+        editor->takeKeyboardInput = false;
+    }
     
     editor->Display_Dockspace();
     editor->Display_Scene();
@@ -115,22 +119,70 @@ void Editor::Display_Scene() {
     ImGui::Begin("Scene");
 
     for (int i = 0; i < Object_Manager::GetSize(); ++i) {
-        if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i))
+        if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick))
             selected_object = i;
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::Button("Add Object")) {
+        Object* newObject = new Object;
+        Transform* transform = new Transform;
+        newObject->SetName("New_Object");
+        newObject->AddComponent(transform);
+
+        Object_Manager::AddObject(newObject);
     }
     
     ImGui::End();
 }
 
 void Editor::Display_Components() {
-    ImGui::Begin("Components");
+    ImGui::Begin("Components##1");
 
-    if (selected_object != -1) {
-        Object* object = Object_Manager::FindObject(selected_object);
+    if (selected_object == -1) { ImGui::End(); return; }
+    Object* object = Object_Manager::FindObject(selected_object);
+    string objectName = object->GetName();
 
-        Display_Transform(object);
-        Display_Physics(object);
-        Display_Model(object);
+    static char nameBuf[128] = "";
+    sprintf(nameBuf, objectName.c_str());
+    
+    if (ImGui::InputText("Name", nameBuf, 128, ImGuiInputTextFlags_EnterReturnsTrue)) {
+        object->SetName(string(nameBuf));
+    }
+
+    if (ImGui::IsItemDeactivatedAfterEdit()) {
+        object->SetName(string(nameBuf));
+    }
+
+    Model* model = object->GetComponent<Model>();
+    Physics* physics = object->GetComponent<Physics>();
+    Transform* transform = object->GetComponent<Transform>();
+
+    Display_Transform(transform);
+    Display_Physics(physics);
+    Display_Model(model);
+    
+    ImGui::Separator();
+    
+    if (ImGui::Button("Add Component##1")) {
+        ImGui::OpenPopup("New Component##1");
+    }
+
+    if (ImGui::BeginPopup("New Component##1")) {
+        if (!model) {
+            if (ImGui::Selectable("Model##1")) {
+                model = new Model;
+                object->AddComponent(model);
+            }
+        }
+        if (!physics) {
+            if (ImGui::Selectable("Physics##1")) {
+                physics = new Physics;
+                object->AddComponent(physics);
+            }
+        }
+        ImGui::EndPopup();
     }
 
     ImGui::End();
@@ -148,6 +200,7 @@ void Editor::Display_World_Settings() {
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+            selected_object = -1;
             Engine::Restart(filePathName);
         }
 
@@ -193,8 +246,9 @@ void Editor::Display_Camera_Settings() {
     ImGui::End();
 }
 
-void Editor::Display_Model(Object* object) {
-    Model* model = object->GetComponent<Model>();
+void Editor::Display_Model(Model* model) {
+    if (!model) return;
+    
     string modelName = model->GetModelName();
     string textureName = model->GetTextureName();
 
@@ -231,8 +285,9 @@ void Editor::Display_Model(Object* object) {
     }
 }
 
-void Editor::Display_Physics(Object* object) {
-    Physics* physics = object->GetComponent<Physics>();
+void Editor::Display_Physics(Physics* physics) {
+    if (!physics) return;
+    
     vec3 velocity = physics->GetVelocity();
 
     if (ImGui::TreeNode("Physics")) {
@@ -248,8 +303,9 @@ void Editor::Display_Physics(Object* object) {
     }
 }
 
-void Editor::Display_Transform(Object* object) {
-    Transform* transform = object->GetComponent<Transform>();
+void Editor::Display_Transform(Transform* transform) {
+    if (!transform) return;
+    
     vec3& position = transform->GetPosition();
     vec3& scale = transform->GetScale();
     vec3& rotation = transform->GetRotation();
@@ -282,3 +338,5 @@ void Editor::Display_Transform(Object* object) {
         ImGui::TreePop();
     }
 }
+
+bool Editor::GetTakeKeyboardInput() { return editor->takeKeyboardInput; }

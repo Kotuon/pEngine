@@ -29,7 +29,7 @@
  * 
  * @param mode_ Draw mode for opengl
  */
-Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr) {}
+Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr), texture(nullptr) {}
 
 /**
  * @brief Copy constructor
@@ -46,7 +46,7 @@ Model::Model(const Model& other) : Component(CType::CModel) {
  * @param reader File with Model data
  * @param mode_  Draw mode for opengl
  */
-Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr) {
+Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr), texture(nullptr) {
     Read(reader);
 }
 
@@ -76,6 +76,8 @@ void Model::Load(File_Reader& reader) {
  */
 void Model::Draw(mat4 projection, mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
+    if (!data) return;
+
     data->Draw(this, transform, projection, view);
 }
 
@@ -97,10 +99,12 @@ void Model::SwitchTexture(string textureName) {
 }
 
 string Model::GetModelName() const {
+    if (!data) return "no model";
     return data->GetModelName();
 }
 
 string Model::GetTextureName() const {
+    if (!texture) return "no texture";
     return texture->GetTextureName();
 }
 

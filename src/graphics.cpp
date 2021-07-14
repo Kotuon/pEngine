@@ -154,7 +154,7 @@ void Graphics::Update() {
         glfwPollEvents();
         
           // Check for restart
-        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS) {
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_RELEASE) {
                 Engine::Restart();
             }
@@ -186,6 +186,8 @@ void Graphics::Render() {
         Object* object = Object_Manager::FindObject(i);
 
         Model* model = object->GetComponent<Model>();
+        if (!model) continue;
+        
         model->Draw(projection, view);
     }
 

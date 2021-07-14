@@ -24,6 +24,7 @@ class Texture {
         string textureName;
         GLuint textureNum;
         GLuint textureId;
+        bool hasBeenSet;
 };
 
 #endif

@@ -60,6 +60,7 @@ void Object_Manager::AddObject(Object* object) {
  * @return Object* 
  */
 Object* Object_Manager::FindObject(unsigned id) {
+    if (id >= object_manager->objects.size()) return nullptr;
     return object_manager->objects[id];
 }
 

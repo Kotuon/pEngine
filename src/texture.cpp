@@ -14,9 +14,12 @@ void Texture::Load(string textureName_) {
     textureName = textureName_;
     textureNum = Texture::LoadDDS("data/textures/" + textureName);
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
+    hasBeenSet = true;
 }
 
 void Texture::Display() {
+    if (!hasBeenSet) return;
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureNum);
     glUniform1i(textureId, 0);

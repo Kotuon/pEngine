@@ -207,7 +207,8 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
     glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
     glUniform1f(Shader::GetLightPowerId(), Engine::GetLightPower());
 
-    parent->GetTexture()->Display();
+    if (parent->GetTexture())
+        parent->GetTexture()->Display();
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

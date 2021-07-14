@@ -4,6 +4,9 @@
 
 // Engine includes //
 #include "object.hpp"
+#include "model.hpp"
+#include "physics.hpp"
+#include "trace.hpp"
 
 class Editor {
     public:
@@ -11,6 +14,8 @@ class Editor {
         static void Update();
         static void Render();
         static void Shutdown();
+
+        static bool GetTakeKeyboardInput();
     private:
         void Display_Dockspace();
         void Display_Scene();
@@ -18,12 +23,13 @@ class Editor {
         void Display_World_Settings();
         void Display_Camera_Settings();
 
-        void Display_Model(Object* object);
-        void Display_Physics(Object* object);
-        void Display_Transform(Object* object);
+        void Display_Model(Model* model);
+        void Display_Physics(Physics* physics);
+        void Display_Transform(Transform* transform);
     private:
         bool isOpen;
         int selected_object;
+        bool takeKeyboardInput;
 };
 
 #endif
