@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef GRAPHICS_HPP
 #define GRAPHICS_HPP
 
@@ -41,9 +42,8 @@ class Graphics {
         static GLFWwindow* GetWindow();
     private:
         pair<int, int> windowSize; //!< Size of the window
-        GLFWwindow* window; //!< Window for application
-        GLuint vertexArrayId;
-        bool cursorVisible;
+        GLFWwindow* window;        //!< Window for application
+        GLuint vertexArrayId;      //!< Id of the VAO
 };
 
 #endif

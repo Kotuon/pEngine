@@ -139,6 +139,12 @@ void Engine::Restart() {
     if (!Object_Manager::Initialize(preset)) return;
 }
 
+/**
+ * @brief Resets the engine to the given preset
+ * 
+ * @param presetName Given preset
+ * @return void
+ */
 void Engine::Restart(string presetName) {
       // Removing all current objects
     Object_Manager::Shutdown();
@@ -156,32 +162,39 @@ void Engine::Restart(string presetName) {
  * 
  * @return float Variable delta time
  */
-float Engine::GetDeltaTime() {
-    return engine->deltaTime;
-}
+float Engine::GetDeltaTime() { return engine->deltaTime; }
 
 /**
  * @brief Returns delta time (fixed)
  * 
  * @return float Fixed delta time
  */
-float Engine::GetDt() { 
-    return engine->dt;
-}
+float Engine::GetDt() { return engine->dt; }
 
 /**
  * @brief Returns gravitational constant
  * 
  * @return double Gravitational constant
  */
-double& Engine::GetGravConst() {
-    return engine->gravConst;
-}
+double& Engine::GetGravConst() { return engine->gravConst; }
 
-string Engine::GetPresetName() {
-    return engine->presetName;
-}
+/**
+ * @brief Returns the name of the current preset
+ * 
+ * @return string 
+ */
+string Engine::GetPresetName() { return engine->presetName; }
 
+/**
+ * @brief Returns reference to power of the light in the scene
+ * 
+ * @return float& 
+ */
 float& Engine::GetLightPower() { return engine->lightPower; }
 
+/**
+ * @brief Returns reference to the position of the light in the scene
+ * 
+ * @return vec3& 
+ */
 vec3& Engine::GetLightPos() { return engine->lightPos; }

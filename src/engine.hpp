@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
@@ -47,11 +48,11 @@ class Engine {
         chrono::steady_clock::time_point newTime;     //!< newest read time
         chrono::steady_clock::duration timeTaken;     //!< time between frames
 
-        double gravConst; //!< gravitational constant (used in physics)
-        string presetName;
-        float lightPower;
+        double gravConst;  //!< gravitational constant (used in physics)
+        string presetName; //!< name of the preset being used
 
-        vec3 lightPos;
+        float lightPower; //!< Power of the light in the scene
+        vec3 lightPos;    //!< Position of the light in the scene
 };
 
 #endif

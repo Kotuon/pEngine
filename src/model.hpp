@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef MODEL_HPP
 #define MODEL_HPP
 
@@ -55,7 +56,7 @@ class Model : public Component {
     private:
         GLenum mode;      //!< Draw mode (Default is GL_TRIANGLES)
         Model_Data* data; //!< Data about the faces of the model
-        Texture* texture;
+        Texture* texture; //!< Texture object of model
 };
 
 #endif

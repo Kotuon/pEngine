@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef MODEL_DATA_HPP
 #define MODEL_DATA_HPP
 
@@ -47,7 +48,6 @@ class Model_Data {
         void Draw(Model* parent, Transform* transform, mat4 projection, mat4 view);
 
         string GetModelName() const;
-        string GetTextureName() const;
     private:
         vector<float> vertices; //!< Contains vertices of model
         vector<float> normals;  //!< Contains normals of model
