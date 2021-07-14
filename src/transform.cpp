@@ -61,6 +61,11 @@ void Transform::SetPosition(vec3 pos) { position = pos; }
  */
 vec3 Transform::GetPosition() const { return position; }
 
+/**
+ * @brief Returns position reference of object
+ * 
+ * @return vec3& 
+ */
 vec3& Transform::GetPosition() { return position; }
 
 /**
@@ -91,6 +96,11 @@ void Transform::SetScale(vec3 sca) { scale = sca; }
  */
 vec3 Transform::GetScale() const { return scale; }
 
+/**
+ * @brief Returns scale reference of object
+ * 
+ * @return vec3& 
+ */
 vec3& Transform::GetScale() { return scale; }
 
 /**
@@ -107,6 +117,11 @@ void Transform::SetRotation(vec3 rot) { rotation = rot; }
  */
 vec3 Transform::GetRotation() const { return rotation; }
 
+/**
+ * @brief Returns rotation reference of object
+ * 
+ * @return vec3& 
+ */
 vec3& Transform::GetRotation() { return rotation; }
 
 /**

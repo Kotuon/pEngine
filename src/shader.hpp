@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef SHADER_HPP
 #define SHADER_HPP
 
@@ -45,7 +46,7 @@ class Shader {
         GLuint viewMatrixId;  //!< View matrix id
         GLuint modelMatrixId; //!< Model matrix id
         GLuint lightId;       //!< Light id for world
-        GLuint lightPowerId;
+        GLuint lightPowerId;  //!< Id for light power buffer
 };
 
 #endif

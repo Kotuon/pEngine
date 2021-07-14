@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef BEHAVIOR_HPP
 #define BEHAVIOR_HPP
 

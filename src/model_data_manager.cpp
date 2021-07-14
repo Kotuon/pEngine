@@ -38,7 +38,7 @@ bool Model_Data_Manager::Initialize() {
  *        a pointer to that data. If no it reads it in and adds it to the model
  *        list
  * 
- * @param filename Name of file containing model data
+ * @param reader File_Reader object containing model data
  * @return Model_Data* Model data either read or gotten from list
  */
 Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
@@ -58,6 +58,14 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
     return data;
 }
 
+/**
+ * @brief Checks if model data has already been read in. If yes then it returns
+ *        a pointer to that data. If no it reads it in and adds it to the model
+ *        list
+ * 
+ * @param modelName Filename of the model to get
+ * @return Model_Data* Model data either read or gotten from list
+ */
 Model_Data* Model_Data_Manager::Get(string modelName) {
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {

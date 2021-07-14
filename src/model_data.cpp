@@ -53,6 +53,10 @@ Model_Data::Model_Data(const Model_Data& other) {
     uvbuffer = other.uvbuffer;
 }
 
+/**
+ * @brief Deletes all buffers of the model
+ * 
+ */
 Model_Data::~Model_Data() {
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteBuffers(1, &uvbuffer);
@@ -62,7 +66,7 @@ Model_Data::~Model_Data() {
 /**
  * @brief Loads data of a model from given file
  * 
- * @param filename_ Name of the file containing the model data
+ * @param reader File_Reader object containing the model data
  * @return true 
  * @return false 
  */
@@ -72,10 +76,22 @@ bool Model_Data::Load(File_Reader& reader) {
     return Read(modelName_);
 }
 
-bool Model_Data::Load(string modelName_) {
-    return Read(modelName_);
-}
+/**
+ * @brief Loads in model using given filename
+ * 
+ * @param modelName_ Model's filename
+ * @return true 
+ * @return false 
+ */
+bool Model_Data::Load(string modelName_) { return Read(modelName_); }
 
+/**
+ * @brief Reads model data from file
+ * 
+ * @param modelName_ Model's filename
+ * @return true 
+ * @return false 
+ */
 bool Model_Data::Read(string modelName_) {
       // Setting the name of the file (used in model_data_manager)
     modelName = modelName_;
@@ -174,14 +190,17 @@ bool Model_Data::Read(string modelName_) {
         }
     }
 
+      // Bind vertex data to buffers
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
     
+      // Bind uv data to buffers
     glGenBuffers(1, &uvbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(float), &uvs[0], GL_STATIC_DRAW);
 
+      // Bind normals data to buffers
     glGenBuffers(1, &normalbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
     glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
@@ -190,26 +209,35 @@ bool Model_Data::Read(string modelName_) {
 }
 
 /**
- * @brief Draws the faces
+ * @brief Draws the models
  * 
+ * @param parent Model component
+ * @param transform Transform component
+ * @param projection Projection matrix of the scene
+ * @param view View matrix of the scene
  */
 void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4 view) {
+      // Creating the MVP (Model * View * Projection) matrix
     mat4 model = mat4(1.f);
     model = translate(model, transform->GetPosition());
     model = scale(model, transform->GetScale());
 
+      // Sending data to the shaders
     mat4 MVP = projection * view * model;
     glUniformMatrix4fv(Shader::GetMatrixId(), 1, GL_FALSE, &MVP[0][0]);
     glUniformMatrix4fv(Shader::GetModelMatrixId(), 1, GL_FALSE, &model[0][0]);
     glUniformMatrix4fv(Shader::GetViewMatrixId(), 1, GL_FALSE, &view[0][0]);
 
+      // Sending light data to the shaders
     vec3 lightPos = Engine::GetLightPos();
     glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
     glUniform1f(Shader::GetLightPowerId(), Engine::GetLightPower());
 
+      // Setup texture for drawing if it exists
     if (parent->GetTexture())
         parent->GetTexture()->Display();
 
+      // Setup the model vertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
@@ -220,7 +248,8 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
         0,
         (void*)0
     );
-    
+
+      // Setup the model uv
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
     glVertexAttribPointer(
@@ -231,7 +260,8 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
         0,
         (void*)0
     );
-    
+
+      // Setup the model normals
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
     glVertexAttribPointer(
@@ -243,8 +273,10 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
         (void*)0
     );
 
+      // Draw the object
     glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
+      // Disable data sent to shaders
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
@@ -256,6 +288,4 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
  * 
  * @return string Name of the file that contains model data
  */
-string Model_Data::GetModelName() const {
-    return modelName;
-}
+string Model_Data::GetModelName() const { return modelName; }

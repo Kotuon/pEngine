@@ -1,3 +1,13 @@
+/**
+ * @file editor.cpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-07-14
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 // Library includes //
 #include <imgui.h>
@@ -17,8 +27,14 @@
 
 using namespace glm;
 
-static Editor* editor = nullptr;
+static Editor* editor = nullptr; //!< Editor object
 
+/**
+ * @brief Sets up the config and style of the editor
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Editor::Initialize() {
     editor = new Editor;
     if (!editor) {
@@ -46,13 +62,20 @@ bool Editor::Initialize() {
     return true;
 }
 
+/**
+ * @brief Updates the editor content and calls display functions
+ * 
+ * @return void
+ */
 void Editor::Update() {
+      // ImGui update functions
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
     ImGui::ShowDemoWindow();
 
+      // Updating whether program should ignore keyboard input
     if (!ImGui::GetIO().WantCaptureKeyboard) {
         editor->takeKeyboardInput = true;
     }
@@ -60,6 +83,7 @@ void Editor::Update() {
         editor->takeKeyboardInput = false;
     }
     
+      // Display the different windows
     editor->Display_Dockspace();
     editor->Display_Scene();
     editor->Display_Components();
@@ -67,6 +91,11 @@ void Editor::Update() {
     editor->Display_Camera_Settings();
 }
 
+/**
+ * @brief Render the editor
+ * 
+ * @return void
+ */
 void Editor::Render() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -79,6 +108,11 @@ void Editor::Render() {
     }
 }
 
+/**
+ * @brief Destroy editor windows and systems
+ * 
+ * @return void
+ */
 void Editor::Shutdown() {
     if (!editor) return;
 
@@ -90,6 +124,10 @@ void Editor::Shutdown() {
     editor = nullptr;
 }
 
+/**
+ * @brief Setup and display the editor's dockspace
+ * 
+ */
 void Editor::Display_Dockspace() {
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
@@ -115,9 +153,14 @@ void Editor::Display_Dockspace() {
     ImGui::End();
 }
 
+/**
+ * @brief Display the scene window
+ * 
+ */
 void Editor::Display_Scene() {
     ImGui::Begin("Scene");
 
+      // Display all objects
     for (int i = 0; i < Object_Manager::GetSize(); ++i) {
         if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick))
             selected_object = i;
@@ -125,6 +168,7 @@ void Editor::Display_Scene() {
 
     ImGui::Separator();
 
+      // Button to add new object to the scene
     if (ImGui::Button("Add Object")) {
         Object* newObject = new Object;
         Transform* transform = new Transform;
@@ -137,6 +181,10 @@ void Editor::Display_Scene() {
     ImGui::End();
 }
 
+/**
+ * @brief Display all of the components of the current selected_object
+ * 
+ */
 void Editor::Display_Components() {
     ImGui::Begin("Components##1");
 
@@ -144,6 +192,7 @@ void Editor::Display_Components() {
     Object* object = Object_Manager::FindObject(selected_object);
     string objectName = object->GetName();
 
+      // Display name box (allows changing the name of an object)
     static char nameBuf[128] = "";
     sprintf(nameBuf, objectName.c_str());
     
@@ -159,12 +208,14 @@ void Editor::Display_Components() {
     Physics* physics = object->GetComponent<Physics>();
     Transform* transform = object->GetComponent<Transform>();
 
+      // Display all of the components of the selected_object
     Display_Transform(transform);
     Display_Physics(physics);
     Display_Model(model);
     
     ImGui::Separator();
     
+      // Button to add new components to the selected_object
     if (ImGui::Button("Add Component##1")) {
         ImGui::OpenPopup("New Component##1");
     }
@@ -188,10 +239,15 @@ void Editor::Display_Components() {
     ImGui::End();
 }
 
+/**
+ * @brief Shows all of the settings of the engine itself
+ * 
+ */
 void Editor::Display_World_Settings() {
     ImGui::Begin("World Settings");
     string presetName = Engine::GetPresetName();
 
+      // Allows user to change the preset that is loaded
     ImGui::Text("Presets"); ImGui::SameLine(120);
     if (ImGui::Button(presetName.c_str())) {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".json", "./data/json/preset/");
@@ -209,9 +265,11 @@ void Editor::Display_World_Settings() {
 
     ImGui::PushItemWidth(141);
 
+      // Strength of the light being used
     ImGui::Text("Light Power");
     ImGui::SameLine(120); ImGui::InputFloat("##1", &Engine::GetLightPower());
 
+      // Position of the light being used
     ImGui::Text("Light Position");
     ImGui::PushItemWidth(50);
     ImGui::SameLine(120); ImGui::InputFloat("x##4", &Engine::GetLightPos().x);
@@ -219,6 +277,7 @@ void Editor::Display_World_Settings() {
     ImGui::SameLine(270); ImGui::InputFloat("z##4", &Engine::GetLightPos().z);
     ImGui::PopItemWidth();
 
+      // Grav const of the engine
     ImGui::Text("Grav Const");
     ImGui::SameLine(120); ImGui::InputDouble("##5", &Engine::GetGravConst());
 
@@ -227,17 +286,24 @@ void Editor::Display_World_Settings() {
     ImGui::End();
 }
 
+/**
+ * @brief Displays the different camera settings, allows user to change them as needed
+ * 
+ */
 void Editor::Display_Camera_Settings() {
     ImGui::Begin("Camera Settings");
 
     ImGui::PushItemWidth(137);
 
+      // Default move speed
     ImGui::Text("Move Speed");
     ImGui::SameLine(100); ImGui::InputFloat("##2", &Camera::GetOriginalMoveSpeed());
 
+      // Move speed when holding shift
     ImGui::Text("Sprint Speed");
     ImGui::SameLine(100); ImGui::InputFloat("##3", &Camera::GetOriginalSprintSpeed());
 
+      // Mouse sensitivity when looking around
     ImGui::Text("Sensitivity");
     ImGui::SameLine(100); ImGui::InputFloat("##4", &Camera::GetOriginalSensitivity());
 
@@ -246,6 +312,11 @@ void Editor::Display_Camera_Settings() {
     ImGui::End();
 }
 
+/**
+ * @brief Displays the data of the model being used
+ * 
+ * @param model 
+ */
 void Editor::Display_Model(Model* model) {
     if (!model) return;
     
@@ -253,6 +324,7 @@ void Editor::Display_Model(Model* model) {
     string textureName = model->GetTextureName();
 
     if (ImGui::TreeNode("Model")) {
+          // Model that is being used
         ImGui::Text("Model"); ImGui::SameLine(100);
         if (ImGui::Button(modelName.c_str())) {
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##1", "Choose File", ".obj", "./data/models/");
@@ -267,6 +339,7 @@ void Editor::Display_Model(Model* model) {
             ImGuiFileDialog::Instance()->Close();
         }
 
+          // Texture that is being used
         ImGui::Text("Texture"); ImGui::SameLine(100);
         if (ImGui::Button(textureName.c_str())) {
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##2", "Choose File", ".dds,.DDS", "./data/textures/");
@@ -285,6 +358,11 @@ void Editor::Display_Model(Model* model) {
     }
 }
 
+/**
+ * @brief Shows the Physics component
+ * 
+ * @param physics 
+ */
 void Editor::Display_Physics(Physics* physics) {
     if (!physics) return;
     
@@ -303,6 +381,11 @@ void Editor::Display_Physics(Physics* physics) {
     }
 }
 
+/**
+ * @brief Display transform data, users can change any of it
+ * 
+ * @param transform 
+ */
 void Editor::Display_Transform(Transform* transform) {
     if (!transform) return;
     
@@ -339,4 +422,10 @@ void Editor::Display_Transform(Transform* transform) {
     }
 }
 
+/**
+ * @brief Returns whether the program should ignore keyboard input
+ * 
+ * @return true 
+ * @return false 
+ */
 bool Editor::GetTakeKeyboardInput() { return editor->takeKeyboardInput; }

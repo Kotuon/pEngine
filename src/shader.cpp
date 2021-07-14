@@ -25,6 +25,7 @@ static Shader* shader = nullptr; //!< Shader object
 /**
  * @brief Initializes the shader object
  * 
+ * @param settings File_Reader object that contains name of shaders to use
  * @return true 
  * @return false 
  */
@@ -137,9 +138,44 @@ void Shader::LoadShader(string vertexPath, string fragmentPath) {
     shader->lightPowerId = glGetUniformLocation(shader->program, "LightPower");
 }
 
+/**
+ * @brief Returns the program id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetProgram() { return shader->program; }
+
+/**
+ * @brief Returns the mvp buffer id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetMatrixId() { return shader->matrixId; }
+
+/**
+ * @brief Returns the view matrix buffer id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetViewMatrixId() { return shader->viewMatrixId; }
+
+/**
+ * @brief Returns the model matrix buffer id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetModelMatrixId() { return shader->modelMatrixId; }
+
+/**
+ * @brief Returns the light pos buffer id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetLightId() { return shader->lightId; }
+
+/**
+ * @brief Returns the light power buffer id
+ * 
+ * @return GLuint 
+ */
 GLuint Shader::GetLightPowerId() { return shader->lightPowerId; }

@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef OBJECT_HPP
 #define OBJECT_HPP
 
@@ -85,7 +86,6 @@ class Object {
 
         void SetName(string name_);
         string GetName() const;
-        string GetName();
 
         void ReadObject(string objectFilename);
     private:

@@ -41,7 +41,6 @@
 using namespace glm;
 
 static Graphics* graphics = nullptr; //!< Graphics object
-static GLuint vertexbuffer;
 
 /**
  * @brief Creates Graphics object with given window size

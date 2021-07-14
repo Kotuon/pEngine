@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef BEHAVIOR_MANAGER_HPP
 #define BEHAVIOR_MANAGER_HPP
 

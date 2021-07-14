@@ -99,6 +99,11 @@ void Behavior_Manager::GravityBetweenObjects(Object* object) {
     object_physics->UpdateGravity();
 }
 
+/**
+ * @brief Particles idle by moving in a radius around their start position
+ * 
+ * @param object 
+ */
 void Behavior_Manager::Idle(Object* object) {
     Behavior* behavior = object->GetComponent<Behavior>();
     Physics* physics = object->GetComponent<Physics>();
@@ -124,6 +129,13 @@ void Behavior_Manager::Idle(Object* object) {
     }
 }
 
+/**
+ * @brief Applies force in the given direction
+ * 
+ * @param direction Direction to apply force in
+ * @param behavior Behavior of the object
+ * @return vec3 
+ */
 vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior* behavior) {
     direction = normalize(direction + behavior->GetDirVariation());
     direction *= (behavior->GetPushForce() + behavior->GetPushVariation());
@@ -131,6 +143,13 @@ vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior* behavior) {
     return direction;
 }
 
+/**
+ * @brief Launches object in the given direction
+ * 
+ * @param direction Direction to launch
+ * @param object Object to launch
+ * @return void
+ */
 void Behavior_Manager::LaunchObject(vec3 direction, Object* object) {
     Behavior* behavior = object->GetComponent<Behavior>();
     Physics* physics = object->GetComponent<Physics>();

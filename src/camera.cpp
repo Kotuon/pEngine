@@ -22,8 +22,6 @@
 #include "trace.hpp"
 
 static Camera* camera = nullptr; //!< Camera object
-static int keyCooldown = 1.f;
-static int keyCounter = 0.f;
 
 /**
  * @brief Creates a new camera with default values
@@ -249,14 +247,29 @@ float Camera::GetPitch() {
     return camera->pitch;
 }
 
+/**
+ * @brief Returns reference to originalMoveSpeed
+ * 
+ * @return float& 
+ */
 float& Camera::GetOriginalMoveSpeed() {
     return camera->originalMoveSpeed;
 }
 
+/**
+ * @brief Returns reference to originalSprintSpeed
+ * 
+ * @return float& 
+ */
 float& Camera::GetOriginalSprintSpeed() {
     return camera->originalSprintSpeed;
 }
 
+/**
+ * @brief Returns reference to originalSensitivity
+ * 
+ * @return float& 
+ */
 float& Camera::GetOriginalSensitivity() {
     return camera->originalSensitivity;
 }

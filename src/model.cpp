@@ -36,9 +36,7 @@ Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr
  * 
  * @param other 
  */
-Model::Model(const Model& other) : Component(CType::CModel) {
-    *this = other;
-}
+Model::Model(const Model& other) : Component(CType::CModel) { *this = other; }
 
 /**
  * @brief Creates a Model object using the data from a file
@@ -55,15 +53,13 @@ Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode
  * 
  * @return Model* Cloned Model
  */
-Model* Model::Clone() const {
-    return new Model(*this);
-}
+Model* Model::Clone() const { return new Model(*this); }
 
 /**
  * @brief Load in the model data from a file (use model manager to not have
  *        multiple versions of the same model)
  * 
- * @param filename 
+ * @param reader File_reader object that contains Model info 
  */
 void Model::Load(File_Reader& reader) {
     data = Model_Data_Manager::Get(reader);
@@ -73,6 +69,8 @@ void Model::Load(File_Reader& reader) {
 /**
  * @brief Draw the model
  * 
+ * @param projection Projection matrix of the scene
+ * @param view View matrix of the scene
  */
 void Model::Draw(mat4 projection, mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
@@ -86,31 +84,48 @@ void Model::Draw(mat4 projection, mat4 view) {
  * 
  * @param reader File that contains the name of the model's file
  */
-void Model::Read(File_Reader& reader) {
-    Load(reader);
-}
+void Model::Read(File_Reader& reader) { Load(reader); }
 
-void Model::SwitchModel(string modelName) {
-    data = Model_Data_Manager::Get(modelName);
-}
+/**
+ * @brief Switches the current model to that of the filename provided
+ * 
+ * @param modelName 
+ */
+void Model::SwitchModel(string modelName) { data = Model_Data_Manager::Get(modelName); }
 
-void Model::SwitchTexture(string textureName) {
-    texture = Texture_Manager::Get(textureName);
-}
+/**
+ * @brief Switches the current texture to that of the filename provided
+ * 
+ * @param textureName 
+ */
+void Model::SwitchTexture(string textureName) { texture = Texture_Manager::Get(textureName); }
 
+/**
+ * @brief Returns the filename of the current model
+ * 
+ * @return string 
+ */
 string Model::GetModelName() const {
     if (!data) return "no model";
     return data->GetModelName();
 }
 
+/**
+ * @brief Returns the filename of the current texture
+ * 
+ * @return string 
+ */
 string Model::GetTextureName() const {
     if (!texture) return "no texture";
     return texture->GetTextureName();
 }
 
-Texture* Model::GetTexture() const {
-    return texture;
-}
+/**
+ * @brief Returns pointer to texture object
+ * 
+ * @return Texture* 
+ */
+Texture* Model::GetTexture() const { return texture; }
 
 /**
  * @brief Gets the CType of Model (used in Object::GetComponent<>())
