@@ -20,9 +20,16 @@
 // Library includes //
 #include <vec3.hpp>
 #include <vec2.hpp>
+#include <mat4x4.hpp>
+#include <GL/gl.h>
+
+// Engine includes //
+#include "transform.hpp"
 
 using namespace std;
 using namespace glm;
+
+class Model;
 
 /*! Model_Data class */
 class Model_Data {
@@ -30,20 +37,25 @@ class Model_Data {
         Model_Data();
         Model_Data(const Model_Data& other);
 
-        bool Load(string filename_);
-        void Draw() const;
+        ~Model_Data();
 
-        string GetFilename() const;
+        bool Load(File_Reader& reader);
+        bool Load(string modelName_);
+
+        bool Read(string modelName_);
+
+        void Draw(Model* parent, Transform* transform, mat4 projection, mat4 view);
+
+        string GetModelName() const;
+        string GetTextureName() const;
     private:
-        /*! Face struct */
-        struct Face {
-            vector<vec3> vertices; //!< Vertices of the model
-            vector<vec2> uvs;      //!< UVS of the model
-            vector<vec3> normals;  //!< Normals of the model
-            array<float, 3> color; //!< Colors of the model
-        }; 
-        vector<Face> faces; //!< Faces of the model
-        string filename;    //!< Name of the file for the model
+        vector<float> vertices; //!< Contains vertices of model
+        vector<float> normals;  //!< Contains normals of model
+        vector<float> uvs;      //!< Contains uv data of model
+        string modelName;       //!< Name of the file for the model
+        GLuint vertexbuffer;    //!< Vertex buffer of model
+        GLuint normalbuffer;    //!< Normal buffer of model
+        GLuint uvbuffer;        //!< UV buffer of model
 };
 
 #endif

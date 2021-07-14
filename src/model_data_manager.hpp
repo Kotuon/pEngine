@@ -9,6 +9,7 @@
  * 
  */
 
+#pragma once
 #ifndef MODEL_DATA_MANAGER_HPP
 #define MODEL_DATA_MANAGER_HPP
 
@@ -18,6 +19,7 @@
 
 // Engine includes //
 #include "model_data.hpp"
+#include "file_reader.hpp"
 
 using namespace std;
 
@@ -25,7 +27,8 @@ using namespace std;
 class Model_Data_Manager {
     public:
         static bool Initialize();
-        static Model_Data* Get(string filename);
+        static Model_Data* Get(File_Reader& reader);
+        static Model_Data* Get(string modelName);
         static void Shutdown();
     private:
         vector<Model_Data*> models; //!< List of the different Model_Data objects

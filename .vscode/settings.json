@@ -40,7 +40,9 @@
         "streambuf": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "hash_map": "cpp",
+        "bitset": "cpp"
     },
     "spellright.language": [
         "en"

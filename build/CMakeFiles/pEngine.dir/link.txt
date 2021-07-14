@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\pEngine.dir/objects.a
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe cr CMakeFiles\pEngine.dir/objects.a @CMakeFiles\pEngine.dir\objects1.rsp
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE -g -Wl,--whole-archive CMakeFiles\pEngine.dir/objects.a -Wl,--no-whole-archive -o pEngine.exe -Wl,--out-implib,libpEngine.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\pEngine.dir\linklibs.rsp

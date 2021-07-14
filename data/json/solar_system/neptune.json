@@ -1,6 +1,7 @@
 {
     "name"         : "neptune",
-    "modelToLoad"  : "ball",
+    "modelToLoad"  : "ball.obj",
+    "textureToLoad" : "uvmap.DDS",
     "scale"        : [ 49.528, 49.528, 49.528 ],
     "rotation"     : 0.0,
     "acceleration" : [ 0.0, 0.0, 0.0 ],

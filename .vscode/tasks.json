@@ -1,43 +1,48 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "cppbuild",
-			"label": "Engine",
-			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
-			"args": [
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Rebuild",
+            "command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
+            "args": [
                 "-m64",
-				"-g",
+                "-g",
                 "-O2",
-				"src\\*.cpp",
+                "src\\*.cpp",
                 "libraries\\JSONCPP\\include\\*.cpp",
-				"-o",
-				"build\\pEngine.exe",
+                "libraries\\imgui\\*.cpp",
+                "-o",
+                "output\\pEngine.exe",
                 "-I", "libraries/GLM",
                 "-I", "libraries/GLFW/include",
+                "-I", "libraries/GLFW/include/GLFW",
                 "-L", "libraries/GLFW/lib",
                 "-I", "libraries/JSONCPP/include/json",
                 "-I", "libraries/JSONCPP/include",
                 "-L", "libraries/JSONCPP/lib",
                 "-I", "libraries/GLEW/include",
+                "-I", "libraries/GLEW/include/GL",
                 "-L", "libraries/GLEW/lib",
-				"-lmingw32",
+                "-I", "libraries/imgui",
+                "-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
                 "-lglew32",
-                "-ljsoncpp"
-			],
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
-			"problemMatcher": [
-				"$gcc"
-			],
-			"group": {
-				"kind": "build",
-				"isDefault": true,
-			}
-		}
-	]
+                "-ljsoncpp",
+                "-limm32"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true,
+            }
+        }
+    ]
 }

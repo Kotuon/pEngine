@@ -35,8 +35,6 @@ class Graphics {
         static void Render();
         static void Shutdown();
 
-        static void Reshape(GLFWwindow*, GLsizei width, GLsizei height);
-
         static bool ErrorCheck(GLenum error);
         static void ErrorCallback(int error, const char* description);
         static pair<int, int> GetWindowSize();
@@ -44,6 +42,8 @@ class Graphics {
     private:
         pair<int, int> windowSize; //!< Size of the window
         GLFWwindow* window; //!< Window for application
+        GLuint vertexArrayId;
+        bool cursorVisible;
 };
 
 #endif

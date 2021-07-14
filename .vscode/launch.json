@@ -5,7 +5,7 @@
             "name": "(gdb)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\build\\pEngine.exe",
+            "program": "${workspaceFolder}\\output\\pEngine.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

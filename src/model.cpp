@@ -20,6 +20,8 @@
 #include "model_data_manager.hpp"
 #include "transform.hpp"
   // Misc //
+#include "texture.hpp"
+#include "texture_manager.hpp"
 #include "trace.hpp"
 
 /**
@@ -27,7 +29,7 @@
  * 
  * @param mode_ Draw mode for opengl
  */
-Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr) {}
+Model::Model(GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr), texture(nullptr) {}
 
 /**
  * @brief Copy constructor
@@ -44,7 +46,7 @@ Model::Model(const Model& other) : Component(CType::CModel) {
  * @param reader File with Model data
  * @param mode_  Draw mode for opengl
  */
-Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr) {
+Model::Model(File_Reader& reader, GLenum mode_) : Component(CType::CModel), mode(mode_), data(nullptr), texture(nullptr) {
     Read(reader);
 }
 
@@ -63,28 +65,20 @@ Model* Model::Clone() const {
  * 
  * @param filename 
  */
-void Model::Load(string filename) {
-    data = Model_Data_Manager::Get(filename);
+void Model::Load(File_Reader& reader) {
+    data = Model_Data_Manager::Get(reader);
+    texture = Texture_Manager::Get(reader);
 }
 
 /**
  * @brief Draw the model
  * 
  */
-void Model::Draw() {
+void Model::Draw(mat4 projection, mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
+    if (!data) return;
 
-      // Setting position and scale of model using transform of the object
-    vec3 pos = transform->GetPosition();
-    vec3 scale = transform->GetScale();
-    glTranslatef((GLfloat)pos.x, (GLfloat)pos.y, (GLfloat)pos.z);
-    glScalef(scale.x, scale.y, scale.z);
-    glRotatef(transform->GetRotation(), 1.f, 1.f, 1.f);
-
-      // Drawing the model
-    glBegin(mode);
-    data->Draw();
-    glEnd();
+    data->Draw(this, transform, projection, view);
 }
 
 /**
@@ -92,8 +86,30 @@ void Model::Draw() {
  * 
  * @param reader File that contains the name of the model's file
  */
-void Model::Read(File_Reader reader) {
-    Load(reader.Read_String("modelToLoad"));
+void Model::Read(File_Reader& reader) {
+    Load(reader);
+}
+
+void Model::SwitchModel(string modelName) {
+    data = Model_Data_Manager::Get(modelName);
+}
+
+void Model::SwitchTexture(string textureName) {
+    texture = Texture_Manager::Get(textureName);
+}
+
+string Model::GetModelName() const {
+    if (!data) return "no model";
+    return data->GetModelName();
+}
+
+string Model::GetTextureName() const {
+    if (!texture) return "no texture";
+    return texture->GetTextureName();
+}
+
+Texture* Model::GetTexture() const {
+    return texture;
 }
 
 /**

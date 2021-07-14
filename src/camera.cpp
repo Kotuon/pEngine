@@ -22,6 +22,8 @@
 #include "trace.hpp"
 
 static Camera* camera = nullptr; //!< Camera object
+static int keyCooldown = 1.f;
+static int keyCounter = 0.f;
 
 /**
  * @brief Creates a new camera with default values
@@ -31,7 +33,7 @@ static Camera* camera = nullptr; //!< Camera object
  */
 Camera::Camera(int width, int height) : position(0.f, 0.f, 0.f), front(0.f, 0.f, -1.f),
     up(0.f, 1.f, 0.f), yaw(-90.f), pitch(0.f), last({ width / 2.f, height / 2.f }), 
-    fov(45.f), speed(1), nearV(0.1f), farV(10000.f), sensitivity(1) {}
+    fov(45.f), speed(1), nearV(0.1f), farV(10000.f), sensitivity(1), canMoveMouse(true) {}
 
 /**
  * @brief Initializes the camera
@@ -94,6 +96,13 @@ void Camera::Update() {
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
         camera->position -= camera->speed * camera->up;
     }
+
+    if (glfwGetMouseButton(Graphics::GetWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+        camera->canMoveMouse = true;
+    }
+    if (glfwGetMouseButton(Graphics::GetWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
+        camera->canMoveMouse = false;
+    }
 }
 
 /**
@@ -104,6 +113,10 @@ void Camera::Update() {
  * @return void
  */
 void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
+    if (!camera->canMoveMouse) {
+        camera->last = { xpos, ypos };
+        return;
+    }
       // Setting up variables
     static bool firstMouse = true;
     pair<double, double> mousePos = { xpos, ypos };
@@ -234,4 +247,16 @@ float Camera::GetYaw() {
  */
 float Camera::GetPitch() {
     return camera->pitch;
+}
+
+float& Camera::GetOriginalMoveSpeed() {
+    return camera->originalMoveSpeed;
+}
+
+float& Camera::GetOriginalSprintSpeed() {
+    return camera->originalSprintSpeed;
+}
+
+float& Camera::GetOriginalSensitivity() {
+    return camera->originalSensitivity;
 }

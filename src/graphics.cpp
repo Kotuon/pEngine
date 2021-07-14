@@ -15,6 +15,7 @@
 #include <cmath>
 
 // Library includes //
+#include <glew.h>
 #include <vec3.hpp>
 #include <vec2.hpp>
 #include <mat4x4.hpp>
@@ -33,12 +34,14 @@
 #include "transform.hpp"
   // Misc //
 #include "camera.hpp"
+#include "editor.hpp"
 #include "trace.hpp"
 #include "shader.hpp"
 
 using namespace glm;
 
 static Graphics* graphics = nullptr; //!< Graphics object
+static GLuint vertexbuffer;
 
 /**
  * @brief Creates Graphics object with given window size
@@ -84,18 +87,22 @@ bool Graphics::Initialize(File_Reader& settings) {
 
       // Setting up callback functions
     glfwSetCursorPosCallback(graphics->window, Camera::MouseUpdate);
-    glfwSetWindowSizeCallback(graphics->window, Reshape);
 
     glfwMakeContextCurrent(graphics->window);
-    glfwSwapInterval(1);
+    //glfwSwapInterval(1);
     InitializeGL();
-    Reshape(nullptr, graphics->windowSize.first, graphics->windowSize.second);
+
+    glewExperimental = GL_TRUE;
+    glewInit();
 
       // Setting up input for keyboard and mouse using glfw library
     glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
-    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-    //if (!Shader::Initialize()) return false;
+    glGenVertexArrays(1, &graphics->vertexArrayId);
+    glBindVertexArray(graphics->vertexArrayId);
+
+    if (!Shader::Initialize(settings)) return false;
     
     return true;
 }
@@ -145,9 +152,9 @@ void Graphics::Update() {
         Engine::Update();
         Render();
         glfwPollEvents();
-
+        
           // Check for restart
-        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS) {
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_R) == GLFW_RELEASE) {
                 Engine::Restart();
             }
@@ -163,10 +170,10 @@ void Graphics::Update() {
 void Graphics::Render() {
       // Setting up graphics system for rendering
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //Shader::Update();
+    Shader::Update();
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    mat4 projection = perspective(radians(Camera::GetFov()), (float)graphics->windowSize.first / 
+        (float)graphics->windowSize.second, Camera::GetNear(), Camera::GetFar());
 
       // Getting the view matrix of the camera
     mat4 view = lookAt(
@@ -174,19 +181,17 @@ void Graphics::Render() {
         Camera::GetPosition() + Camera::GetFront(), 
         Camera::GetUp());
 
-      // Updating the view matrix of the camera in the graphics system
-    glLoadMatrixf(&view[0][0]);
-
       // Rendering all of the objects
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
         Object* object = Object_Manager::FindObject(i);
 
         Model* model = object->GetComponent<Model>();
-
-        glPushMatrix();
-        model->Draw();
-        glPopMatrix();
+        if (!model) continue;
+        
+        model->Draw(projection, view);
     }
+
+    Editor::Render();
 
     glfwSwapBuffers(graphics->window);
 }
@@ -199,39 +204,14 @@ void Graphics::Render() {
 void Graphics::Shutdown() {
     if (!graphics) return;
 
-    //Shader::Shutdown();
+    Shader::Shutdown();
+    glDeleteVertexArrays(1, &graphics->vertexArrayId);
       // Shutting down opengl
     glfwDestroyWindow(graphics->window);
     glfwTerminate();
       // Deleting graphics object
     delete graphics;
     graphics = nullptr;
-}
-
-/**
- * @brief Reshape callback for if the window changes size
- * 
- * @param width Width of the window
- * @param height Height of the window
- * @return void
- */
-void Graphics::Reshape(GLFWwindow*, GLsizei width, GLsizei height) {
-    if (height == 0) height = 1;
-
-      // Updating viewport
-    GLfloat aspect = (GLfloat)width / (GLfloat)height;
-    glViewport(0, 0, width, height);
-
-    const GLdouble pi = 3.1415926535897932384626433832795;
-    GLdouble fW, fH;
-
-      // Updating camera
-    fH = tan( Camera::GetFov() / 180 * pi ) * Camera::GetNear();
-    fW = fH * aspect;
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glFrustum( -fW, fW, -fH, fH, Camera::GetNear(), Camera::GetFar());
 }
 
 /**

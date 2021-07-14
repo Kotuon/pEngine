@@ -33,7 +33,7 @@ File_Reader::File_Reader(string filename) {
  */
 void File_Reader::Read_File(string filename) {
       // Opening the json file
-    string fileToOpen = "data/json/" + filename + ".json";
+    string fileToOpen = "data/json/" + filename;
     ifstream file(fileToOpen.c_str(), ifstream::binary);
 
       // Reading data from file into root variable

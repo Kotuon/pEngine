@@ -14,11 +14,17 @@
 #include <cstring>
 
 // Library includes //
-#include <GL/gl.h>
+#include <glew.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtx/transform.hpp>
 
 // Engine includes //
+#include "engine.hpp"
+#include "model.hpp"
 #include "model_data.hpp"
 #include "trace.hpp"
+#include "shader.hpp"
 
 /**
  * @brief Default constructor
@@ -32,9 +38,25 @@ Model_Data::Model_Data() {}
  * @param other 
  */
 Model_Data::Model_Data(const Model_Data& other) {
-    for (const Face& otherFace : other.faces) {
-        faces.emplace_back(otherFace);
+    for (float vert : other.vertices) {
+        vertices.emplace_back(vert);
     }
+    for (float norm : other.normals) {
+        normals.emplace_back(norm);
+    }
+    for (float uv : other.uvs) {
+        uvs.emplace_back(uv);
+    }
+
+    vertexbuffer = other.vertexbuffer;
+    normalbuffer = other.normalbuffer;
+    uvbuffer = other.uvbuffer;
+}
+
+Model_Data::~Model_Data() {
+    glDeleteBuffers(1, &vertexbuffer);
+    glDeleteBuffers(1, &uvbuffer);
+    glDeleteBuffers(1, &normalbuffer);
 }
 
 /**
@@ -44,9 +66,19 @@ Model_Data::Model_Data(const Model_Data& other) {
  * @return true 
  * @return false 
  */
-bool Model_Data::Load(string filename_) {
+bool Model_Data::Load(File_Reader& reader) {
+    string modelName_ = reader.Read_String("modelToLoad");
+
+    return Read(modelName_);
+}
+
+bool Model_Data::Load(string modelName_) {
+    return Read(modelName_);
+}
+
+bool Model_Data::Read(string modelName_) {
       // Setting the name of the file (used in model_data_manager)
-    filename = filename_;
+    modelName = modelName_;
 
       // Creating variables for reading
     vector<unsigned> vertex_indices, uv_indices, normal_indices;
@@ -55,10 +87,10 @@ bool Model_Data::Load(string filename_) {
     vector<vec3> temp_normals;
 
       // Opening the file
-    string fileToOpen = "data/models/" + string(filename) + ".obj";
+    string fileToOpen = "data/models/" + modelName;
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
-        Trace::Message("File '" + filename + "' was not successfully opened.\n");
+        Trace::Message("File '" + modelName + "' was not successfully opened.\n");
         return false;
     }
 
@@ -93,8 +125,6 @@ bool Model_Data::Load(string filename_) {
         }
 
         if (strcmp(line_header, "f") == 0) {
-            Face face;
-
               // Connecting face to previous read vertices, uvs, and normals
             unsigned vertex_index[3], uv_index[3], normal_index[3];
             int matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d\n", &vertex_index[0], &uv_index[0], &normal_index[0],
@@ -107,55 +137,54 @@ bool Model_Data::Load(string filename_) {
             }
 
               // Setting vertices for current face
-            face.vertices.emplace_back(temp_vertices[vertex_index[0] - 1]);
-            face.vertices.emplace_back(temp_vertices[vertex_index[1] - 1]);
-            face.vertices.emplace_back(temp_vertices[vertex_index[2] - 1]);
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[0] - 1]).z);
+
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[1] - 1]).z);
+
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).x);
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).y);
+            vertices.emplace_back((temp_vertices[vertex_index[2] - 1]).z);
 
               // Setting uvs for current face
-            face.uvs.emplace_back(temp_uvs[uv_index[0] - 1]);
-            face.uvs.emplace_back(temp_uvs[uv_index[1] - 1]);
-            face.uvs.emplace_back(temp_uvs[uv_index[2] - 1]);
+            uvs.emplace_back((temp_uvs[uv_index[0] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[0] - 1]).y);
+
+            uvs.emplace_back((temp_uvs[uv_index[1] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[1] - 1]).y);
+            
+            uvs.emplace_back((temp_uvs[uv_index[2] - 1]).x);
+            uvs.emplace_back((temp_uvs[uv_index[2] - 1]).y);
 
               // Setting normals for current face
-            face.normals.emplace_back(temp_normals[normal_index[0] - 1]);
-            face.normals.emplace_back(temp_normals[normal_index[1] - 1]);
-            face.normals.emplace_back(temp_normals[normal_index[2] - 1]);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[0] - 1]).z);
 
-              // Setting colors of the faces
-            if (faces.size() % 6 == 0) {
-                face.color[0] = 0.f;
-                face.color[1] = 1.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 1) {
-                face.color[0] = 1.f;
-                face.color[1] = .5f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 2) {
-                face.color[0] = 1.f;
-                face.color[1] = 0.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 3) {
-                face.color[0] = 1.f;
-                face.color[1] = 1.f;
-                face.color[2] = 0.f;
-            }
-            else if (faces.size() % 6 == 4) {
-                face.color[0] = 0.f;
-                face.color[1] = 0.f;
-                face.color[2] = 1.f;
-            }
-            else if (faces.size() % 6 == 5) {
-                face.color[0] = 1.f;
-                face.color[1] = 0.f;
-                face.color[2] = 1.f;
-            }
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[1] - 1]).z);
 
-            faces.emplace_back(face);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).x);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).y);
+            normals.emplace_back((temp_normals[normal_index[2] - 1]).z);
         }
     }
+
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &uvbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(float), &uvs[0], GL_STATIC_DRAW);
+
+    glGenBuffers(1, &normalbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(float), &normals[0], GL_STATIC_DRAW);
 
     return true;
 }
@@ -164,19 +193,62 @@ bool Model_Data::Load(string filename_) {
  * @brief Draws the faces
  * 
  */
-void Model_Data::Draw() const {
-    for (const Face& face : faces) {
-          // Setting color of face
-        glColor3f(face.color[0], face.color[1], face.color[2]);
-          // Drawing vertices of face
-        for (vec3 vert : face.vertices) {
-            glVertex3f(vert.x, vert.y, vert.z);
-        }
-          // Setting uvs for face
-        for (vec2 uv : face.uvs) {
-            glTexCoord2f(uv.x, 1 - uv.y);
-        }
-    }
+void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4 view) {
+    mat4 model = mat4(1.f);
+    model = translate(model, transform->GetPosition());
+    model = scale(model, transform->GetScale());
+
+    mat4 MVP = projection * view * model;
+    glUniformMatrix4fv(Shader::GetMatrixId(), 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(Shader::GetModelMatrixId(), 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(Shader::GetViewMatrixId(), 1, GL_FALSE, &view[0][0]);
+
+    vec3 lightPos = Engine::GetLightPos();
+    glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
+    glUniform1f(Shader::GetLightPowerId(), Engine::GetLightPower());
+
+    if (parent->GetTexture())
+        parent->GetTexture()->Display();
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glVertexAttribPointer(
+        0,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
+    
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+    glVertexAttribPointer(
+        1,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
+    
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+    glVertexAttribPointer(
+        2,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        (void*)0
+    );
+
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
+
 }
 
 /**
@@ -184,6 +256,6 @@ void Model_Data::Draw() const {
  * 
  * @return string Name of the file that contains model data
  */
-string Model_Data::GetFilename() const {
-    return filename;
+string Model_Data::GetModelName() const {
+    return modelName;
 }

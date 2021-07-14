@@ -87,9 +87,11 @@ Object* Object::Clone() const {
  */
 void Object::Update() {
     Behavior* behavior = GetComponent<Behavior>();
-    behavior->Update();
+    if (behavior)
+        behavior->Update();
     Physics* physics = GetComponent<Physics>();
-    physics->Update();
+    if (physics)
+        physics->Update();
 }
 
 /**
@@ -129,6 +131,8 @@ void Object::SetName(string name_) { name = name_; }
  * @return string Name of object
  */
 string Object::GetName() const { return name; }
+
+string Object::GetName() { return name; }
 
 /**
  * @brief Reads object from file. This includes the components of an object

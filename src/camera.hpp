@@ -44,6 +44,10 @@ class Camera {
 
         static float GetYaw();
         static float GetPitch();
+
+        static float& GetOriginalMoveSpeed();
+        static float& GetOriginalSprintSpeed();
+        static float& GetOriginalSensitivity();
     private:
         vec3 position;             //!< Position of camera
         vec3 front;                //!< Direction of camera
@@ -59,6 +63,7 @@ class Camera {
         float originalMoveSpeed;   //!< Initial move speed (speed gets change by delta time)
         float originalSprintSpeed; //!< Initial sprint speed
         float originalSensitivity; //!< Original mouse sensitivity 
+        bool canMoveMouse;
 };
 
 #endif
