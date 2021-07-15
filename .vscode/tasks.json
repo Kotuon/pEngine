@@ -25,13 +25,16 @@
                 "-I", "libraries/GLEW/include/GL",
                 "-L", "libraries/GLEW/lib",
                 "-I", "libraries/imgui",
+                "-I", "libraries/lua/include",
+                "-L", "libraries/lua/lib",
                 "-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
                 "-lglew32",
                 "-ljsoncpp",
-                "-limm32"
+                "-limm32",
+                "-llua"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
