@@ -116,17 +116,17 @@ void Behavior_Manager::Idle(Object* object) {
     }
 
       // Check if the object is in its idle area
-    float distanceFromStart = distance(transform->GetPosition(), behavior->GetStartPos());
-    float combinedRadius = transform->GetScale().x + behavior->GetIdleRadius();
-    if (distanceFromStart > combinedRadius) {
-        LaunchObject(normalize(behavior->GetStartPos() - transform->GetPosition()),
-            object);
-        return;
-    }
+    // float distanceFromStart = distance(transform->GetPosition(), behavior->GetStartPos());
+    // float combinedRadius = transform->GetScale().x + behavior->GetIdleRadius();
+    // if (distanceFromStart > combinedRadius) {
+    //     LaunchObject(normalize(behavior->GetStartPos() - transform->GetPosition()),
+    //         object);
+    //     return;
+    // }
 
-    if (length(physics->GetVelocity()) < behavior->GetMaxVelocity()) {
-        LaunchObject(normalize(physics->GetVelocity()), object);
-    }
+    // if (length(physics->GetVelocity()) < behavior->GetMaxVelocity()) {
+    //     LaunchObject(normalize(physics->GetVelocity()), object);
+    // }
 }
 
 /**
@@ -136,9 +136,9 @@ void Behavior_Manager::Idle(Object* object) {
  * @param behavior Behavior of the object
  * @return vec3 
  */
-vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior* behavior) {
-    direction = normalize(direction + behavior->GetDirVariation());
-    direction *= (behavior->GetPushForce() + behavior->GetPushVariation());
+vec3 Behavior_Manager::ApplyForce(vec3 direction, Behavior*) {
+    // direction = normalize(direction + behavior->GetDirVariation());
+    // direction *= (behavior->GetPushForce() + behavior->GetPushVariation());
 
     return direction;
 }

@@ -19,10 +19,13 @@
 using namespace std;
 
 void test_lua() {
-    int error_code = 0;
     lua_State *lua = luaL_newstate();
     luaL_openlibs(lua);
+
     luaL_dofile(lua, "data/scripts/test.lua");
+    lua_getglobal(lua, "helloWorld");
+    lua_call(lua, 0, 0);
+
     lua_close(lua);
 }
 

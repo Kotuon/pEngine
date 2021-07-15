@@ -18,6 +18,7 @@
 
 // Library includes //
 #include <vec3.hpp>
+#include "lua.hpp"
 
 // Engine includes //
 #include "component.hpp"
@@ -41,21 +42,23 @@ class Behavior : public Component {
         void SetStartPos(vec3 startPos_);
         vec3 GetStartPos() const;
 
-        float GetMaxVelocity() const;
-        float GetIdleRadius() const;
-        float GetPushForce() const;
-        float GetDirVariation() const;
-        float GetPushVariation() const;
+        // float GetMaxVelocity() const;
+        // float GetIdleRadius() const;
+        // float GetPushForce() const;
+        // float GetDirVariation() const;
+        // float GetPushVariation() const;
 
         static CType GetCType();
     private:
-        vector<int> behaviorList; //!< List of behaviors to call
-        vec3 startPos;            //!< Start position of the object
-        float maxVelocity;        //!< Fastest the object can move
-        float idleRadius;         //!< Furthest that object can be from startPos
-        float pushForce;          //!< Strength of force applied to object
-        float dirVariation;       //!< Amount of variation applied to object's direction
-        float pushVariation;      //!< Amount of variation applied to object's push force
+        vector<string> scripts;
+        vector<lua_State*> states;
+        // vector<int> behaviorList; //!< List of behaviors to call
+        // vec3 startPos;            //!< Start position of the object
+        // float maxVelocity;        //!< Fastest the object can move
+        // float idleRadius;         //!< Furthest that object can be from startPos
+        // float pushForce;          //!< Strength of force applied to object
+        // float dirVariation;       //!< Amount of variation applied to object's direction
+        // float pushVariation;      //!< Amount of variation applied to object's push force
 };
 
 #endif

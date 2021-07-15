@@ -12,6 +12,7 @@
 // Engine includes //
 #include "behavior_manager.hpp"
 #include "behavior.hpp"
+#include "engine.hpp"
 #include "random.hpp"
 
 /**
@@ -53,7 +54,15 @@ Behavior* Behavior::Clone() const {
  * 
  */
 void Behavior::Update() {
-    Behavior_Manager::UseBehaviors(GetParent(), behaviorList);
+    for (lua_State* state : states) {
+        lua_getglobal(state, "Update");
+        lua_pushnumber(state, Engine::GetDeltaTime());
+        lua_call(state, 1, 0);
+
+        lua_getglobal(state, "FixedUpdate");
+        lua_pushnumber(state, Engine::GetDt());
+        lua_call(state, 1, 0);
+    }
 }
 
 /**
@@ -68,78 +77,16 @@ void Behavior::Read(File_Reader& reader) {
     string behavior_name = reader.Read_Behavior_Name("behavior_" + to_string(behavior_num));
         if (behavior_name.compare("") == 0) break;
 
-        behaviorList.emplace_back(Behavior_Manager::FindBehaviorIndex(behavior_name));
+        scripts.emplace_back(behavior_name);
         ++behavior_num;
     }
-
-    maxVelocity = reader.Read_Float("maxVelocity");
-    idleRadius = reader.Read_Float("idleRadius");
-    pushForce = reader.Read_Float("pushForce");
-    dirVariation = reader.Read_Float("dirVariation");
-    pushVariation = reader.Read_Float("pushVariation");
-}
-
-/**
- * @brief Sets the start position of the object
- * 
- * @param startPos_ Start position of the object
- */
-void Behavior::SetStartPos(vec3 startPos_) {
-    startPos = startPos_;
-}
-
-/**
- * @brief Returns the start position of the object
- * 
- * @return vec3 
- */
-vec3 Behavior::GetStartPos() const {
-    return startPos;
-}
-
-/**
- * @brief Returns max velocity of object
- * 
- * @return float 
- */
-float Behavior::GetMaxVelocity() const {
-    return maxVelocity;
-}
-
-/**
- * @brief Returns the idle radius of the object
- * 
- * @return float 
- */
-float Behavior::GetIdleRadius() const {
-    return idleRadius;
-}
-
-/**
- * @brief Returns strength of force
- * 
- * @return float 
- */
-float Behavior::GetPushForce() const {
-    return pushForce;
-}
-
-/**
- * @brief Returns the variation of an object's direction
- * 
- * @return float 
- */
-float Behavior::GetDirVariation() const {
-    return Random::random_float(-dirVariation, dirVariation);
-}
-
-/**
- * @brief Returns the variation of an object's push force
- * 
- * @return float 
- */
-float Behavior::GetPushVariation() const {
-    return Random::random_float(-pushVariation, pushVariation);
+    
+    for (string script : scripts) {
+        states.emplace_back();
+        states.back() = luaL_newstate();
+        luaL_openlibs(states.back());
+        luaL_dofile(states.back(), string("data/scripts/" + script).c_str());
+    }
 }
 
 /**

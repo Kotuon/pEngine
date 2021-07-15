@@ -123,8 +123,8 @@ void Object_Manager::ReadList(File_Reader& preset) {
         vec3 position = preset.Read_Object_Position("object_" + to_string(object_num));
         Transform* transform = object->GetComponent<Transform>();
         transform->SetPosition(position);
-        Behavior* behavior = object->GetComponent<Behavior>();
-        behavior->SetStartPos(position);
+        //Behavior* behavior = object->GetComponent<Behavior>();
+        //behavior->SetStartPos(position);
 
           // Adding the object to the manager
         AddObject(object);

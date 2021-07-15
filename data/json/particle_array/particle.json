@@ -7,7 +7,7 @@
     "acceleration"  : [ 0.0, 0.0, 0.0 ],
     "velocity"      : [ 0.0, 0.0, 0.0 ],
     "mass"          : 1.0,
-    "behaviors"     : { "behavior_0" : "Idle" },
+    "behaviors"     : { "behavior_0" : "Idle.lua" },
     "maxVelocity"   : 25.0,
     "idleRadius"    : 0.10,
     "pushForce"     : 50.0,
