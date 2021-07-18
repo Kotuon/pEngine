@@ -23,9 +23,6 @@
 #include "engine.hpp"
 #include "graphics.hpp"
 #include "object_manager.hpp"
-#include "transform.hpp"
-
-using namespace glm;
 
 static Editor* editor = nullptr; //!< Editor object
 
@@ -124,6 +121,10 @@ void Editor::Shutdown() {
     editor = nullptr;
 }
 
+void Editor::Reset() {
+    editor->selected_object = -1;
+}
+
 /**
  * @brief Setup and display the editor's dockspace
  * 
@@ -172,6 +173,7 @@ void Editor::Display_Scene() {
     if (ImGui::Button("Add Object")) {
         Object* newObject = new Object;
         Transform* transform = new Transform;
+        transform->SetStartPosition(glm::vec3(0.f));
         newObject->SetName("New_Object");
         newObject->AddComponent(transform);
 
@@ -190,20 +192,21 @@ void Editor::Display_Components() {
 
     if (selected_object == -1) { ImGui::End(); return; }
     Object* object = Object_Manager::FindObject(selected_object);
-    string objectName = object->GetName();
+    std::string objectName = object->GetName();
 
       // Display name box (allows changing the name of an object)
     static char nameBuf[128] = "";
     sprintf(nameBuf, objectName.c_str());
     
     if (ImGui::InputText("Name", nameBuf, 128, ImGuiInputTextFlags_EnterReturnsTrue)) {
-        object->SetName(string(nameBuf));
+        object->SetName(std::string(nameBuf));
     }
 
     if (ImGui::IsItemDeactivatedAfterEdit()) {
-        object->SetName(string(nameBuf));
+        object->SetName(std::string(nameBuf));
     }
 
+    Behavior* behavior = object->GetComponent<Behavior>();
     Model* model = object->GetComponent<Model>();
     Physics* physics = object->GetComponent<Physics>();
     Transform* transform = object->GetComponent<Transform>();
@@ -212,6 +215,7 @@ void Editor::Display_Components() {
     Display_Transform(transform);
     Display_Physics(physics);
     Display_Model(model);
+    Display_Scripts(behavior);
     
     ImGui::Separator();
     
@@ -221,16 +225,22 @@ void Editor::Display_Components() {
     }
 
     if (ImGui::BeginPopup("New Component##1")) {
+        if (!physics) {
+            if (ImGui::Selectable("Physics##1")) {
+                physics = new Physics;
+                object->AddComponent(physics);
+            }
+        }
         if (!model) {
             if (ImGui::Selectable("Model##1")) {
                 model = new Model;
                 object->AddComponent(model);
             }
         }
-        if (!physics) {
-            if (ImGui::Selectable("Physics##1")) {
-                physics = new Physics;
-                object->AddComponent(physics);
+        if (!behavior) {
+            if (ImGui::Selectable("Scripts##1")) {
+                behavior = new Behavior;
+                object->AddComponent(behavior);
             }
         }
         ImGui::EndPopup();
@@ -245,7 +255,7 @@ void Editor::Display_Components() {
  */
 void Editor::Display_World_Settings() {
     ImGui::Begin("World Settings");
-    string presetName = Engine::GetPresetName();
+    std::string presetName = Engine::GetPresetName();
 
       // Allows user to change the preset that is loaded
     ImGui::Text("Presets"); ImGui::SameLine(120);
@@ -255,7 +265,7 @@ void Editor::Display_World_Settings() {
 
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
-            string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+            std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
             selected_object = -1;
             Engine::Restart(filePathName);
         }
@@ -312,6 +322,47 @@ void Editor::Display_Camera_Settings() {
     ImGui::End();
 }
 
+void Editor::Display_Scripts(Behavior* behavior) {
+    if (!behavior) return;
+
+    if (ImGui::TreeNode("Scripts")) {
+        std::vector<std::string>& scripts = behavior->GetScripts();
+        unsigned scriptNum = 1;
+        for (std::string& script : scripts) {
+            ImGui::Text(std::string("Script " + std::to_string(scriptNum) + ":").c_str());
+            ImGui::SameLine(100);
+            if (ImGui::Button(script.c_str())) {
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".lua", "./data/scripts/");
+            }
+
+            if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
+                if (ImGuiFileDialog::Instance()->IsOk()) {
+                    std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                    behavior->SwitchScript(scriptNum, filePathName);
+                }
+
+                ImGuiFileDialog::Instance()->Close();
+            }
+        }
+
+        ImGui::Text("##2"); ImGui::SameLine(100);
+        if (ImGui::Button("New Script##1")) {
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", "./data/scripts/");
+        }
+
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##4")) {
+            if (ImGuiFileDialog::Instance()->IsOk()) {
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                behavior->AddScript(filePathName);
+            }
+
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImGui::TreePop();
+    }
+}
+
 /**
  * @brief Displays the data of the model being used
  * 
@@ -320,8 +371,8 @@ void Editor::Display_Camera_Settings() {
 void Editor::Display_Model(Model* model) {
     if (!model) return;
     
-    string modelName = model->GetModelName();
-    string textureName = model->GetTextureName();
+    std::string modelName = model->GetModelName();
+    std::string textureName = model->GetTextureName();
 
     if (ImGui::TreeNode("Model")) {
           // Model that is being used
@@ -332,7 +383,7 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##1")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 model->SwitchModel(filePathName);
             }
 
@@ -347,7 +398,7 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##2")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 model->SwitchTexture(filePathName);
             }
 
@@ -366,7 +417,7 @@ void Editor::Display_Model(Model* model) {
 void Editor::Display_Physics(Physics* physics) {
     if (!physics) return;
     
-    vec3 velocity = physics->GetVelocity();
+    glm::vec3 velocity = physics->GetVelocity();
 
     if (ImGui::TreeNode("Physics")) {
         ImGui::Text("Velocity");
@@ -389,9 +440,10 @@ void Editor::Display_Physics(Physics* physics) {
 void Editor::Display_Transform(Transform* transform) {
     if (!transform) return;
     
-    vec3& position = transform->GetPosition();
-    vec3& scale = transform->GetScale();
-    vec3& rotation = transform->GetRotation();
+    glm::vec3& position = transform->GetPositionRef();
+    glm::vec3& scale = transform->GetScaleRef();
+    glm::vec3& rotation = transform->GetRotationRef();
+    glm::vec3& startPos = transform->GetStartPositionRef();
 
     if (ImGui::TreeNode("Transform")) {
         ImGui::Text("Position");
@@ -416,6 +468,14 @@ void Editor::Display_Transform(Transform* transform) {
         ImGui::SameLine(100); ImGui::InputFloat("x##3", &rotation.x);
         ImGui::SameLine(175); ImGui::InputFloat("y##3", &rotation.y);
         ImGui::SameLine(250); ImGui::InputFloat("z##3", &rotation.z);
+        ImGui::PopItemWidth();
+        
+        ImGui::Text("Start Pos");
+
+        ImGui::PushItemWidth(50);
+        ImGui::SameLine(100); ImGui::InputFloat("x##5", &startPos.x);
+        ImGui::SameLine(175); ImGui::InputFloat("y##5", &startPos.y);
+        ImGui::SameLine(250); ImGui::InputFloat("z##5", &startPos.z);
         ImGui::PopItemWidth();
 
         ImGui::TreePop();

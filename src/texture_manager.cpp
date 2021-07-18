@@ -44,7 +44,7 @@ bool Texture_Manager::Initialize() {
  */
 Texture* Texture_Manager::Get(File_Reader& reader) {
       // Getting texture's filename
-    string filename = reader.Read_String("textureToLoad");
+    std::string filename = reader.Read_String("textureToLoad");
       // Looking for texture in list of loaded textures
     for (Texture* texture : texture_manager->textures) {
         if (texture->GetTextureName().compare(filename) == 0) {
@@ -68,7 +68,7 @@ Texture* Texture_Manager::Get(File_Reader& reader) {
  * @param textureName Name of texture
  * @return Texture* 
  */
-Texture* Texture_Manager::Get(string textureName) {
+Texture* Texture_Manager::Get(std::string textureName) {
       // Looking for texture in list of loaded textures
     for (Texture* texture : texture_manager->textures) {
         if (texture->GetTextureName().compare(textureName) == 0) {

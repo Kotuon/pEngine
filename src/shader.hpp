@@ -22,8 +22,6 @@
 // Engine includes //
 #include "file_reader.hpp"
 
-using namespace std;
-
 /*! Shader class */
 class Shader {
     public:
@@ -31,8 +29,8 @@ class Shader {
         static void Update();
         static void Shutdown();
 
-        static string ReadFile(string filename);
-        static void LoadShader(string vertexPath, string fragmentPath);
+        static std::string ReadFile(std::string filename);
+        static void LoadShader(std::string vertexPath, std::string fragmentPath);
 
         static GLuint GetProgram();
         static GLuint GetMatrixId();

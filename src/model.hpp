@@ -20,17 +20,12 @@
 
 // Library includes //
 #include <GL/gl.h>
-#include <vec3.hpp>
-#include <vec2.hpp>
 
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
 #include "model_data.hpp"
 #include "texture.hpp"
-
-using namespace std;
-using namespace glm;
 
 /*! Model class */
 class Model : public Component {
@@ -41,14 +36,14 @@ class Model : public Component {
         Model* Clone() const;
 
         void Load(File_Reader& reader);
-        void Draw(mat4 projection, mat4 view);
+        void Draw(glm::mat4 projection, glm::mat4 view);
 
         void Read(File_Reader& reader);
-        void SwitchModel(string modelName);
-        void SwitchTexture(string textureName);
+        void SwitchModel(std::string modelName);
+        void SwitchTexture(std::string textureName);
 
-        string GetModelName() const;
-        string GetTextureName() const;
+        std::string GetModelName() const;
+        std::string GetTextureName() const;
 
         Texture* GetTexture() const;
 

@@ -22,7 +22,7 @@
  * 
  * @param filename Name of the file to be read
  */
-File_Reader::File_Reader(string filename) {
+File_Reader::File_Reader(std::string filename) {
     Read_File(filename);
 }
 
@@ -31,14 +31,14 @@ File_Reader::File_Reader(string filename) {
  * 
  * @param filename Name of the file to be read
  */
-void File_Reader::Read_File(string filename) {
+void File_Reader::Read_File(std::string filename) {
       // Opening the json file
-    string fileToOpen = "data/json/" + filename;
-    ifstream file(fileToOpen.c_str(), ifstream::binary);
+    std::string fileToOpen = "data/json/" + filename;
+    std::ifstream file(fileToOpen.c_str(), std::ifstream::binary);
 
       // Reading data from file into root variable
     Json::CharReaderBuilder reader;
-    string errors;
+    std::string errors;
     if (!parseFromStream(reader, file, &root, &errors)) {
         Trace::Message("Unable to read file '" + filename + "': " + errors + "\n");
     }
@@ -52,7 +52,7 @@ void File_Reader::Read_File(string filename) {
  * @param valueName Name of the int in the json file
  * @return int Value that was read
  */
-int File_Reader::Read_Int(string valueName) {
+int File_Reader::Read_Int(std::string valueName) {
       // Checking if the value is an int
     if (!root[valueName].isInt()) {
         Trace::Message("Error reading int: " + valueName + "\n");
@@ -62,34 +62,34 @@ int File_Reader::Read_Int(string valueName) {
 }
 
 /**
- * @brief Reads string from the json file stored in root
+ * @brief Reads std::string from the json file stored in root
  * 
- * @param valueName Name of the string in the json file
- * @return string Value that was read
+ * @param valueName Name of the std::string in the json file
+ * @return std::string Value that was read
  */
-string File_Reader::Read_String(string valueName) {
-      // Checking if the value is a string
+std::string File_Reader::Read_String(std::string valueName) {
+      // Checking if the value is a std::string
     if (!root[valueName].isString()) {
-        Trace::Message("Error reading string: " + valueName + "\n");
-        return string("");
+        Trace::Message("Error reading std::string: " + valueName + "\n");
+        return std::string("");
     }
     return root[valueName].asString();
 }
 
 /**
- * @brief Reads vec3 from the json file stored in root. vec3 is constructed
+ * @brief Reads glm::vec3 from the json file stored in root. glm::vec3 is constructed
  *        from an array
  * 
- * @param valueName Name of the vec3 in the json file
- * @return vec3 Value that was read
+ * @param valueName Name of the glm::vec3 in the json file
+ * @return glm::vec3 Value that was read
  */
-vec3 File_Reader::Read_Vec3(string valueName) {
+glm::vec3 File_Reader::Read_Vec3(std::string valueName) {
       // Checking if the value is an array
     if (!root[valueName].isArray()) {
-        Trace::Message("Error reading vec3: " + valueName + "\n");
-        return vec3(0.f, 0.f, 0.f);
+        Trace::Message("Error reading glm::vec3: " + valueName + "\n");
+        return glm::vec3(0.f, 0.f, 0.f);
     }
-    return vec3(root[valueName][0].asFloat(), root[valueName][1].asFloat(), root[valueName][2].asFloat());
+    return glm::vec3(root[valueName][0].asFloat(), root[valueName][1].asFloat(), root[valueName][2].asFloat());
 }
 
 /**
@@ -99,7 +99,7 @@ vec3 File_Reader::Read_Vec3(string valueName) {
  * @return true 
  * @return false 
  */
-bool File_Reader::Read_Bool(string valueName) {
+bool File_Reader::Read_Bool(std::string valueName) {
       // Checking if the value is a bool
     if (!root[valueName].isBool()) {
         Trace::Message("Error reading bool: " + valueName + "\n");
@@ -114,7 +114,7 @@ bool File_Reader::Read_Bool(string valueName) {
  * @param valueName Name of the float in the json file
  * @return float Value that was read
  */
-float File_Reader::Read_Float(string valueName) {
+float File_Reader::Read_Float(std::string valueName) {
       // Checking if the value is a double (has decimal)
     if (!root[valueName].isDouble()) {
         Trace::Message("Error reading float: " + valueName + "\n");
@@ -129,7 +129,7 @@ float File_Reader::Read_Float(string valueName) {
  * @param valueName Name of the double in the json file
  * @return double Value that was read
  */
-double File_Reader::Read_Double(string valueName) {
+double File_Reader::Read_Double(std::string valueName) {
       // Checking if the value is a double (has decimal)
     if (!root[valueName].isDouble()) {
         Trace::Message("Error reading double: " + valueName + "\n");
@@ -142,13 +142,13 @@ double File_Reader::Read_Double(string valueName) {
  * @brief Reads the name of an object from an object list (preset folder)
  * 
  * @param valueName Specifies which object
- * @return string Name of the object
+ * @return std::string Name of the object
  */
-string File_Reader::Read_Object_Name(string valueName) {
-      // Checking if the value is a string
+std::string File_Reader::Read_Object_Name(std::string valueName) {
+      // Checking if the value is a std::string
     if (!root[valueName]["objectName"].isString()) {
-        Trace::Message("Error reading string: " + valueName + "\n");
-        return string("");
+        Trace::Message("Error reading std::string: " + valueName + "\n");
+        return std::string("");
     }
     return root[valueName]["objectName"].asString();
 }
@@ -157,28 +157,28 @@ string File_Reader::Read_Object_Name(string valueName) {
  * @brief Reads the position of an object from an object list (preset folder)
  * 
  * @param valueName Specifies which object
- * @return vec3 Position of object
+ * @return glm::vec3 Position of object
  */
-vec3 File_Reader::Read_Object_Position(string valueName) {
-      // Checking if the value is an array (used to construct vec3)
+glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
+      // Checking if the value is an array (used to construct glm::vec3)
     if (!root[valueName]["position"].isArray()) {
-        Trace::Message("Error reading string: " + valueName + "\n");
-        return vec3(0.f, 0.f, 0.f);
+        Trace::Message("Error reading std::string: " + valueName + "\n");
+        return glm::vec3(0.f, 0.f, 0.f);
     }
-    return vec3(root[valueName]["position"][0].asFloat(), root[valueName]["position"][1].asFloat(), root[valueName]["position"][2].asFloat());
+    return glm::vec3(root[valueName]["position"][0].asFloat(), root[valueName]["position"][1].asFloat(), root[valueName]["position"][2].asFloat());
 }
 
 /**
  * @brief Reads the name of the behavior
  * 
  * @param valueName Behavior to read
- * @return string Name of the behavior
+ * @return std::string Name of the behavior
  */
-string File_Reader::Read_Behavior_Name(string valueName) {
-      // Checking if the value is a string
+std::string File_Reader::Read_Behavior_Name(std::string valueName) {
+      // Checking if the value is a std::string
     if (!root["behaviors"][valueName].isString()) {
-        Trace::Message("Error reading string: " + valueName + "\n");
-        return string("");
+        Trace::Message("Error reading std::string: " + valueName + "\n");
+        return std::string("");
     }
     return root["behaviors"][valueName].asString();
 }

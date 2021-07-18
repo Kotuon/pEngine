@@ -17,7 +17,7 @@
  * 
  */
 Transform::Transform() : Component(CType::CTransform), 
-    position(vec3(0.f, 0.f, 0.f)), scale(vec3(1.f, 1.f, 1.f)), rotation(0.f) {}
+    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(0.f) {}
 
 /**
  * @brief Copy constructor
@@ -34,7 +34,7 @@ Transform::Transform(const Transform& other) : Component(CType::CTransform) {
  * @param reader File to use for making Transform object
  */
 Transform::Transform(File_Reader& reader) : Component(CType::CTransform), 
-    position(vec3(0.f, 0.f, 0.f)), scale(vec3(1.f, 1.f, 1.f)), rotation(0.f) {
+    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(0.f) {
     Read(reader);
 }
 
@@ -52,77 +52,83 @@ Transform* Transform::Clone() const {
  * 
  * @param pos 
  */
-void Transform::SetPosition(vec3 pos) { position = pos; }
+void Transform::SetPosition(glm::vec3 pos) { position = pos; }
 
 /**
  * @brief Returns position of object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Transform::GetPosition() const { return position; }
+glm::vec3 Transform::GetPosition() const { return position; }
 
 /**
  * @brief Returns position reference of object
  * 
- * @return vec3& 
+ * @return glm::vec3& 
  */
-vec3& Transform::GetPosition() { return position; }
+glm::vec3& Transform::GetPositionRef() { return position; }
 
 /**
  * @brief Sets old position of object
  * 
  * @param oldPos 
  */
-void Transform::SetOldPosition(vec3 oldPos) { oldPosition = oldPos; }
+void Transform::SetOldPosition(glm::vec3 oldPos) { oldPosition = oldPos; }
 
 /**
  * @brief Returns old position of object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Transform::GetOldPosition() const { return oldPosition; }
+glm::vec3 Transform::GetOldPosition() const { return oldPosition; }
 
 /**
  * @brief Sets scale of object
  * 
  * @param sca 
  */
-void Transform::SetScale(vec3 sca) { scale = sca; }
+void Transform::SetScale(glm::vec3 sca) { scale = sca; }
 
 /**
  * @brief Returns scale of object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Transform::GetScale() const { return scale; }
+glm::vec3 Transform::GetScale() const { return scale; }
 
 /**
  * @brief Returns scale reference of object
  * 
- * @return vec3& 
+ * @return glm::vec3& 
  */
-vec3& Transform::GetScale() { return scale; }
+glm::vec3& Transform::GetScaleRef() { return scale; }
 
 /**
  * @brief Sets rotation of object
  * 
  * @param rot 
  */
-void Transform::SetRotation(vec3 rot) { rotation = rot; }
+void Transform::SetRotation(glm::vec3 rot) { rotation = rot; }
 
 /**
  * @brief Returns rotation of object
  * 
  * @return float 
  */
-vec3 Transform::GetRotation() const { return rotation; }
+glm::vec3 Transform::GetRotation() const { return rotation; }
 
 /**
  * @brief Returns rotation reference of object
  * 
- * @return vec3& 
+ * @return glm::vec3& 
  */
-vec3& Transform::GetRotation() { return rotation; }
+glm::vec3& Transform::GetRotationRef() { return rotation; }
+
+void Transform::SetStartPosition(glm::vec3 startPosition_) { startPosition = startPosition_; }
+
+glm::vec3 Transform::GetStartPosition() const { return startPosition; }
+
+glm::vec3& Transform::GetStartPositionRef() { return startPosition; }
 
 /**
  * @brief Reads data for Transform object from file

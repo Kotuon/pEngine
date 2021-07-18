@@ -19,20 +19,18 @@
 // Library includes //
 #include <GL/gl.h>
 
-using namespace std;
-
 /*! Texture class */
 class Texture {
     public:
         ~Texture();
-        void Load(string textureName_);
+        void Load(std::string textureName_);
         void Display();
-        string GetTextureName() const;
+        std::string GetTextureName() const;
         GLuint GetTextureNum() const;
     private:
-        static GLuint LoadDDS(string filename);
+        static GLuint LoadDDS(std::string filename);
     private:
-        string textureName; //!< Name of texture
+        std::string textureName; //!< Name of texture
         GLuint textureNum;  //!< Loaded texture data id
         GLuint textureId;   //!< Textures buffer id
         bool hasBeenSet;    //!< Whether there is a texture or not

@@ -20,8 +20,6 @@
 #include "object.hpp"
 #include "file_reader.hpp"
 
-using namespace std;
-
 /*! Object_Manager class */
 class Object_Manager {
     public:
@@ -34,7 +32,7 @@ class Object_Manager {
         void ReadList(File_Reader& preset);
         void CheckName(Object* object);
     private:
-        vector<Object*> objects; //!< Current objects being tracked by the engine
+        std::vector<Object*> objects; //!< Current objects being tracked by the engine
 };
 
 #endif

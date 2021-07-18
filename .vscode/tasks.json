@@ -7,6 +7,8 @@
             "command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
             "args": [
                 "-m64",
+                "--std=c++14",
+                "-std=c++17",
                 "-g",
                 "-O2",
                 "src\\*.cpp",
@@ -25,13 +27,17 @@
                 "-I", "libraries/GLEW/include/GL",
                 "-L", "libraries/GLEW/lib",
                 "-I", "libraries/imgui",
+                "-I", "libraries/lua/include",
+                "-L", "libraries/lua/lib",
+                "-I", "libraries/sol",
                 "-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
                 "-lglu32",
                 "-lglew32",
                 "-ljsoncpp",
-                "-limm32"
+                "-limm32",
+                "-llua"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

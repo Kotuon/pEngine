@@ -14,8 +14,6 @@
 #include "engine.hpp"
 #include "graphics.hpp"
 
-using namespace std;
-
 /**
  * @brief Main function
  * 

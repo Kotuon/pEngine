@@ -522,29 +522,509 @@ ContinuousCoverage/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ContinuousCoverage.dir\build.make CMakeFiles/ContinuousCoverage.dir/build
 .PHONY : ContinuousCoverage/fast
 
-main.obj: main.cpp.obj
-.PHONY : main.obj
+src/behavior.obj: src/behavior.cpp.obj
+.PHONY : src/behavior.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+src/behavior.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior.cpp.obj
+.PHONY : src/behavior.cpp.obj
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/behavior.i: src/behavior.cpp.i
+.PHONY : src/behavior.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/behavior.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior.cpp.i
+.PHONY : src/behavior.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/behavior.s: src/behavior.cpp.s
+.PHONY : src/behavior.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/behavior.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior.cpp.s
+.PHONY : src/behavior.cpp.s
+
+src/behavior_manager.obj: src/behavior_manager.cpp.obj
+.PHONY : src/behavior_manager.obj
+
+# target to build an object file
+src/behavior_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj
+.PHONY : src/behavior_manager.cpp.obj
+
+src/behavior_manager.i: src/behavior_manager.cpp.i
+.PHONY : src/behavior_manager.i
+
+# target to preprocess a source file
+src/behavior_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior_manager.cpp.i
+.PHONY : src/behavior_manager.cpp.i
+
+src/behavior_manager.s: src/behavior_manager.cpp.s
+.PHONY : src/behavior_manager.s
+
+# target to generate assembly for a file
+src/behavior_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/behavior_manager.cpp.s
+.PHONY : src/behavior_manager.cpp.s
+
+src/camera.obj: src/camera.cpp.obj
+.PHONY : src/camera.obj
+
+# target to build an object file
+src/camera.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/camera.cpp.obj
+.PHONY : src/camera.cpp.obj
+
+src/camera.i: src/camera.cpp.i
+.PHONY : src/camera.i
+
+# target to preprocess a source file
+src/camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/camera.cpp.i
+.PHONY : src/camera.cpp.i
+
+src/camera.s: src/camera.cpp.s
+.PHONY : src/camera.s
+
+# target to generate assembly for a file
+src/camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/camera.cpp.s
+.PHONY : src/camera.cpp.s
+
+src/component.obj: src/component.cpp.obj
+.PHONY : src/component.obj
+
+# target to build an object file
+src/component.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/component.cpp.obj
+.PHONY : src/component.cpp.obj
+
+src/component.i: src/component.cpp.i
+.PHONY : src/component.i
+
+# target to preprocess a source file
+src/component.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/component.cpp.i
+.PHONY : src/component.cpp.i
+
+src/component.s: src/component.cpp.s
+.PHONY : src/component.s
+
+# target to generate assembly for a file
+src/component.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/component.cpp.s
+.PHONY : src/component.cpp.s
+
+src/editor.obj: src/editor.cpp.obj
+.PHONY : src/editor.obj
+
+# target to build an object file
+src/editor.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/editor.cpp.obj
+.PHONY : src/editor.cpp.obj
+
+src/editor.i: src/editor.cpp.i
+.PHONY : src/editor.i
+
+# target to preprocess a source file
+src/editor.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/editor.cpp.i
+.PHONY : src/editor.cpp.i
+
+src/editor.s: src/editor.cpp.s
+.PHONY : src/editor.s
+
+# target to generate assembly for a file
+src/editor.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/editor.cpp.s
+.PHONY : src/editor.cpp.s
+
+src/engine.obj: src/engine.cpp.obj
+.PHONY : src/engine.obj
+
+# target to build an object file
+src/engine.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/engine.cpp.obj
+.PHONY : src/engine.cpp.obj
+
+src/engine.i: src/engine.cpp.i
+.PHONY : src/engine.i
+
+# target to preprocess a source file
+src/engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/engine.cpp.i
+.PHONY : src/engine.cpp.i
+
+src/engine.s: src/engine.cpp.s
+.PHONY : src/engine.s
+
+# target to generate assembly for a file
+src/engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/engine.cpp.s
+.PHONY : src/engine.cpp.s
+
+src/file_reader.obj: src/file_reader.cpp.obj
+.PHONY : src/file_reader.obj
+
+# target to build an object file
+src/file_reader.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/file_reader.cpp.obj
+.PHONY : src/file_reader.cpp.obj
+
+src/file_reader.i: src/file_reader.cpp.i
+.PHONY : src/file_reader.i
+
+# target to preprocess a source file
+src/file_reader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/file_reader.cpp.i
+.PHONY : src/file_reader.cpp.i
+
+src/file_reader.s: src/file_reader.cpp.s
+.PHONY : src/file_reader.s
+
+# target to generate assembly for a file
+src/file_reader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/file_reader.cpp.s
+.PHONY : src/file_reader.cpp.s
+
+src/graphics.obj: src/graphics.cpp.obj
+.PHONY : src/graphics.obj
+
+# target to build an object file
+src/graphics.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/graphics.cpp.obj
+.PHONY : src/graphics.cpp.obj
+
+src/graphics.i: src/graphics.cpp.i
+.PHONY : src/graphics.i
+
+# target to preprocess a source file
+src/graphics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/graphics.cpp.i
+.PHONY : src/graphics.cpp.i
+
+src/graphics.s: src/graphics.cpp.s
+.PHONY : src/graphics.s
+
+# target to generate assembly for a file
+src/graphics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/graphics.cpp.s
+.PHONY : src/graphics.cpp.s
+
+src/main.obj: src/main.cpp.obj
+.PHONY : src/main.obj
+
+# target to build an object file
+src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/main.cpp.obj
+.PHONY : src/main.cpp.obj
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
+
+src/model.obj: src/model.cpp.obj
+.PHONY : src/model.obj
+
+# target to build an object file
+src/model.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model.cpp.obj
+.PHONY : src/model.cpp.obj
+
+src/model.i: src/model.cpp.i
+.PHONY : src/model.i
+
+# target to preprocess a source file
+src/model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model.cpp.i
+.PHONY : src/model.cpp.i
+
+src/model.s: src/model.cpp.s
+.PHONY : src/model.s
+
+# target to generate assembly for a file
+src/model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model.cpp.s
+.PHONY : src/model.cpp.s
+
+src/model_data.obj: src/model_data.cpp.obj
+.PHONY : src/model_data.obj
+
+# target to build an object file
+src/model_data.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data.cpp.obj
+.PHONY : src/model_data.cpp.obj
+
+src/model_data.i: src/model_data.cpp.i
+.PHONY : src/model_data.i
+
+# target to preprocess a source file
+src/model_data.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data.cpp.i
+.PHONY : src/model_data.cpp.i
+
+src/model_data.s: src/model_data.cpp.s
+.PHONY : src/model_data.s
+
+# target to generate assembly for a file
+src/model_data.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data.cpp.s
+.PHONY : src/model_data.cpp.s
+
+src/model_data_manager.obj: src/model_data_manager.cpp.obj
+.PHONY : src/model_data_manager.obj
+
+# target to build an object file
+src/model_data_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj
+.PHONY : src/model_data_manager.cpp.obj
+
+src/model_data_manager.i: src/model_data_manager.cpp.i
+.PHONY : src/model_data_manager.i
+
+# target to preprocess a source file
+src/model_data_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data_manager.cpp.i
+.PHONY : src/model_data_manager.cpp.i
+
+src/model_data_manager.s: src/model_data_manager.cpp.s
+.PHONY : src/model_data_manager.s
+
+# target to generate assembly for a file
+src/model_data_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/model_data_manager.cpp.s
+.PHONY : src/model_data_manager.cpp.s
+
+src/object.obj: src/object.cpp.obj
+.PHONY : src/object.obj
+
+# target to build an object file
+src/object.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object.cpp.obj
+.PHONY : src/object.cpp.obj
+
+src/object.i: src/object.cpp.i
+.PHONY : src/object.i
+
+# target to preprocess a source file
+src/object.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object.cpp.i
+.PHONY : src/object.cpp.i
+
+src/object.s: src/object.cpp.s
+.PHONY : src/object.s
+
+# target to generate assembly for a file
+src/object.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object.cpp.s
+.PHONY : src/object.cpp.s
+
+src/object_manager.obj: src/object_manager.cpp.obj
+.PHONY : src/object_manager.obj
+
+# target to build an object file
+src/object_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object_manager.cpp.obj
+.PHONY : src/object_manager.cpp.obj
+
+src/object_manager.i: src/object_manager.cpp.i
+.PHONY : src/object_manager.i
+
+# target to preprocess a source file
+src/object_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object_manager.cpp.i
+.PHONY : src/object_manager.cpp.i
+
+src/object_manager.s: src/object_manager.cpp.s
+.PHONY : src/object_manager.s
+
+# target to generate assembly for a file
+src/object_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/object_manager.cpp.s
+.PHONY : src/object_manager.cpp.s
+
+src/physics.obj: src/physics.cpp.obj
+.PHONY : src/physics.obj
+
+# target to build an object file
+src/physics.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/physics.cpp.obj
+.PHONY : src/physics.cpp.obj
+
+src/physics.i: src/physics.cpp.i
+.PHONY : src/physics.i
+
+# target to preprocess a source file
+src/physics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/physics.cpp.i
+.PHONY : src/physics.cpp.i
+
+src/physics.s: src/physics.cpp.s
+.PHONY : src/physics.s
+
+# target to generate assembly for a file
+src/physics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/physics.cpp.s
+.PHONY : src/physics.cpp.s
+
+src/random.obj: src/random.cpp.obj
+.PHONY : src/random.obj
+
+# target to build an object file
+src/random.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/random.cpp.obj
+.PHONY : src/random.cpp.obj
+
+src/random.i: src/random.cpp.i
+.PHONY : src/random.i
+
+# target to preprocess a source file
+src/random.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/random.cpp.i
+.PHONY : src/random.cpp.i
+
+src/random.s: src/random.cpp.s
+.PHONY : src/random.s
+
+# target to generate assembly for a file
+src/random.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/random.cpp.s
+.PHONY : src/random.cpp.s
+
+src/shader.obj: src/shader.cpp.obj
+.PHONY : src/shader.obj
+
+# target to build an object file
+src/shader.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/shader.cpp.obj
+.PHONY : src/shader.cpp.obj
+
+src/shader.i: src/shader.cpp.i
+.PHONY : src/shader.i
+
+# target to preprocess a source file
+src/shader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/shader.cpp.i
+.PHONY : src/shader.cpp.i
+
+src/shader.s: src/shader.cpp.s
+.PHONY : src/shader.s
+
+# target to generate assembly for a file
+src/shader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/shader.cpp.s
+.PHONY : src/shader.cpp.s
+
+src/texture.obj: src/texture.cpp.obj
+.PHONY : src/texture.obj
+
+# target to build an object file
+src/texture.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture.cpp.obj
+.PHONY : src/texture.cpp.obj
+
+src/texture.i: src/texture.cpp.i
+.PHONY : src/texture.i
+
+# target to preprocess a source file
+src/texture.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture.cpp.i
+.PHONY : src/texture.cpp.i
+
+src/texture.s: src/texture.cpp.s
+.PHONY : src/texture.s
+
+# target to generate assembly for a file
+src/texture.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture.cpp.s
+.PHONY : src/texture.cpp.s
+
+src/texture_manager.obj: src/texture_manager.cpp.obj
+.PHONY : src/texture_manager.obj
+
+# target to build an object file
+src/texture_manager.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj
+.PHONY : src/texture_manager.cpp.obj
+
+src/texture_manager.i: src/texture_manager.cpp.i
+.PHONY : src/texture_manager.i
+
+# target to preprocess a source file
+src/texture_manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture_manager.cpp.i
+.PHONY : src/texture_manager.cpp.i
+
+src/texture_manager.s: src/texture_manager.cpp.s
+.PHONY : src/texture_manager.s
+
+# target to generate assembly for a file
+src/texture_manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/texture_manager.cpp.s
+.PHONY : src/texture_manager.cpp.s
+
+src/trace.obj: src/trace.cpp.obj
+.PHONY : src/trace.obj
+
+# target to build an object file
+src/trace.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/trace.cpp.obj
+.PHONY : src/trace.cpp.obj
+
+src/trace.i: src/trace.cpp.i
+.PHONY : src/trace.i
+
+# target to preprocess a source file
+src/trace.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/trace.cpp.i
+.PHONY : src/trace.cpp.i
+
+src/trace.s: src/trace.cpp.s
+.PHONY : src/trace.s
+
+# target to generate assembly for a file
+src/trace.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/trace.cpp.s
+.PHONY : src/trace.cpp.s
+
+src/transform.obj: src/transform.cpp.obj
+.PHONY : src/transform.obj
+
+# target to build an object file
+src/transform.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/transform.cpp.obj
+.PHONY : src/transform.cpp.obj
+
+src/transform.i: src/transform.cpp.i
+.PHONY : src/transform.i
+
+# target to preprocess a source file
+src/transform.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/transform.cpp.i
+.PHONY : src/transform.cpp.i
+
+src/transform.s: src/transform.cpp.s
+.PHONY : src/transform.s
+
+# target to generate assembly for a file
+src/transform.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pEngine.dir\build.make CMakeFiles/pEngine.dir/src/transform.cpp.s
+.PHONY : src/transform.cpp.s
 
 # Help Target
 help:
@@ -586,9 +1066,69 @@ help:
 	@echo ... NightlyTest
 	@echo ... NightlyUpdate
 	@echo ... pEngine
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... src/behavior.obj
+	@echo ... src/behavior.i
+	@echo ... src/behavior.s
+	@echo ... src/behavior_manager.obj
+	@echo ... src/behavior_manager.i
+	@echo ... src/behavior_manager.s
+	@echo ... src/camera.obj
+	@echo ... src/camera.i
+	@echo ... src/camera.s
+	@echo ... src/component.obj
+	@echo ... src/component.i
+	@echo ... src/component.s
+	@echo ... src/editor.obj
+	@echo ... src/editor.i
+	@echo ... src/editor.s
+	@echo ... src/engine.obj
+	@echo ... src/engine.i
+	@echo ... src/engine.s
+	@echo ... src/file_reader.obj
+	@echo ... src/file_reader.i
+	@echo ... src/file_reader.s
+	@echo ... src/graphics.obj
+	@echo ... src/graphics.i
+	@echo ... src/graphics.s
+	@echo ... src/main.obj
+	@echo ... src/main.i
+	@echo ... src/main.s
+	@echo ... src/model.obj
+	@echo ... src/model.i
+	@echo ... src/model.s
+	@echo ... src/model_data.obj
+	@echo ... src/model_data.i
+	@echo ... src/model_data.s
+	@echo ... src/model_data_manager.obj
+	@echo ... src/model_data_manager.i
+	@echo ... src/model_data_manager.s
+	@echo ... src/object.obj
+	@echo ... src/object.i
+	@echo ... src/object.s
+	@echo ... src/object_manager.obj
+	@echo ... src/object_manager.i
+	@echo ... src/object_manager.s
+	@echo ... src/physics.obj
+	@echo ... src/physics.i
+	@echo ... src/physics.s
+	@echo ... src/random.obj
+	@echo ... src/random.i
+	@echo ... src/random.s
+	@echo ... src/shader.obj
+	@echo ... src/shader.i
+	@echo ... src/shader.s
+	@echo ... src/texture.obj
+	@echo ... src/texture.i
+	@echo ... src/texture.s
+	@echo ... src/texture_manager.obj
+	@echo ... src/texture_manager.i
+	@echo ... src/texture_manager.s
+	@echo ... src/trace.obj
+	@echo ... src/trace.i
+	@echo ... src/trace.s
+	@echo ... src/transform.obj
+	@echo ... src/transform.i
+	@echo ... src/transform.s
 .PHONY : help
 
 

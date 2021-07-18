@@ -27,9 +27,6 @@
 // Engine includes //
 #include "transform.hpp"
 
-using namespace std;
-using namespace glm;
-
 class Model;
 
 /*! Model_Data class */
@@ -41,18 +38,18 @@ class Model_Data {
         ~Model_Data();
 
         bool Load(File_Reader& reader);
-        bool Load(string modelName_);
+        bool Load(std::string modelName_);
 
-        bool Read(string modelName_);
+        bool Read(std::string modelName_);
 
-        void Draw(Model* parent, Transform* transform, mat4 projection, mat4 view);
+        void Draw(Model* parent, Transform* transform, glm::mat4 projection, glm::mat4 view);
 
-        string GetModelName() const;
+        std::string GetModelName() const;
     private:
-        vector<float> vertices; //!< Contains vertices of model
-        vector<float> normals;  //!< Contains normals of model
-        vector<float> uvs;      //!< Contains uv data of model
-        string modelName;       //!< Name of the file for the model
+        std::vector<float> vertices; //!< Contains vertices of model
+        std::vector<float> normals;  //!< Contains normals of model
+        std::vector<float> uvs;      //!< Contains uv data of model
+        std::string modelName;       //!< Name of the file for the model
         GLuint vertexbuffer;    //!< Vertex buffer of model
         GLuint normalbuffer;    //!< Normal buffer of model
         GLuint uvbuffer;        //!< UV buffer of model

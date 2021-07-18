@@ -68,33 +68,374 @@ include CMakeFiles/pEngine.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/pEngine.dir/flags.make
 
-CMakeFiles/pEngine.dir/main.cpp.obj: CMakeFiles/pEngine.dir/flags.make
-CMakeFiles/pEngine.dir/main.cpp.obj: ../main.cpp
-CMakeFiles/pEngine.dir/main.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pEngine.dir/main.cpp.obj"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/main.cpp.obj -MF CMakeFiles\pEngine.dir\main.cpp.obj.d -o CMakeFiles\pEngine.dir\main.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\main.cpp
+CMakeFiles/pEngine.dir/src/behavior.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/behavior.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/behavior.cpp.obj: ../src/behavior.cpp
+CMakeFiles/pEngine.dir/src/behavior.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/pEngine.dir/src/behavior.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/behavior.cpp.obj -MF CMakeFiles\pEngine.dir\src\behavior.cpp.obj.d -o CMakeFiles\pEngine.dir\src\behavior.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\behavior.cpp
 
-CMakeFiles/pEngine.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/main.cpp.i"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\main.cpp > CMakeFiles\pEngine.dir\main.cpp.i
+CMakeFiles/pEngine.dir/src/behavior.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/behavior.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\behavior.cpp > CMakeFiles\pEngine.dir\src\behavior.cpp.i
 
-CMakeFiles/pEngine.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/main.cpp.s"
-	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\main.cpp -o CMakeFiles\pEngine.dir\main.cpp.s
+CMakeFiles/pEngine.dir/src/behavior.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/behavior.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\behavior.cpp -o CMakeFiles\pEngine.dir\src\behavior.cpp.s
+
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj: ../src/behavior_manager.cpp
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj -MF CMakeFiles\pEngine.dir\src\behavior_manager.cpp.obj.d -o CMakeFiles\pEngine.dir\src\behavior_manager.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\behavior_manager.cpp
+
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/behavior_manager.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\behavior_manager.cpp > CMakeFiles\pEngine.dir\src\behavior_manager.cpp.i
+
+CMakeFiles/pEngine.dir/src/behavior_manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/behavior_manager.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\behavior_manager.cpp -o CMakeFiles\pEngine.dir\src\behavior_manager.cpp.s
+
+CMakeFiles/pEngine.dir/src/camera.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/camera.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/camera.cpp.obj: ../src/camera.cpp
+CMakeFiles/pEngine.dir/src/camera.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/pEngine.dir/src/camera.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/camera.cpp.obj -MF CMakeFiles\pEngine.dir\src\camera.cpp.obj.d -o CMakeFiles\pEngine.dir\src\camera.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\camera.cpp
+
+CMakeFiles/pEngine.dir/src/camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/camera.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\camera.cpp > CMakeFiles\pEngine.dir\src\camera.cpp.i
+
+CMakeFiles/pEngine.dir/src/camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/camera.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\camera.cpp -o CMakeFiles\pEngine.dir\src\camera.cpp.s
+
+CMakeFiles/pEngine.dir/src/component.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/component.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/component.cpp.obj: ../src/component.cpp
+CMakeFiles/pEngine.dir/src/component.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/pEngine.dir/src/component.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/component.cpp.obj -MF CMakeFiles\pEngine.dir\src\component.cpp.obj.d -o CMakeFiles\pEngine.dir\src\component.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\component.cpp
+
+CMakeFiles/pEngine.dir/src/component.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/component.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\component.cpp > CMakeFiles\pEngine.dir\src\component.cpp.i
+
+CMakeFiles/pEngine.dir/src/component.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/component.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\component.cpp -o CMakeFiles\pEngine.dir\src\component.cpp.s
+
+CMakeFiles/pEngine.dir/src/editor.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/editor.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/editor.cpp.obj: ../src/editor.cpp
+CMakeFiles/pEngine.dir/src/editor.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/pEngine.dir/src/editor.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/editor.cpp.obj -MF CMakeFiles\pEngine.dir\src\editor.cpp.obj.d -o CMakeFiles\pEngine.dir\src\editor.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\editor.cpp
+
+CMakeFiles/pEngine.dir/src/editor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/editor.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\editor.cpp > CMakeFiles\pEngine.dir\src\editor.cpp.i
+
+CMakeFiles/pEngine.dir/src/editor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/editor.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\editor.cpp -o CMakeFiles\pEngine.dir\src\editor.cpp.s
+
+CMakeFiles/pEngine.dir/src/engine.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/engine.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/engine.cpp.obj: ../src/engine.cpp
+CMakeFiles/pEngine.dir/src/engine.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/pEngine.dir/src/engine.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/engine.cpp.obj -MF CMakeFiles\pEngine.dir\src\engine.cpp.obj.d -o CMakeFiles\pEngine.dir\src\engine.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\engine.cpp
+
+CMakeFiles/pEngine.dir/src/engine.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/engine.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\engine.cpp > CMakeFiles\pEngine.dir\src\engine.cpp.i
+
+CMakeFiles/pEngine.dir/src/engine.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/engine.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\engine.cpp -o CMakeFiles\pEngine.dir\src\engine.cpp.s
+
+CMakeFiles/pEngine.dir/src/file_reader.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/file_reader.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/file_reader.cpp.obj: ../src/file_reader.cpp
+CMakeFiles/pEngine.dir/src/file_reader.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/pEngine.dir/src/file_reader.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/file_reader.cpp.obj -MF CMakeFiles\pEngine.dir\src\file_reader.cpp.obj.d -o CMakeFiles\pEngine.dir\src\file_reader.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\file_reader.cpp
+
+CMakeFiles/pEngine.dir/src/file_reader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/file_reader.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\file_reader.cpp > CMakeFiles\pEngine.dir\src\file_reader.cpp.i
+
+CMakeFiles/pEngine.dir/src/file_reader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/file_reader.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\file_reader.cpp -o CMakeFiles\pEngine.dir\src\file_reader.cpp.s
+
+CMakeFiles/pEngine.dir/src/graphics.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/graphics.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/graphics.cpp.obj: ../src/graphics.cpp
+CMakeFiles/pEngine.dir/src/graphics.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/pEngine.dir/src/graphics.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/graphics.cpp.obj -MF CMakeFiles\pEngine.dir\src\graphics.cpp.obj.d -o CMakeFiles\pEngine.dir\src\graphics.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\graphics.cpp
+
+CMakeFiles/pEngine.dir/src/graphics.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/graphics.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\graphics.cpp > CMakeFiles\pEngine.dir\src\graphics.cpp.i
+
+CMakeFiles/pEngine.dir/src/graphics.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/graphics.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\graphics.cpp -o CMakeFiles\pEngine.dir\src\graphics.cpp.s
+
+CMakeFiles/pEngine.dir/src/main.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/main.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/main.cpp.obj: ../src/main.cpp
+CMakeFiles/pEngine.dir/src/main.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/pEngine.dir/src/main.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/main.cpp.obj -MF CMakeFiles\pEngine.dir\src\main.cpp.obj.d -o CMakeFiles\pEngine.dir\src\main.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\main.cpp
+
+CMakeFiles/pEngine.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/main.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\main.cpp > CMakeFiles\pEngine.dir\src\main.cpp.i
+
+CMakeFiles/pEngine.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/main.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\main.cpp -o CMakeFiles\pEngine.dir\src\main.cpp.s
+
+CMakeFiles/pEngine.dir/src/model.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/model.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/model.cpp.obj: ../src/model.cpp
+CMakeFiles/pEngine.dir/src/model.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/pEngine.dir/src/model.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/model.cpp.obj -MF CMakeFiles\pEngine.dir\src\model.cpp.obj.d -o CMakeFiles\pEngine.dir\src\model.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\model.cpp
+
+CMakeFiles/pEngine.dir/src/model.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/model.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\model.cpp > CMakeFiles\pEngine.dir\src\model.cpp.i
+
+CMakeFiles/pEngine.dir/src/model.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/model.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\model.cpp -o CMakeFiles\pEngine.dir\src\model.cpp.s
+
+CMakeFiles/pEngine.dir/src/model_data.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/model_data.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/model_data.cpp.obj: ../src/model_data.cpp
+CMakeFiles/pEngine.dir/src/model_data.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/pEngine.dir/src/model_data.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/model_data.cpp.obj -MF CMakeFiles\pEngine.dir\src\model_data.cpp.obj.d -o CMakeFiles\pEngine.dir\src\model_data.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\model_data.cpp
+
+CMakeFiles/pEngine.dir/src/model_data.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/model_data.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\model_data.cpp > CMakeFiles\pEngine.dir\src\model_data.cpp.i
+
+CMakeFiles/pEngine.dir/src/model_data.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/model_data.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\model_data.cpp -o CMakeFiles\pEngine.dir\src\model_data.cpp.s
+
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj: ../src/model_data_manager.cpp
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj -MF CMakeFiles\pEngine.dir\src\model_data_manager.cpp.obj.d -o CMakeFiles\pEngine.dir\src\model_data_manager.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\model_data_manager.cpp
+
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/model_data_manager.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\model_data_manager.cpp > CMakeFiles\pEngine.dir\src\model_data_manager.cpp.i
+
+CMakeFiles/pEngine.dir/src/model_data_manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/model_data_manager.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\model_data_manager.cpp -o CMakeFiles\pEngine.dir\src\model_data_manager.cpp.s
+
+CMakeFiles/pEngine.dir/src/object.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/object.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/object.cpp.obj: ../src/object.cpp
+CMakeFiles/pEngine.dir/src/object.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/pEngine.dir/src/object.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/object.cpp.obj -MF CMakeFiles\pEngine.dir\src\object.cpp.obj.d -o CMakeFiles\pEngine.dir\src\object.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\object.cpp
+
+CMakeFiles/pEngine.dir/src/object.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/object.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\object.cpp > CMakeFiles\pEngine.dir\src\object.cpp.i
+
+CMakeFiles/pEngine.dir/src/object.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/object.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\object.cpp -o CMakeFiles\pEngine.dir\src\object.cpp.s
+
+CMakeFiles/pEngine.dir/src/object_manager.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/object_manager.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/object_manager.cpp.obj: ../src/object_manager.cpp
+CMakeFiles/pEngine.dir/src/object_manager.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/pEngine.dir/src/object_manager.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/object_manager.cpp.obj -MF CMakeFiles\pEngine.dir\src\object_manager.cpp.obj.d -o CMakeFiles\pEngine.dir\src\object_manager.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\object_manager.cpp
+
+CMakeFiles/pEngine.dir/src/object_manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/object_manager.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\object_manager.cpp > CMakeFiles\pEngine.dir\src\object_manager.cpp.i
+
+CMakeFiles/pEngine.dir/src/object_manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/object_manager.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\object_manager.cpp -o CMakeFiles\pEngine.dir\src\object_manager.cpp.s
+
+CMakeFiles/pEngine.dir/src/physics.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/physics.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/physics.cpp.obj: ../src/physics.cpp
+CMakeFiles/pEngine.dir/src/physics.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/pEngine.dir/src/physics.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/physics.cpp.obj -MF CMakeFiles\pEngine.dir\src\physics.cpp.obj.d -o CMakeFiles\pEngine.dir\src\physics.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\physics.cpp
+
+CMakeFiles/pEngine.dir/src/physics.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/physics.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\physics.cpp > CMakeFiles\pEngine.dir\src\physics.cpp.i
+
+CMakeFiles/pEngine.dir/src/physics.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/physics.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\physics.cpp -o CMakeFiles\pEngine.dir\src\physics.cpp.s
+
+CMakeFiles/pEngine.dir/src/random.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/random.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/random.cpp.obj: ../src/random.cpp
+CMakeFiles/pEngine.dir/src/random.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/pEngine.dir/src/random.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/random.cpp.obj -MF CMakeFiles\pEngine.dir\src\random.cpp.obj.d -o CMakeFiles\pEngine.dir\src\random.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\random.cpp
+
+CMakeFiles/pEngine.dir/src/random.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/random.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\random.cpp > CMakeFiles\pEngine.dir\src\random.cpp.i
+
+CMakeFiles/pEngine.dir/src/random.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/random.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\random.cpp -o CMakeFiles\pEngine.dir\src\random.cpp.s
+
+CMakeFiles/pEngine.dir/src/shader.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/shader.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/shader.cpp.obj: ../src/shader.cpp
+CMakeFiles/pEngine.dir/src/shader.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/pEngine.dir/src/shader.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/shader.cpp.obj -MF CMakeFiles\pEngine.dir\src\shader.cpp.obj.d -o CMakeFiles\pEngine.dir\src\shader.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\shader.cpp
+
+CMakeFiles/pEngine.dir/src/shader.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/shader.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\shader.cpp > CMakeFiles\pEngine.dir\src\shader.cpp.i
+
+CMakeFiles/pEngine.dir/src/shader.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/shader.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\shader.cpp -o CMakeFiles\pEngine.dir\src\shader.cpp.s
+
+CMakeFiles/pEngine.dir/src/texture.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/texture.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/texture.cpp.obj: ../src/texture.cpp
+CMakeFiles/pEngine.dir/src/texture.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/pEngine.dir/src/texture.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/texture.cpp.obj -MF CMakeFiles\pEngine.dir\src\texture.cpp.obj.d -o CMakeFiles\pEngine.dir\src\texture.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\texture.cpp
+
+CMakeFiles/pEngine.dir/src/texture.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/texture.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\texture.cpp > CMakeFiles\pEngine.dir\src\texture.cpp.i
+
+CMakeFiles/pEngine.dir/src/texture.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/texture.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\texture.cpp -o CMakeFiles\pEngine.dir\src\texture.cpp.s
+
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj: ../src/texture_manager.cpp
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj -MF CMakeFiles\pEngine.dir\src\texture_manager.cpp.obj.d -o CMakeFiles\pEngine.dir\src\texture_manager.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\texture_manager.cpp
+
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/texture_manager.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\texture_manager.cpp > CMakeFiles\pEngine.dir\src\texture_manager.cpp.i
+
+CMakeFiles/pEngine.dir/src/texture_manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/texture_manager.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\texture_manager.cpp -o CMakeFiles\pEngine.dir\src\texture_manager.cpp.s
+
+CMakeFiles/pEngine.dir/src/trace.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/trace.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/trace.cpp.obj: ../src/trace.cpp
+CMakeFiles/pEngine.dir/src/trace.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/pEngine.dir/src/trace.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/trace.cpp.obj -MF CMakeFiles\pEngine.dir\src\trace.cpp.obj.d -o CMakeFiles\pEngine.dir\src\trace.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\trace.cpp
+
+CMakeFiles/pEngine.dir/src/trace.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/trace.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\trace.cpp > CMakeFiles\pEngine.dir\src\trace.cpp.i
+
+CMakeFiles/pEngine.dir/src/trace.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/trace.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\trace.cpp -o CMakeFiles\pEngine.dir\src\trace.cpp.s
+
+CMakeFiles/pEngine.dir/src/transform.cpp.obj: CMakeFiles/pEngine.dir/flags.make
+CMakeFiles/pEngine.dir/src/transform.cpp.obj: CMakeFiles/pEngine.dir/includes_CXX.rsp
+CMakeFiles/pEngine.dir/src/transform.cpp.obj: ../src/transform.cpp
+CMakeFiles/pEngine.dir/src/transform.cpp.obj: CMakeFiles/pEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/pEngine.dir/src/transform.cpp.obj"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pEngine.dir/src/transform.cpp.obj -MF CMakeFiles\pEngine.dir\src\transform.cpp.obj.d -o CMakeFiles\pEngine.dir\src\transform.cpp.obj -c C:\Users\Kelson\Documents\ParticleEngine\src\transform.cpp
+
+CMakeFiles/pEngine.dir/src/transform.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/pEngine.dir/src/transform.cpp.i"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Kelson\Documents\ParticleEngine\src\transform.cpp > CMakeFiles\pEngine.dir\src\transform.cpp.i
+
+CMakeFiles/pEngine.dir/src/transform.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/pEngine.dir/src/transform.cpp.s"
+	C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Kelson\Documents\ParticleEngine\src\transform.cpp -o CMakeFiles\pEngine.dir\src\transform.cpp.s
 
 # Object files for target pEngine
 pEngine_OBJECTS = \
-"CMakeFiles/pEngine.dir/main.cpp.obj"
+"CMakeFiles/pEngine.dir/src/behavior.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/camera.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/component.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/editor.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/engine.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/file_reader.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/graphics.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/main.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/model.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/model_data.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/object.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/object_manager.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/physics.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/random.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/shader.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/texture.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/trace.cpp.obj" \
+"CMakeFiles/pEngine.dir/src/transform.cpp.obj"
 
 # External object files for target pEngine
 pEngine_EXTERNAL_OBJECTS =
 
-pEngine.exe: CMakeFiles/pEngine.dir/main.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/behavior.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/behavior_manager.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/camera.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/component.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/editor.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/engine.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/file_reader.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/graphics.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/main.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/model.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/model_data.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/model_data_manager.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/object.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/object_manager.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/physics.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/random.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/shader.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/texture.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/texture_manager.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/trace.cpp.obj
+pEngine.exe: CMakeFiles/pEngine.dir/src/transform.cpp.obj
 pEngine.exe: CMakeFiles/pEngine.dir/build.make
 pEngine.exe: CMakeFiles/pEngine.dir/linklibs.rsp
 pEngine.exe: CMakeFiles/pEngine.dir/objects1.rsp
 pEngine.exe: CMakeFiles/pEngine.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable pEngine.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Kelson\Documents\ParticleEngine\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX executable pEngine.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\pEngine.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

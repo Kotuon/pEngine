@@ -29,7 +29,7 @@ Texture::~Texture() {
  * 
  * @param textureName_ Filename of texture
  */
-void Texture::Load(string textureName_) {
+void Texture::Load(std::string textureName_) {
     textureName = textureName_;
     textureNum = Texture::LoadDDS("data/textures/" + textureName);
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
@@ -51,9 +51,9 @@ void Texture::Display() {
 /**
  * @brief Returns texture name
  * 
- * @return string 
+ * @return std::string 
  */
-string Texture::GetTextureName() const { return textureName; }
+std::string Texture::GetTextureName() const { return textureName; }
 
 /**
  * @brief Returns texture data id
@@ -71,7 +71,7 @@ GLuint Texture::GetTextureNum() const { return textureNum; }
  * @param imagepath DDS filename
  * @return GLuint 
  */
-GLuint Texture::LoadDDS(string imagepath) {
+GLuint Texture::LoadDDS(std::string imagepath) {
     unsigned char header[124];
 
     FILE *fp;

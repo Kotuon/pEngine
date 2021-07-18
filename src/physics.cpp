@@ -30,8 +30,8 @@
  * 
  */
 Physics::Physics() : Component(CType::CPhysics),
-    acceleration(vec3(0.f, 0.f, 0.f)), forces(vec3(0.f, 0.f, 0.f)), 
-    velocity(vec3(0.f, 0.f, 0.f)), mass(1.f) {}
+    acceleration(glm::vec3(0.f, 0.f, 0.f)), forces(glm::vec3(0.f, 0.f, 0.f)), 
+    velocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {}
 
 /**
  * @brief Copy constructor
@@ -48,8 +48,8 @@ Physics::Physics(const Physics& other) : Component(CType::CPhysics) {
  * @param reader File to use for making physics object
  */
 Physics::Physics(File_Reader& reader) : Component(CType::CPhysics),
-    acceleration(vec3(0.f, 0.f, 0.f)), forces(vec3(0.f, 0.f, 0.f)), 
-    velocity(vec3(0.f, 0.f, 0.f)), mass(1.f) {
+    acceleration(glm::vec3(0.f, 0.f, 0.f)), forces(glm::vec3(0.f, 0.f, 0.f)), 
+    velocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {
     Read(reader);
 }
 
@@ -67,49 +67,62 @@ Physics* Physics::Clone() const {
  * 
  * @param accel 
  */
-void Physics::SetAcceleration(vec3 accel) { acceleration = accel; }
+void Physics::SetAcceleration(glm::vec3 accel) { acceleration = accel; }
 
 /**
  * @brief Returns acceleration of object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Physics::GetAcceleration() const { return acceleration; }
+glm::vec3 Physics::GetAcceleration() const { return acceleration; }
+
+glm::vec3& Physics::GetAccelerationRef() { return acceleration; }
 
 /**
  * @brief Sets forces acting on object
  * 
  * @param force 
  */
-void Physics::SetForces(vec3 force) { forces = force; }
+void Physics::SetForces(glm::vec3 force) { forces = force; }
 
 /**
  * @brief Adds a force to the current forces acting on the object
  * 
  * @param force 
  */
-void Physics::AddForce(vec3 force) { forces += force; }
+void Physics::AddForce(glm::vec3 force) { forces += force; }
 
 /**
  * @brief Returns the forces acting on the object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Physics::GetForces() const { return forces; }
+glm::vec3 Physics::GetForces() const { return forces; }
+
+glm::vec3& Physics::GetForcesRef() { return forces; }
+
+void Physics::ApplyForce(glm::vec3 direction, float power) {
+    direction = glm::normalize(direction);
+    direction *= power;
+
+    AddForce(direction);
+}
 
 /**
  * @brief Sets the velocity of the object
  * 
  * @param vel 
  */
-void Physics::SetVelocity(vec3 vel) { velocity = vel; }
+void Physics::SetVelocity(glm::vec3 vel) { velocity = vel; }
 
 /**
  * @brief Returns the current velocity of the object
  * 
- * @return vec3 
+ * @return glm::vec3 
  */
-vec3 Physics::GetVelocity() const { return velocity; }
+glm::vec3 Physics::GetVelocity() const { return velocity; }
+
+glm::vec3& Physics::GetVelocityRef() { return velocity; }
 
 /**
  * @brief Sets the mass of the object
@@ -134,18 +147,18 @@ void Physics::Update() {
     acceleration = forces / mass;
 
       // Updating velocity
-    vec3 oldVel = velocity;
+    glm::vec3 oldVel = velocity;
     velocity += (acceleration * Engine::GetDt());
 
       // Updating position
     Transform* transform = GetParent()->GetComponent<Transform>();
-    vec3 position = transform->GetPosition();
+    glm::vec3 position = transform->GetPosition();
     transform->SetOldPosition(position);
     position = (velocity * Engine::GetDt()) + position;
     transform->SetPosition(position);
 
       // Resetting the forces acting on the object
-    forces = vec3(0.f, 0.f, 0.f);
+    forces = glm::vec3(0.f, 0.f, 0.f);
 }
 
 /**
@@ -157,7 +170,7 @@ void Physics::UpdateGravity() {
     Object* object = GetParent();
     Transform* transform = object->GetComponent<Transform>();
     Physics* physics = object->GetComponent<Physics>();
-    vec3 position = transform->GetPosition();
+    glm::vec3 position = transform->GetPosition();
 
       // For each object
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
@@ -166,7 +179,7 @@ void Physics::UpdateGravity() {
         Object* other = Object_Manager::FindObject(i);
         Physics* otherPhysics = other->GetComponent<Physics>();
         Transform* otherTransform = other->GetComponent<Transform>();
-        vec3 otherPosition = otherTransform->GetPosition();
+        glm::vec3 otherPosition = otherTransform->GetPosition();
           // Finding the distance between the objects
         double distance = sqrt(pow(double(otherPosition.x - position.x), 2.0) + 
             pow(double(otherPosition.y - position.y), 2.0) +
@@ -174,10 +187,10 @@ void Physics::UpdateGravity() {
           // Calculating the force the objects apply on each other
         double magnitude = Engine::GetGravConst() * ((physics->mass * otherPhysics->mass)) / pow(distance, 2.0);
           // Getting the direction (normalized)
-        vec3 direction = otherPosition - position;
-        vec3 normDirection = normalize(direction);
+        glm::vec3 direction = otherPosition - position;
+        glm::vec3 normDirection = glm::normalize(direction);
           // Applying gravitational force to normalized direction
-        vec3 force = normDirection * float(magnitude);
+        glm::vec3 force = normDirection * float(magnitude);
           // Adding the gravitational force to the forces on object
         physics->AddForce(force);
     }

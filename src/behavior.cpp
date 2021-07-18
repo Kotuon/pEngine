@@ -9,10 +9,17 @@
  * 
  */
 
+// Library includes //
+#include <glm.hpp>
+
 // Engine includes //
-#include "behavior_manager.hpp"
 #include "behavior.hpp"
+#include "engine.hpp"
+#include "object.hpp"
+#include "physics.hpp"
 #include "random.hpp"
+#include "transform.hpp"
+#include "vector3_func.hpp"
 
 /**
  * @brief Creates an empty Behavior object
@@ -53,7 +60,9 @@ Behavior* Behavior::Clone() const {
  * 
  */
 void Behavior::Update() {
-    Behavior_Manager::UseBehaviors(GetParent(), behaviorList);
+    for (sol::state* state : states) {
+        (*state)["FixedUpdate"](Engine::GetDt());
+    }
 }
 
 /**
@@ -65,81 +74,18 @@ void Behavior::Read(File_Reader& reader) {
     unsigned behavior_num = 0;
 
     while (true) {
-    string behavior_name = reader.Read_Behavior_Name("behavior_" + to_string(behavior_num));
+    std::string behavior_name = reader.Read_Behavior_Name("behavior_" + std::to_string(behavior_num));
         if (behavior_name.compare("") == 0) break;
 
-        behaviorList.emplace_back(Behavior_Manager::FindBehaviorIndex(behavior_name));
+        scripts.emplace_back(behavior_name);
         ++behavior_num;
     }
 
-    maxVelocity = reader.Read_Float("maxVelocity");
-    idleRadius = reader.Read_Float("idleRadius");
-    pushForce = reader.Read_Float("pushForce");
-    dirVariation = reader.Read_Float("dirVariation");
-    pushVariation = reader.Read_Float("pushVariation");
-}
-
-/**
- * @brief Sets the start position of the object
- * 
- * @param startPos_ Start position of the object
- */
-void Behavior::SetStartPos(vec3 startPos_) {
-    startPos = startPos_;
-}
-
-/**
- * @brief Returns the start position of the object
- * 
- * @return vec3 
- */
-vec3 Behavior::GetStartPos() const {
-    return startPos;
-}
-
-/**
- * @brief Returns max velocity of object
- * 
- * @return float 
- */
-float Behavior::GetMaxVelocity() const {
-    return maxVelocity;
-}
-
-/**
- * @brief Returns the idle radius of the object
- * 
- * @return float 
- */
-float Behavior::GetIdleRadius() const {
-    return idleRadius;
-}
-
-/**
- * @brief Returns strength of force
- * 
- * @return float 
- */
-float Behavior::GetPushForce() const {
-    return pushForce;
-}
-
-/**
- * @brief Returns the variation of an object's direction
- * 
- * @return float 
- */
-float Behavior::GetDirVariation() const {
-    return Random::random_float(-dirVariation, dirVariation);
-}
-
-/**
- * @brief Returns the variation of an object's push force
- * 
- * @return float 
- */
-float Behavior::GetPushVariation() const {
-    return Random::random_float(-pushVariation, pushVariation);
+    for (std::string& script : scripts) {
+        sol::state* state = new sol::state;
+        state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
+        states.emplace_back(state);
+    }
 }
 
 /**
@@ -149,4 +95,79 @@ float Behavior::GetPushVariation() const {
  */
 CType Behavior::GetCType() {
     return CType::CBehavior;
+}
+
+void Behavior::SetupClassesForLua() {
+    for (sol::state* state : states) {
+        ClassSetup(state);
+    }
+
+    for (unsigned i = 0; i < states.size(); ++i) {
+        states[i]->script_file(std::string("data/scripts/" + scripts[i]).c_str());
+        (*states[i])["Start"]();
+    }
+}
+
+std::vector<std::string>& Behavior::GetScripts() { return scripts; }
+
+void Behavior::ClassSetup(sol::state* state) {
+    Physics* physics = GetParent()->GetComponent<Physics>();
+    Transform* transform = GetParent()->GetComponent<Transform>();
+
+    state->set_function("random_vec3", Random::random_vec3);
+    state->set_function("random_float", Random::random_float);
+
+    sol::usertype<glm::vec3> vec3_type = state->new_usertype<glm::vec3>("vec3",
+        sol::constructors<glm::vec3(float, float, float)>());
+    vec3_type["x"] = &glm::vec3::x;
+    vec3_type["y"] = &glm::vec3::y;
+    vec3_type["z"] = &glm::vec3::z;
+
+    state->set_function("normalize", Vector3_Func::normalize);
+    state->set_function("distance", Vector3_Func::distance);
+    state->set_function("get_direction", Vector3_Func::get_direction);
+    state->set_function("zero_vec3", Vector3_Func::zero_vec3);
+    state->set_function("length", Vector3_Func::length);
+
+    state->set("physics", physics);
+    sol::usertype<Physics> physics_type = state->new_usertype<Physics>("Physics",
+        sol::constructors<Physics(), Physics(const Physics)>());
+    physics_type["acceleration"] = sol::property(Physics::GetAccelerationRef, &Physics::SetAcceleration);
+    physics_type["forces"] = sol::property(Physics::GetForcesRef, &Physics::SetForces);
+    physics_type["velocity"] = sol::property(Physics::GetVelocityRef, &Physics::SetVelocity);
+    physics_type.set_function("ApplyForce", &Physics::ApplyForce);
+    physics_type.set_function("UpdateGravity", &Physics::UpdateGravity);
+
+    (*state)["transform"] = transform;
+    sol::usertype<Transform> transform_type = state->new_usertype<Transform>("Transform",
+        sol::constructors<Transform(), Transform(const Transform)>());
+    transform_type["position"] = sol::property(Transform::GetPositionRef, &Transform::SetPosition);
+    transform_type["rotation"] = sol::property(Transform::GetRotationRef, &Transform::SetRotation);
+    transform_type["scale"] = sol::property(Transform::GetScaleRef, &Transform::SetScale);
+    transform_type.set("startPosition", sol::property(Transform::GetStartPositionRef, &Transform::SetStartPosition));
+}
+
+void Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
+    sol::state* state = states[scriptNum];
+    delete state;
+    state = new sol::state;
+    state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
+
+    scripts[scriptNum] = newScriptName;
+    ClassSetup(state);
+
+    states[scriptNum]->script_file(std::string("data/scripts/" + scripts[scriptNum]).c_str());
+    (*states[scriptNum])["Start"]();
+}
+
+void Behavior::AddScript(std::string newScriptName) {
+    sol::state* state = new sol::state;
+    state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
+    states.emplace_back(state);
+
+    scripts.emplace_back(newScriptName);
+    ClassSetup(state);
+
+    states.back()->script_file(std::string("data/scripts/" + scripts.back()).c_str());
+    (*states.back())["Start"]();
 }

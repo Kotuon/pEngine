@@ -171,11 +171,11 @@ void Graphics::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     Shader::Update();
 
-    mat4 projection = perspective(radians(Camera::GetFov()), (float)graphics->windowSize.first / 
+    glm::mat4 projection = perspective(radians(Camera::GetFov()), (float)graphics->windowSize.first / 
         (float)graphics->windowSize.second, Camera::GetNear(), Camera::GetFar());
 
       // Getting the view matrix of the camera
-    mat4 view = lookAt(
+    glm::mat4 view = lookAt(
         Camera::GetPosition(), 
         Camera::GetPosition() + Camera::GetFront(), 
         Camera::GetUp());
@@ -221,7 +221,7 @@ void Graphics::Shutdown() {
  * @return void
  */
 void Graphics::ErrorCallback(int error, const char* description) {
-    Trace::Message("Error: " + string(description) + "\n");
+    Trace::Message("Error: " + std::string(description) + "\n");
 }
 
 /**
@@ -244,9 +244,9 @@ bool Graphics::ErrorCheck(GLenum error) {
 /**
  * @brief Returns window size
  * 
- * @return pair<int, int> 
+ * @return std::pair<int, int> 
  */
-pair<int, int> Graphics::GetWindowSize() {
+std::pair<int, int> Graphics::GetWindowSize() {
     return graphics->windowSize;
 }
 

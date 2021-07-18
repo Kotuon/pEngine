@@ -15,22 +15,21 @@
 
 // std includes //
 #include <string>
+#include <vector>
 
 // Engine includes //
 #include "file_reader.hpp"
 #include "texture.hpp"
-
-using namespace std;
 
 /*! Texture_Manager class */
 class Texture_Manager {
     public:
         static bool Initialize();
         static Texture* Get(File_Reader& reader);
-        static Texture* Get(string textureName);
+        static Texture* Get(std::string textureName);
         static void Shutdown();
     private:
-        vector<Texture*> textures; //!< List of loaded textures
+        std::vector<Texture*> textures; //!< List of loaded textures
 };
 
 #endif

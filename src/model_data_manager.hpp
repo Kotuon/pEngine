@@ -21,17 +21,15 @@
 #include "model_data.hpp"
 #include "file_reader.hpp"
 
-using namespace std;
-
 /*! Model_Data_Manager class */
 class Model_Data_Manager {
     public:
         static bool Initialize();
         static Model_Data* Get(File_Reader& reader);
-        static Model_Data* Get(string modelName);
+        static Model_Data* Get(std::string modelName);
         static void Shutdown();
     private:
-        vector<Model_Data*> models; //!< List of the different Model_Data objects
+        std::vector<Model_Data*> models; //!< List of the different Model_Data objects
 };
 
 #endif

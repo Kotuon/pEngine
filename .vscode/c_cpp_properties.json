@@ -11,7 +11,9 @@
                 "libraries/JSONCPP/include/json",
                 "libraries/GLEW/include",
                 "libraries/GLEW/include/GL",
-                "libraries/imgui"
+                "libraries/imgui",
+                "libraries/lua/include",
+                "libraries/sol"
             ],
             "defines": [
                 "_DEBUG",

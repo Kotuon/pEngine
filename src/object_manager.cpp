@@ -9,6 +9,9 @@
  * 
  */
 
+// std includes //
+#include <string>
+
 // Engine includes //
 #include "behavior.hpp"
 #include "object_manager.hpp"
@@ -114,17 +117,18 @@ void Object_Manager::ReadList(File_Reader& preset) {
       // Reads objects until there is a failed read
     while (true) {
           // Getting the name of the objects file
-        string object_name = preset.Read_Object_Name("object_" + to_string(object_num));
+        std::string object_name = preset.Read_Object_Name("object_" + std::to_string(object_num));
         if (object_name.compare("") == 0) break;
 
           // Constructing the object 
         Object* object = new Object(object_name);
           // Reading in the objects position
-        vec3 position = preset.Read_Object_Position("object_" + to_string(object_num));
+        glm::vec3 position = preset.Read_Object_Position("object_" + std::to_string(object_num));
         Transform* transform = object->GetComponent<Transform>();
         transform->SetPosition(position);
+        transform->SetStartPosition(position);
         Behavior* behavior = object->GetComponent<Behavior>();
-        behavior->SetStartPos(position);
+        behavior->SetupClassesForLua();
 
           // Adding the object to the manager
         AddObject(object);
@@ -142,10 +146,10 @@ void Object_Manager::ReadList(File_Reader& preset) {
 void Object_Manager::CheckName(Object* object) {
     int objWithName = 0;
     for (Object* objToCheck : object_manager->objects) {
-        if (objToCheck->GetName().find(object->GetName()) != string::npos)
+        if (objToCheck->GetName().find(object->GetName()) != std::string::npos)
             ++ objWithName;
     }
 
     if (objWithName > 0) 
-        object->SetName(object->GetName() + "_" + to_string(objWithName));
+        object->SetName(object->GetName() + "_" + std::to_string(objWithName));
 }

@@ -21,10 +21,8 @@
 #include "component.hpp"
 #include "trace.hpp"
 
-using namespace std;
-
 /*! unordered_map tp relate CType enum to string (only used in GetComponent) */
-static unordered_map<CType, string> CNames = {
+static std::unordered_map<CType, std::string> CNames = {
     { CType::CModel, "Model" },
     { CType::CPhysics, "Physics" },
     { CType::CTransform, "Transform" }
@@ -35,7 +33,7 @@ class Object {
     public:
         Object();
         Object(const Object& other);
-        Object(string filename);
+        Object(std::string filename);
 
         Object* Clone() const;
     
@@ -84,14 +82,15 @@ class Object {
         void SetId(unsigned id_);
         unsigned GetId() const;
 
-        void SetName(string name_);
-        string GetName() const;
+        void SetName(std::string name_);
+        std::string GetName() const;
 
-        void ReadObject(string objectFilename);
+        void ReadObject(std::string objectFilename);
+        std::unordered_map<CType, Component*> GetComponentList();
     private:
-        unordered_map<CType, Component*> components; //!< List of components
+        std::unordered_map<CType, Component*> components; //!< List of components
         unsigned id; //!< Location of object in object_manager
-        string name; //!< Name of the object
+        std::string name; //!< Name of the object
 };
 
 #endif

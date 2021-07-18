@@ -72,7 +72,7 @@ void Model::Load(File_Reader& reader) {
  * @param projection Projection matrix of the scene
  * @param view View matrix of the scene
  */
-void Model::Draw(mat4 projection, mat4 view) {
+void Model::Draw(glm::mat4 projection, glm::mat4 view) {
     Transform* transform = GetParent()->GetComponent<Transform>();
     if (!data) return;
 
@@ -91,21 +91,21 @@ void Model::Read(File_Reader& reader) { Load(reader); }
  * 
  * @param modelName 
  */
-void Model::SwitchModel(string modelName) { data = Model_Data_Manager::Get(modelName); }
+void Model::SwitchModel(std::string modelName) { data = Model_Data_Manager::Get(modelName); }
 
 /**
  * @brief Switches the current texture to that of the filename provided
  * 
  * @param textureName 
  */
-void Model::SwitchTexture(string textureName) { texture = Texture_Manager::Get(textureName); }
+void Model::SwitchTexture(std::string textureName) { texture = Texture_Manager::Get(textureName); }
 
 /**
  * @brief Returns the filename of the current model
  * 
- * @return string 
+ * @return std::string 
  */
-string Model::GetModelName() const {
+std::string Model::GetModelName() const {
     if (!data) return "no model";
     return data->GetModelName();
 }
@@ -113,9 +113,9 @@ string Model::GetModelName() const {
 /**
  * @brief Returns the filename of the current texture
  * 
- * @return string 
+ * @return std::string 
  */
-string Model::GetTextureName() const {
+std::string Model::GetTextureName() const {
     if (!texture) return "no texture";
     return texture->GetTextureName();
 }
