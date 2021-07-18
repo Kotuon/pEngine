@@ -25,12 +25,13 @@ class Object_Manager {
     public:
         static bool Initialize(File_Reader& preset);
         static void AddObject(Object* object);
-        static Object* FindObject(unsigned id);
+        static Object* FindObject(int id);
         static unsigned GetSize();
         static void Update();
         static void Shutdown();
         void ReadList(File_Reader& preset);
-        void CheckName(Object* object);
+        static std::string CheckName(std::string objectName, int id);
+        static void RemoveObject(int id);
     private:
         std::vector<Object*> objects; //!< Current objects being tracked by the engine
 };

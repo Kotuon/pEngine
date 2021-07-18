@@ -163,8 +163,22 @@ void Editor::Display_Scene() {
 
       // Display all objects
     for (int i = 0; i < Object_Manager::GetSize(); ++i) {
-        if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick))
+        if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick)) {
             selected_object = i;
+        }
+
+        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            selected_object = i;
+            ImGui::OpenPopup("DeleteObject##2");
+        }
+    }
+
+    if (ImGui::BeginPopup("DeleteObject##2")) {
+        if (ImGui::Selectable("Delete##1")) {
+            Object_Manager::RemoveObject(selected_object);
+            selected_object = -1;
+        }
+        ImGui::EndPopup();
     }
 
     ImGui::Separator();
@@ -216,9 +230,9 @@ void Editor::Display_Components() {
     Display_Physics(physics);
     Display_Model(model);
     Display_Scripts(behavior);
-    
+
     ImGui::Separator();
-    
+
       // Button to add new components to the selected_object
     if (ImGui::Button("Add Component##1")) {
         ImGui::OpenPopup("New Component##1");
@@ -345,7 +359,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
             }
         }
 
-        ImGui::Text("##2"); ImGui::SameLine(100);
+        ImGui::Text(""); ImGui::SameLine(100);
         if (ImGui::Button("New Script##1")) {
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", "./data/scripts/");
         }

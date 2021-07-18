@@ -53,7 +53,6 @@ class Object {
               // Searching for component using the type (enum as int)
             auto found = components.find(T::GetCType());
             if (found == components.end()) {
-                Trace::Message("Component not found." + CNames[T::GetCType()] + "\n");
                 return nullptr;
             }
               // Cast found component into correct type
@@ -79,8 +78,8 @@ class Object {
             return (T*)found->second;
         }
 
-        void SetId(unsigned id_);
-        unsigned GetId() const;
+        void SetId(int id_);
+        int GetId() const;
 
         void SetName(std::string name_);
         std::string GetName() const;
@@ -89,7 +88,7 @@ class Object {
         std::unordered_map<CType, Component*> GetComponentList();
     private:
         std::unordered_map<CType, Component*> components; //!< List of components
-        unsigned id; //!< Location of object in object_manager
+        int id; //!< Location of object in object_manager
         std::string name; //!< Name of the object
 };
 

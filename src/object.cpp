@@ -15,6 +15,7 @@
   // Component //
 #include "behavior.hpp"
 #include "model.hpp"
+#include "object_manager.hpp"
 #include "physics.hpp"
 #include "transform.hpp"
   // Misc //
@@ -24,7 +25,7 @@
  * @brief Default constructor
  * 
  */
-Object::Object() {}
+Object::Object() : id(-1) {}
 
 /**
  * @brief Copy constructor
@@ -109,21 +110,23 @@ void Object::AddComponent(Component* component) {
  * 
  * @param id_ Position in Object_Manager
  */
-void Object::SetId(unsigned id_) { id = id_; }
+void Object::SetId(int id_) { id = id_; }
 
 /**
  * @brief Returns the id of object
  * 
  * @return unsigned Position in Object_Manager
  */
-unsigned Object::GetId() const { return id; }
+int Object::GetId() const { return id; }
 
 /**
  * @brief Sets name of object
  * 
  * @param name_ Name of object
  */
-void Object::SetName(std::string name_) { name = name_; }
+void Object::SetName(std::string name_) {
+    name = Object_Manager::CheckName(name_, id);
+}
 
 /**
  * @brief Returns name of object
