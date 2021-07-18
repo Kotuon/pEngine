@@ -14,21 +14,6 @@
 #include "engine.hpp"
 #include "graphics.hpp"
 
-#include "lua.hpp"
-
-using namespace std;
-
-void test_lua() {
-    lua_State *lua = luaL_newstate();
-    luaL_openlibs(lua);
-
-    luaL_dofile(lua, "data/scripts/test.lua");
-    lua_getglobal(lua, "helloWorld");
-    lua_call(lua, 0, 0);
-
-    lua_close(lua);
-}
-
 /**
  * @brief Main function
  * 
@@ -41,7 +26,6 @@ int main (int argc, char *argv[]) {
     Trace::Initialize();
     Engine::Initialize();
 
-    test_lua();
       // Engine update loop
     Graphics::Update();
 

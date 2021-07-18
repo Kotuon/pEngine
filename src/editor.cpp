@@ -25,8 +25,6 @@
 #include "object_manager.hpp"
 #include "transform.hpp"
 
-using namespace glm;
-
 static Editor* editor = nullptr; //!< Editor object
 
 /**
@@ -190,18 +188,18 @@ void Editor::Display_Components() {
 
     if (selected_object == -1) { ImGui::End(); return; }
     Object* object = Object_Manager::FindObject(selected_object);
-    string objectName = object->GetName();
+    std::string objectName = object->GetName();
 
       // Display name box (allows changing the name of an object)
     static char nameBuf[128] = "";
     sprintf(nameBuf, objectName.c_str());
     
     if (ImGui::InputText("Name", nameBuf, 128, ImGuiInputTextFlags_EnterReturnsTrue)) {
-        object->SetName(string(nameBuf));
+        object->SetName(std::string(nameBuf));
     }
 
     if (ImGui::IsItemDeactivatedAfterEdit()) {
-        object->SetName(string(nameBuf));
+        object->SetName(std::string(nameBuf));
     }
 
     Model* model = object->GetComponent<Model>();
@@ -245,7 +243,7 @@ void Editor::Display_Components() {
  */
 void Editor::Display_World_Settings() {
     ImGui::Begin("World Settings");
-    string presetName = Engine::GetPresetName();
+    std::string presetName = Engine::GetPresetName();
 
       // Allows user to change the preset that is loaded
     ImGui::Text("Presets"); ImGui::SameLine(120);
@@ -255,7 +253,7 @@ void Editor::Display_World_Settings() {
 
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
-            string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+            std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
             selected_object = -1;
             Engine::Restart(filePathName);
         }
@@ -320,8 +318,8 @@ void Editor::Display_Camera_Settings() {
 void Editor::Display_Model(Model* model) {
     if (!model) return;
     
-    string modelName = model->GetModelName();
-    string textureName = model->GetTextureName();
+    std::string modelName = model->GetModelName();
+    std::string textureName = model->GetTextureName();
 
     if (ImGui::TreeNode("Model")) {
           // Model that is being used
@@ -332,7 +330,7 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##1")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 model->SwitchModel(filePathName);
             }
 
@@ -347,7 +345,7 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##2")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
                 model->SwitchTexture(filePathName);
             }
 
@@ -366,7 +364,7 @@ void Editor::Display_Model(Model* model) {
 void Editor::Display_Physics(Physics* physics) {
     if (!physics) return;
     
-    vec3 velocity = physics->GetVelocity();
+    glm::vec3 velocity = physics->GetVelocity();
 
     if (ImGui::TreeNode("Physics")) {
         ImGui::Text("Velocity");
@@ -389,9 +387,9 @@ void Editor::Display_Physics(Physics* physics) {
 void Editor::Display_Transform(Transform* transform) {
     if (!transform) return;
     
-    vec3& position = transform->GetPosition();
-    vec3& scale = transform->GetScale();
-    vec3& rotation = transform->GetRotation();
+    glm::vec3& position = transform->GetPositionRef();
+    glm::vec3& scale = transform->GetScaleRef();
+    glm::vec3& rotation = transform->GetRotationRef();
 
     if (ImGui::TreeNode("Transform")) {
         ImGui::Text("Position");

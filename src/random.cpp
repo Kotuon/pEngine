@@ -51,12 +51,12 @@ void Random::Shutdown() {
  * @param high Upper boundary in random gen
  * @return vec3 
  */
-vec3 Random::random_vec3(float low, float high) {
+glm::vec3 Random::random_vec3(float low, float high) {
       // Setup random gen
-    mt19937 gen(random->rd());
-    uniform_real_distribution<> dist(low, high);
+    std::mt19937 gen(random->rd());
+    std::uniform_real_distribution<> dist(low, high);
       // Gen random vec3
-    vec3 result_vec3 = { dist(gen), dist(gen), dist(gen) };
+    glm::vec3 result_vec3 = { dist(gen), dist(gen), dist(gen) };
     return result_vec3;
 }
 
@@ -69,8 +69,8 @@ vec3 Random::random_vec3(float low, float high) {
  */
 float Random::random_float(float low, float high) {
       // Setup random gen
-    mt19937 gen(random->rd());
-    uniform_real_distribution<> dist(low, high);
+    std::mt19937 gen(random->rd());
+    std::uniform_real_distribution<> dist(low, high);
       // Gen random float
     return dist(gen);
 }

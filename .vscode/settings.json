@@ -42,7 +42,22 @@
         "typeinfo": "cpp",
         "chrono": "cpp",
         "hash_map": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "strstream": "cpp",
+        "codecvt": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "list": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "map": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "ratio": "cpp",
+        "set": "cpp",
+        "iomanip": "cpp",
+        "forward_list": "cpp",
+        "variant": "cpp"
     },
     "spellright.language": [
         "en"
@@ -51,5 +66,6 @@
         "markdown",
         "latex",
         "cpp"
-    ]
+    ],
+    "cmake.configureOnOpen": false
 }

@@ -117,7 +117,7 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
     }
       // Setting up variables
     static bool firstMouse = true;
-    pair<double, double> mousePos = { xpos, ypos };
+    std::pair<double, double> mousePos = { xpos, ypos };
 
       // Setting the camera sens using delta time
     camera->sensitivity = camera->originalSensitivity * Engine::GetDeltaTime();
@@ -129,7 +129,7 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
     }
 
       // Finding how far the mouse is from its last position
-    pair<float, float> offset = { 
+    std::pair<float, float> offset = { 
         mousePos.first - camera->last.first, 
         camera->last.second - mousePos.second
     };
@@ -149,17 +149,17 @@ void Camera::MouseUpdate(GLFWwindow*, double xpos, double ypos) {
     if (camera->pitch < -89.f) camera->pitch = -89.f;
 
       // Finding the direction of the camera
-    vec3 tempFront = {
-        cos(radians(camera->yaw)) * cos(radians(camera->pitch)),
-        sin(radians(camera->pitch)),
-        sin(radians(camera->yaw)) * cos(radians(camera->pitch))
+    glm::vec3 tempFront = {
+        std::cos(glm::radians(camera->yaw)) * std::cos(glm::radians(camera->pitch)),
+        std::sin(glm::radians(camera->pitch)),
+        std::sin(glm::radians(camera->yaw)) * std::cos(glm::radians(camera->pitch))
     };
-    camera->front = normalize(tempFront);
+    camera->front = glm::normalize(tempFront);
 
       // Finding the upward direction of the camera
-    vec3 tempUp = { 0.f, 1.f, 0.f };
-    vec3 right = normalize(cross(tempUp, camera->front));
-    vec3 up = cross(camera->front, right);
+    glm::vec3 tempUp = { 0.f, 1.f, 0.f };
+    glm::vec3 right = glm::normalize(glm::cross(tempUp, camera->front));
+    glm::vec3 up = glm::cross(camera->front, right);
     camera->up = up;
 }
 
@@ -180,96 +180,74 @@ void Camera::Shutdown() {
  * 
  * @return vec3& 
  */
-vec3& Camera::GetPosition() {
-    return camera->position;
-}
+glm::vec3& Camera::GetPosition() { return camera->position; }
 
 /**
  * @brief Returns the direction of the camera
  * 
  * @return vec3& 
  */
-vec3& Camera::GetFront() {
-    return camera->front;
-}
+glm::vec3& Camera::GetFront() { return camera->front; }
 
 /**
  * @brief Returns the upward direction of the camera
  * 
  * @return vec3& 
  */
-vec3& Camera::GetUp() {
-    return camera->up;
-}
+glm::vec3& Camera::GetUp() { return camera->up; }
 
 /**
  * @brief Returns the field of view of the camera
  * 
  * @return float 
  */
-float Camera::GetFov() {
-    return camera->fov;
-}
+float Camera::GetFov() { return camera->fov; }
 
 /**
  * @brief Returns the near view distance of the camera
  * 
  * @return float 
  */
-float Camera::GetNear() {
-    return camera->nearV;
-}
+float Camera::GetNear() { return camera->nearV; }
 
 /**
  * @brief Returns the far view distance of the camera
  * 
  * @return float 
  */
-float Camera::GetFar() {
-    return camera->farV;
-}
+float Camera::GetFar() { return camera->farV; }
 
 /**
  * @brief Returns the x rotation of the camera
  * 
  * @return float 
  */
-float Camera::GetYaw() {
-    return camera->yaw;
-}
+float Camera::GetYaw() { return camera->yaw; }
 
 /**
  * @brief Returns the y rotation of the camera
  * 
  * @return float 
  */
-float Camera::GetPitch() {
-    return camera->pitch;
-}
+float Camera::GetPitch() { return camera->pitch; }
 
 /**
  * @brief Returns reference to originalMoveSpeed
  * 
  * @return float& 
  */
-float& Camera::GetOriginalMoveSpeed() {
-    return camera->originalMoveSpeed;
-}
+float& Camera::GetOriginalMoveSpeed() { return camera->originalMoveSpeed; }
 
 /**
  * @brief Returns reference to originalSprintSpeed
  * 
  * @return float& 
  */
-float& Camera::GetOriginalSprintSpeed() {
-    return camera->originalSprintSpeed;
-}
+float& Camera::GetOriginalSprintSpeed() { return camera->originalSprintSpeed; }
 
 /**
  * @brief Returns reference to originalSensitivity
  * 
  * @return float& 
  */
-float& Camera::GetOriginalSensitivity() {
-    return camera->originalSensitivity;
-}
+float& Camera::GetOriginalSensitivity() { return camera->originalSensitivity; }

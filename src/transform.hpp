@@ -20,8 +20,6 @@
 #include "component.hpp"
 #include "file_reader.hpp"
 
-using namespace glm;
-
 /*! Transform class */
 class Transform : public Component {
     public:
@@ -30,47 +28,34 @@ class Transform : public Component {
         Transform(File_Reader& reader);
         Transform* Clone() const;
 
-        void SetPosition(vec3 pos);
-        vec3 GetPosition() const;
+        void SetPosition(glm::vec3 pos);
+        glm::vec3 GetPosition() const;
+        glm::vec3& GetPositionRef();
 
-        /**
-         * @brief Returns position reference
-         * 
-         * @return vec3& 
-         */
-        vec3& GetPosition();
+        void SetOldPosition(glm::vec3 oldPos);
+        glm::vec3 GetOldPosition() const;
 
-        void SetOldPosition(vec3 oldPos);
-        vec3 GetOldPosition() const;
+        void SetScale(glm::vec3 sca);
+        glm::vec3 GetScale() const;
+        glm::vec3& GetScaleRef();
 
-        void SetScale(vec3 sca);
-        vec3 GetScale() const;
+        void SetRotation(glm::vec3 rot);
+        glm::vec3 GetRotation() const;
+        glm::vec3& GetRotationRef();
 
-        /**
-         * @brief Returns scale reference
-         * 
-         * @return vec3& 
-         */
-        vec3& GetScale();
-
-        void SetRotation(vec3 rot);
-        vec3 GetRotation() const;
-
-        /**
-         * @brief Returns rotation reference
-         * 
-         * @return vec3& 
-         */
-        vec3& GetRotation();
+        void SetStartPosition(glm::vec3 startPosition_);
+        glm::vec3 GetStartPosition() const;
+        glm::vec3& GetStartPositionRef();
 
         void Read(File_Reader& reader);
 
         static CType GetCType();
     private:
-        vec3 position;    //!< Position of object
-        vec3 oldPosition; //!< Previous position of object
-        vec3 scale;       //!< Scale of object
-        vec3 rotation;    //!< Rotation of object
+        glm::vec3 position;      //!< Position of object
+        glm::vec3 oldPosition;   //!< Previous position of object
+        glm::vec3 scale;         //!< Scale of object
+        glm::vec3 rotation;      //!< Rotation of object
+        glm::vec3 startPosition; //!< Starting position of the object
 };
 
 #endif

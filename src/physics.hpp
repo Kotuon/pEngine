@@ -20,8 +20,6 @@
 #include "component.hpp"
 #include "file_reader.hpp"
 
-using namespace glm;
-
 /*! Physics class */
 class Physics : public Component {
     public:
@@ -30,15 +28,19 @@ class Physics : public Component {
         Physics(File_Reader& reader);
         Physics* Clone() const;
 
-        void SetAcceleration(vec3 accel);
-        vec3 GetAcceleration() const;
+        void SetAcceleration(glm::vec3 accel);
+        glm::vec3 GetAcceleration() const;
+        glm::vec3& GetAccelerationRef();
 
-        void SetForces(vec3 force);
-        void AddForce(vec3 force);
-        vec3 GetForces() const;
+        void SetForces(glm::vec3 force);
+        void AddForce(glm::vec3 force);
+        glm::vec3 GetForces() const;
+        glm::vec3& GetForcesRef();
+        void ApplyForce(glm::vec3 direction, float power);
 
-        void SetVelocity(vec3 vel);
-        vec3 GetVelocity() const;
+        void SetVelocity(glm::vec3 vel);
+        glm::vec3 GetVelocity() const;
+        glm::vec3& GetVelocityRef();
 
         void SetMass(float ma);
         float GetMass() const;
@@ -51,9 +53,9 @@ class Physics : public Component {
 
         static CType GetCType();
     private:
-        vec3 acceleration; //!< Acceleration of object
-        vec3 forces;       //!< Forces acting on object (reset at end of each update)
-        vec3 velocity;     //!< Velocity of object
+        glm::vec3 acceleration; //!< Acceleration of object
+        glm::vec3 forces;       //!< Forces acting on object (reset at end of each update)
+        glm::vec3 velocity;     //!< Velocity of object
         float mass;        //!< Mass of object
 };
 

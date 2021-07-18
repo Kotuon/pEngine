@@ -42,7 +42,7 @@ bool Model_Data_Manager::Initialize() {
  * @return Model_Data* Model data either read or gotten from list
  */
 Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
-    string filename = reader.Read_String("modelToLoad");
+    std::string filename = reader.Read_String("modelToLoad");
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {
         if (model_data->GetModelName().compare(filename) == 0) {
@@ -66,7 +66,7 @@ Model_Data* Model_Data_Manager::Get(File_Reader& reader) {
  * @param modelName Filename of the model to get
  * @return Model_Data* Model data either read or gotten from list
  */
-Model_Data* Model_Data_Manager::Get(string modelName) {
+Model_Data* Model_Data_Manager::Get(std::string modelName) {
       // Checks name of file against other model data objects
     for (Model_Data* model_data : model_data_manager->models) {
         if (model_data->GetModelName().compare(modelName) == 0) {

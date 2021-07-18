@@ -12,7 +12,8 @@
                 "libraries/GLEW/include",
                 "libraries/GLEW/include/GL",
                 "libraries/imgui",
-                "libraries/lua/include"
+                "libraries/lua/include",
+                "libraries/sol"
             ],
             "defines": [
                 "_DEBUG",

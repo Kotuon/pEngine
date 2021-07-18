@@ -24,8 +24,6 @@
 // Engine includes //
 #include "file_reader.hpp"
 
-using namespace std;
-
 /*! Graphics class */
 class Graphics {
     public:
@@ -38,10 +36,10 @@ class Graphics {
 
         static bool ErrorCheck(GLenum error);
         static void ErrorCallback(int error, const char* description);
-        static pair<int, int> GetWindowSize();
+        static std::pair<int, int> GetWindowSize();
         static GLFWwindow* GetWindow();
     private:
-        pair<int, int> windowSize; //!< Size of the window
+        std::pair<int, int> windowSize; //!< Size of the window
         GLFWwindow* window;        //!< Window for application
         GLuint vertexArrayId;      //!< Id of the VAO
 };

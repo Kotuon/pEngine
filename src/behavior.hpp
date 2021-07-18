@@ -18,14 +18,12 @@
 
 // Library includes //
 #include <vec3.hpp>
-#include "lua.hpp"
+#include <lua.hpp>
+#include <sol/sol.hpp>
 
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
-
-using namespace std;
-using namespace glm;
 
 /*! Behavior class */
 class Behavior : public Component {
@@ -39,26 +37,12 @@ class Behavior : public Component {
 
         void Read(File_Reader& reader);
 
-        void SetStartPos(vec3 startPos_);
-        vec3 GetStartPos() const;
-
-        // float GetMaxVelocity() const;
-        // float GetIdleRadius() const;
-        // float GetPushForce() const;
-        // float GetDirVariation() const;
-        // float GetPushVariation() const;
-
         static CType GetCType();
+
+        void SetupClassesForLua();
     private:
-        vector<string> scripts;
-        vector<lua_State*> states;
-        // vector<int> behaviorList; //!< List of behaviors to call
-        // vec3 startPos;            //!< Start position of the object
-        // float maxVelocity;        //!< Fastest the object can move
-        // float idleRadius;         //!< Furthest that object can be from startPos
-        // float pushForce;          //!< Strength of force applied to object
-        // float dirVariation;       //!< Amount of variation applied to object's direction
-        // float pushVariation;      //!< Amount of variation applied to object's push force
+        std::vector<std::string> scripts;
+        std::vector<sol::state*> states;
 };
 
 #endif

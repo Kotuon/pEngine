@@ -19,18 +19,15 @@
 // Library includes //
 #include <vec3.hpp>
 
-using namespace std;
-using namespace glm;
-
 /*! Random class */
 class Random {
     public:
         static bool Initialize();
         static void Shutdown();
-        static vec3 random_vec3(float low, float high);
+        static glm::vec3 random_vec3(float low, float high);
         static float random_float(float low, float high);
     private:
-    random_device rd; //!< Random device
+    std::random_device rd; //!< Random device
 };
 
 #endif

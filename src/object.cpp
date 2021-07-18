@@ -68,7 +68,7 @@ Object::Object(const Object& other) {
  * 
  * @param filename Name of file used to create object
  */
-Object::Object(string filename) {
+Object::Object(std::string filename) {
     ReadObject(filename);
 }
 
@@ -123,21 +123,21 @@ unsigned Object::GetId() const { return id; }
  * 
  * @param name_ Name of object
  */
-void Object::SetName(string name_) { name = name_; }
+void Object::SetName(std::string name_) { name = name_; }
 
 /**
  * @brief Returns name of object
  * 
  * @return string Name of object
  */
-string Object::GetName() const { return name; }
+std::string Object::GetName() const { return name; }
 
 /**
  * @brief Reads object from file. This includes the components of an object
  * 
  * @param objectFilename 
  */
-void Object::ReadObject(string objectFilename) {
+void Object::ReadObject(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader(objectFilename);
 
@@ -158,4 +158,8 @@ void Object::ReadObject(string objectFilename) {
       // Reading Transform component from file
     Transform* object_transform = new Transform(object_reader);
     AddComponent(object_transform);
+}
+
+std::unordered_map<CType, Component*> Object::GetComponentList() {
+    return components;
 }

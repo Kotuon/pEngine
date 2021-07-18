@@ -71,7 +71,7 @@ Model_Data::~Model_Data() {
  * @return false 
  */
 bool Model_Data::Load(File_Reader& reader) {
-    string modelName_ = reader.Read_String("modelToLoad");
+    std::string modelName_ = reader.Read_String("modelToLoad");
 
     return Read(modelName_);
 }
@@ -83,7 +83,7 @@ bool Model_Data::Load(File_Reader& reader) {
  * @return true 
  * @return false 
  */
-bool Model_Data::Load(string modelName_) { return Read(modelName_); }
+bool Model_Data::Load(std::string modelName_) { return Read(modelName_); }
 
 /**
  * @brief Reads model data from file
@@ -92,18 +92,18 @@ bool Model_Data::Load(string modelName_) { return Read(modelName_); }
  * @return true 
  * @return false 
  */
-bool Model_Data::Read(string modelName_) {
+bool Model_Data::Read(std::string modelName_) {
       // Setting the name of the file (used in model_data_manager)
     modelName = modelName_;
 
       // Creating variables for reading
-    vector<unsigned> vertex_indices, uv_indices, normal_indices;
-    vector<vec3> temp_vertices;
-    vector<vec2> temp_uvs;
-    vector<vec3> temp_normals;
+    std::vector<unsigned> vertex_indices, uv_indices, normal_indices;
+    std::vector<glm::vec3> temp_vertices;
+    std::vector<glm::vec2> temp_uvs;
+    std::vector<glm::vec3> temp_normals;
 
       // Opening the file
-    string fileToOpen = "data/models/" + modelName;
+    std::string fileToOpen = "data/models/" + modelName;
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
         Trace::Message("File '" + modelName + "' was not successfully opened.\n");
@@ -120,21 +120,21 @@ bool Model_Data::Read(string modelName_) {
 
           // Checking for which data needs to be read in
         if (strcmp(line_header,"v") == 0) {
-            vec3 vertex;
+            glm::vec3 vertex;
             fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
             temp_vertices.emplace_back(vertex);
             continue;
         }
 
         if (strcmp(line_header, "vt") == 0) {
-            vec2 uv;
+            glm::vec2 uv;
             fscanf(file, "%f %f\n", &uv.x, &uv.y);
             temp_uvs.emplace_back(uv);
             continue;
         }
 
         if (strcmp(line_header, "vn") == 0) {
-            vec3 normal;
+            glm::vec3 normal;
             fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z);
             temp_normals.emplace_back(normal);
             continue;
@@ -216,20 +216,20 @@ bool Model_Data::Read(string modelName_) {
  * @param projection Projection matrix of the scene
  * @param view View matrix of the scene
  */
-void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4 view) {
+void Model_Data::Draw(Model* parent, Transform* transform, glm::mat4 projection, glm::mat4 view) {
       // Creating the MVP (Model * View * Projection) matrix
-    mat4 model = mat4(1.f);
-    model = translate(model, transform->GetPosition());
-    model = scale(model, transform->GetScale());
+    glm::mat4 model = glm::mat4(1.f);
+    model = glm::translate(model, transform->GetPosition());
+    model = glm::scale(model, transform->GetScale());
 
       // Sending data to the shaders
-    mat4 MVP = projection * view * model;
+    glm::mat4 MVP = projection * view * model;
     glUniformMatrix4fv(Shader::GetMatrixId(), 1, GL_FALSE, &MVP[0][0]);
     glUniformMatrix4fv(Shader::GetModelMatrixId(), 1, GL_FALSE, &model[0][0]);
     glUniformMatrix4fv(Shader::GetViewMatrixId(), 1, GL_FALSE, &view[0][0]);
 
       // Sending light data to the shaders
-    vec3 lightPos = Engine::GetLightPos();
+    glm::vec3 lightPos = Engine::GetLightPos();
     glUniform3f(Shader::GetLightId(), lightPos.x, lightPos.y, lightPos.z);
     glUniform1f(Shader::GetLightPowerId(), Engine::GetLightPower());
 
@@ -288,4 +288,4 @@ void Model_Data::Draw(Model* parent, Transform* transform, mat4 projection, mat4
  * 
  * @return string Name of the file that contains model data
  */
-string Model_Data::GetModelName() const { return modelName; }
+std::string Model_Data::GetModelName() const { return modelName; }

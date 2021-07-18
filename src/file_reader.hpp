@@ -21,26 +21,23 @@
 #include <reader.h>
 #include <vec3.hpp>
 
-using namespace std;
-using namespace glm;
-
 /*! File_Reader class */
 class File_Reader {
     public:
-        File_Reader(string filename);
-        void Read_File(string filename);
+        File_Reader(std::string filename);
+        void Read_File(std::string filename);
 
-        int Read_Int(string valueName);
-        string Read_String(string valueName);
-        vec3 Read_Vec3(string valueName);
-        bool Read_Bool(string valueName);
-        float Read_Float(string valueName);
-        double Read_Double(string valueName);
+        int Read_Int(std::string valueName);
+        std::string Read_String(std::string valueName);
+        glm::vec3 Read_Vec3(std::string valueName);
+        bool Read_Bool(std::string valueName);
+        float Read_Float(std::string valueName);
+        double Read_Double(std::string valueName);
 
-        string Read_Object_Name(string valueName);
-        vec3 Read_Object_Position(string valueName);
+        std::string Read_Object_Name(std::string valueName);
+        glm::vec3 Read_Object_Position(std::string valueName);
 
-        string Read_Behavior_Name(string valueName);
+        std::string Read_Behavior_Name(std::string valueName);
 
     private:
         Json::Value root; //!< Holds the data of the json file

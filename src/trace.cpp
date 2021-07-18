@@ -16,8 +16,6 @@
 // Engine includes //
 #include "trace.hpp"
 
-using namespace std;
-
 static Trace* trace = nullptr; //!< Trace object
 
 /**
@@ -30,7 +28,7 @@ void Trace::Initialize() {
 
       // Opens output file
     trace->trace_stream.open("output/trace.log", std::ofstream::out);
-    if (!trace->trace_stream) cout << "File wasn't opened successfully.";
+    if (!trace->trace_stream) std::cout << "File wasn't opened successfully.";
 }
 
 /**
@@ -39,11 +37,11 @@ void Trace::Initialize() {
  * @param message Message to be printed
  * @return void
  */
-void Trace::Message(string message) {
+void Trace::Message(std::string message) {
     if (!trace->trace_stream) return;
 
     trace->trace_stream << message;
-    cout << message;
+    std::cout << message;
 }
 
 /**

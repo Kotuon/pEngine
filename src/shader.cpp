@@ -11,7 +11,6 @@
 
 // std includes //
 #include <fstream>
-#include <vector>
 
 // Library includes //
 #include <glew.h>
@@ -66,29 +65,29 @@ void Shader::Shutdown() {
 }
 
 /**
- * @brief Reads shader file into string
+ * @brief Reads shader file into std::string
  * 
  * @param filepath Shader file
- * @return string 
+ * @return std::string 
  */
-string Shader::ReadFile(string filepath) {
-    string content;
+std::string Shader::ReadFile(std::string filepath) {
+    std::string content;
 
       // Opening the shader file
-    ifstream file(filepath.c_str(), ios::in);
+    std::ifstream file(filepath.c_str(), std::ios::in);
     if (!file.is_open()) {
         Trace::Message("Failed to read file: " + filepath + "\n");
         return "";
     }
 
-      // Saving shader file into string
-    string line = "";
+      // Saving shader file into std::string
+    std::string line = "";
     while (!file.eof()) {
         getline(file, line);
         content.append(line + "\n");
     }
 
-      // Closing file and returning string
+      // Closing file and returning std::string
     file.close();
     return content;
 }
@@ -100,14 +99,14 @@ string Shader::ReadFile(string filepath) {
  * @param fragmentPath // Fragment shader filepath
  * @return void
  */
-void Shader::LoadShader(string vertexPath, string fragmentPath) {
+void Shader::LoadShader(std::string vertexPath, std::string fragmentPath) {
       // Creating shaders
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
       // Reading shaders
-    string vertShaderStr = ReadFile(vertexPath);
-    string fragShaderStr = ReadFile(fragmentPath);
+    std::string vertShaderStr = ReadFile(vertexPath);
+    std::string fragShaderStr = ReadFile(fragmentPath);
     const char *vertShaderSrc = vertShaderStr.c_str();
     const char *fragShaderSrc = fragShaderStr.c_str();
 

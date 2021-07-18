@@ -17,16 +17,14 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
-
 /*! Trace class */
 class Trace {
     public:
         static void Initialize();
-        static void Message(string message);
+        static void Message(std::string message);
         static void Shutdown();
     private:
-        fstream trace_stream; //!< Output file
+        std::fstream trace_stream; //!< Output file
 };
 
 

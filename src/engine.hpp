@@ -20,9 +20,6 @@
 // Library includes //
 #include <vec3.hpp>
 
-using namespace std;
-using namespace glm;
-
 /*! Engine class */
 class Engine {
     public:
@@ -30,13 +27,13 @@ class Engine {
         static void Update();
         static void Shutdown();
         static void Restart();
-        static void Restart(string presetName);
+        static void Restart(std::string presetName);
         static float GetDeltaTime();
         static float GetDt();
         static double& GetGravConst();
-        static string GetPresetName();
+        static std::string GetPresetName();
         static float& GetLightPower();
-        static vec3& GetLightPos();
+        static glm::vec3& GetLightPos();
     private:
         bool  isRunning;        //!< state of the main loop
         float deltaTime;        //!< time between frames
@@ -44,15 +41,15 @@ class Engine {
         float time;             //!< total time
         const float dt = 0.01f; //!< fixed delta time for physics updates
 
-        chrono::steady_clock::time_point currentTime; //!< current read time
-        chrono::steady_clock::time_point newTime;     //!< newest read time
-        chrono::steady_clock::duration timeTaken;     //!< time between frames
+        std::chrono::steady_clock::time_point currentTime; //!< current read time
+        std::chrono::steady_clock::time_point newTime;     //!< newest read time
+        std::chrono::steady_clock::duration timeTaken;     //!< time between frames
 
         double gravConst;  //!< gravitational constant (used in physics)
-        string presetName; //!< name of the preset being used
+        std::string presetName; //!< name of the preset being used
 
         float lightPower; //!< Power of the light in the scene
-        vec3 lightPos;    //!< Position of the light in the scene
+        glm::vec3 lightPos;    //!< Position of the light in the scene
 };
 
 #endif

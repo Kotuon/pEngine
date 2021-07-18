@@ -21,7 +21,6 @@
 #include "object_manager.hpp"
 #include "object.hpp"
   // Component //
-#include "behavior_manager.hpp"
 #include "component.hpp"
 #include "model_data_manager.hpp"
 #include "physics.hpp"
@@ -48,7 +47,7 @@ void Engine::Initialize() {
     }
 
     engine->lightPower = 1000.f;
-    engine->lightPos = vec3(4, 4, 0);
+    engine->lightPos = glm::vec3(4, 4, 0);
       // Reading settings from json
     File_Reader settings("settings.json");
     engine->presetName = settings.Read_String("preset");
@@ -61,13 +60,12 @@ void Engine::Initialize() {
     if (!Texture_Manager::Initialize()) return;
     if (!Camera::Initialize(settings)) return;
     if (!Graphics::Initialize(settings)) return;
-    if (!Behavior_Manager::Initialize()) return;
     if (!Object_Manager::Initialize(preset)) return;
     if (!Random::Initialize()) return;
     if (!Editor::Initialize()) return;
 
       // Setting up variables used for dt
-    engine->currentTime = chrono::steady_clock::now();
+    engine->currentTime = std::chrono::steady_clock::now();
     engine->accumulator = 0.f;
     engine->time = 0.f;
     engine->isRunning = true;
@@ -81,9 +79,10 @@ void Engine::Initialize() {
  */
 void Engine::Update() {
       // Calculating dt
-    engine->newTime = chrono::steady_clock::now();
+    engine->newTime = std::chrono::steady_clock::now();
     engine->timeTaken = engine->newTime - engine->currentTime;
-    engine->deltaTime = float(engine->timeTaken.count()) * chrono::steady_clock::period::num / chrono::steady_clock::period::den;
+    engine->deltaTime = float(engine->timeTaken.count()) * 
+        std::chrono::steady_clock::period::num / std::chrono::steady_clock::period::den;
     engine->currentTime = engine->newTime;
     engine->accumulator += engine->deltaTime;
 
@@ -111,7 +110,6 @@ void Engine::Shutdown() {
     Editor::Shutdown();
     Random::Shutdown();
     Object_Manager::Shutdown();
-    Behavior_Manager::Shutdown();
     Graphics::Shutdown();
     Camera::Shutdown();
     Texture_Manager::Shutdown();
@@ -145,7 +143,7 @@ void Engine::Restart() {
  * @param presetName Given preset
  * @return void
  */
-void Engine::Restart(string presetName) {
+void Engine::Restart(std::string presetName) {
       // Removing all current objects
     Object_Manager::Shutdown();
 
@@ -181,9 +179,9 @@ double& Engine::GetGravConst() { return engine->gravConst; }
 /**
  * @brief Returns the name of the current preset
  * 
- * @return string 
+ * @return std::string 
  */
-string Engine::GetPresetName() { return engine->presetName; }
+std::string Engine::GetPresetName() { return engine->presetName; }
 
 /**
  * @brief Returns reference to power of the light in the scene
@@ -195,6 +193,6 @@ float& Engine::GetLightPower() { return engine->lightPower; }
 /**
  * @brief Returns reference to the position of the light in the scene
  * 
- * @return vec3& 
+ * @return glm::vec3& 
  */
-vec3& Engine::GetLightPos() { return engine->lightPos; }
+glm::vec3& Engine::GetLightPos() { return engine->lightPos; }
