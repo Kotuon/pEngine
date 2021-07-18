@@ -32,6 +32,7 @@ class Behavior : public Component {
         Behavior(const Behavior& other);
         Behavior(File_Reader& reader);
         Behavior* Clone() const;
+        ~Behavior();
 
         void Update();
 
@@ -40,6 +41,12 @@ class Behavior : public Component {
         static CType GetCType();
 
         void SetupClassesForLua();
+
+        std::vector<std::string>& GetScripts();
+        
+        void ClassSetup(sol::state* state);
+        void SwitchScript(unsigned scriptNum, std::string newScriptName);
+        void AddScript(std::string newScriptName);
     private:
         std::vector<std::string> scripts;
         std::vector<sol::state*> states;

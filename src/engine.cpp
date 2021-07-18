@@ -46,14 +46,18 @@ void Engine::Initialize() {
         return;
     }
 
-    engine->lightPower = 1000.f;
-    engine->lightPos = glm::vec3(4, 4, 0);
       // Reading settings from json
     File_Reader settings("settings.json");
     engine->presetName = settings.Read_String("preset");
     
     File_Reader preset("preset/" + engine->presetName);
     engine->gravConst = preset.Read_Double("gravConst");
+
+    engine->lightPower = 1000.f;
+    engine->lightPos = preset.Read_Vec3("lightPos");
+    if (engine->lightPos == glm::vec3(0.f)) {
+        engine->lightPos = glm::vec3(4, 4, 0);
+    }
 
       // Initializing sub systems
     if (!Model_Data_Manager::Initialize()) return;
@@ -128,6 +132,7 @@ void Engine::Shutdown() {
 void Engine::Restart() {
       // Removing all current objects
     Object_Manager::Shutdown();
+    Editor::Reset();
 
       // Initializing object manager
     File_Reader settings("settings.json");
@@ -146,6 +151,7 @@ void Engine::Restart() {
 void Engine::Restart(std::string presetName) {
       // Removing all current objects
     Object_Manager::Shutdown();
+    Editor::Reset();
 
       // Initializing object manager
     File_Reader settings("settings.json");

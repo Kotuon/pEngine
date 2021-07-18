@@ -1,5 +1,6 @@
 {
     "gravConst" : 0.0,
+    "lightPos"  : [ 0.0, 0.0, -80.0 ],
     "object_0"  : { "objectName": "particle_array/particle.json", "position" : [   0.0,   0.0, -100.0 ] },
     "object_1"  : { "objectName": "particle_array/particle.json", "position" : [  20.0,   0.0, -100.0 ] },
     "object_2"  : { "objectName": "particle_array/particle.json", "position" : [   0.0,  20.0, -100.0 ] },

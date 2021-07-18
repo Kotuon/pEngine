@@ -14,10 +14,12 @@
 #define EDITOR_HPP
 
 // Engine includes //
+#include "behavior.hpp"
 #include "object.hpp"
 #include "model.hpp"
 #include "physics.hpp"
 #include "trace.hpp"
+#include "transform.hpp"
 
 /*! Editor class */
 class Editor {
@@ -26,6 +28,7 @@ class Editor {
         static void Update();
         static void Render();
         static void Shutdown();
+        static void Reset();
 
         static bool GetTakeKeyboardInput();
     private:
@@ -35,6 +38,7 @@ class Editor {
         void Display_World_Settings();
         void Display_Camera_Settings();
 
+        void Display_Scripts(Behavior* behavior);
         void Display_Model(Model* model);
         void Display_Physics(Physics* physics);
         void Display_Transform(Transform* transform);
