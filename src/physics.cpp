@@ -202,9 +202,17 @@ void Physics::UpdateGravity() {
  * @param reader File to be read from
  */
 void Physics::Read(File_Reader& reader) {
-    SetAcceleration(reader.Read_Vec3("acceleration"));
-    SetVelocity(reader.Read_Vec3("velocity"));
+    initialAcceleration = reader.Read_Vec3("acceleration");
+    initialVelocity = reader.Read_Vec3("velocity");
+    SetAcceleration(initialAcceleration);
+    SetVelocity(initialVelocity);
     SetMass(reader.Read_Float("mass"));
+}
+
+void Physics::Write(File_Writer& writer) {
+    writer.Write_Vec3("acceleration", initialAcceleration);
+    writer.Write_Vec3("velocity", initialVelocity);
+    writer.Write_Value("mass", mass);
 }
 
 /**

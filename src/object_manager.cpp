@@ -131,6 +131,7 @@ void Object_Manager::ReadList(File_Reader& preset) {
 
           // Adding the object to the manager
         AddObject(object);
+        object->Write();
 
         ++object_num;
     }

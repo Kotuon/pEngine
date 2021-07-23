@@ -88,6 +88,10 @@ void Behavior::Read(File_Reader& reader) {
     }
 }
 
+void Behavior::Write(File_Writer& writer) {
+    writer.Write_Behavior_Name(scripts);
+}
+
 /**
  * @brief Gets the CType of Behavior (used in Object::GetComponent<>())
  * 

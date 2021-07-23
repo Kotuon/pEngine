@@ -86,6 +86,11 @@ void Model::Draw(glm::mat4 projection, glm::mat4 view) {
  */
 void Model::Read(File_Reader& reader) { Load(reader); }
 
+void Model::Write(File_Writer& writer) {
+    writer.Write_Value("modelToLoad", data->GetModelName());
+    writer.Write_Value("textureToLoad", texture->GetTextureName());
+}
+
 /**
  * @brief Switches the current model to that of the filename provided
  * 

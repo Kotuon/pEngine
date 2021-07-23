@@ -70,7 +70,7 @@ Object::Object(const Object& other) {
  * @param filename Name of file used to create object
  */
 Object::Object(std::string filename) {
-    ReadObject(filename);
+    Read(filename);
 }
 
 /**
@@ -140,11 +140,12 @@ std::string Object::GetName() const { return name; }
  * 
  * @param objectFilename 
  */
-void Object::ReadObject(std::string objectFilename) {
+void Object::Read(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader(objectFilename);
 
     SetName(object_reader.Read_String("name"));
+    filename = objectFilename;
 
       // Reading Behavior component form file
     Behavior* object_behavior = new Behavior(object_reader);
@@ -161,6 +162,25 @@ void Object::ReadObject(std::string objectFilename) {
       // Reading Transform component from file
     Transform* object_transform = new Transform(object_reader);
     AddComponent(object_transform);
+}
+
+void Object::Write() {
+    File_Writer object_writer;
+    object_writer.Write_Value("name", name);
+
+    Model* object_model = GetComponent<Model>();
+    if (object_model) object_model->Write(object_writer);
+
+    Transform* object_transform = GetComponent<Transform>();
+    if (object_transform) object_transform->Write(object_writer);
+
+    Physics* object_physics = GetComponent<Physics>();
+    if (object_physics) object_physics->Write(object_writer);
+
+    Behavior* object_behavior = GetComponent<Behavior>();
+    if (object_behavior) object_behavior->Write(object_writer);
+
+    object_writer.Write_File(std::string(name + ".json"));
 }
 
 std::unordered_map<CType, Component*> Object::GetComponentList() {

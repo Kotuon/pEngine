@@ -24,6 +24,7 @@
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 #include "model_data.hpp"
 #include "texture.hpp"
 
@@ -39,6 +40,8 @@ class Model : public Component {
         void Draw(glm::mat4 projection, glm::mat4 view);
 
         void Read(File_Reader& reader);
+        void Write(File_Writer& writer);
+        
         void SwitchModel(std::string modelName);
         void SwitchTexture(std::string textureName);
 

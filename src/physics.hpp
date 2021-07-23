@@ -19,6 +19,7 @@
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 
 /*! Physics class */
 class Physics : public Component {
@@ -50,12 +51,15 @@ class Physics : public Component {
         void UpdateGravity();
 
         void Read(File_Reader& reader);
+        void Write(File_Writer& writer);
 
         static CType GetCType();
     private:
         glm::vec3 acceleration; //!< Acceleration of object
         glm::vec3 forces;       //!< Forces acting on object (reset at end of each update)
         glm::vec3 velocity;     //!< Velocity of object
+        glm::vec3 initialVelocity;
+        glm::vec3 initialAcceleration;
         float mass;        //!< Mass of object
 };
 

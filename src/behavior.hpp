@@ -24,6 +24,7 @@
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 
 /*! Behavior class */
 class Behavior : public Component {
@@ -37,6 +38,7 @@ class Behavior : public Component {
         void Update();
 
         void Read(File_Reader& reader);
+        void Write(File_Writer& writer);
 
         static CType GetCType();
 

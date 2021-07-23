@@ -19,6 +19,7 @@
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 
 /*! Transform class */
 class Transform : public Component {
@@ -48,6 +49,7 @@ class Transform : public Component {
         glm::vec3& GetStartPositionRef();
 
         void Read(File_Reader& reader);
+        void Write(File_Writer& writer);
 
         static CType GetCType();
     private:

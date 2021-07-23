@@ -140,6 +140,11 @@ void Transform::Read(File_Reader& reader) {
     //SetRotation(reader.Read_Float("rotation"));
 }
 
+void Transform::Write(File_Writer& writer) {
+    writer.Write_Vec3("scale", scale);
+    writer.Write_Vec3("rotation", rotation);
+}
+
 /**
  * @brief Gets the CType of Transform (used in Object::GetComponent<>())
  * 

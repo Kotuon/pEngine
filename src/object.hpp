@@ -94,12 +94,14 @@ class Object {
         void SetName(std::string name_);
         std::string GetName() const;
 
-        void ReadObject(std::string objectFilename);
+        void Read(std::string objectFilename);
+        void Write();
         std::unordered_map<CType, Component*> GetComponentList();
     private:
         std::unordered_map<CType, Component*> components; //!< List of components
         int id; //!< Location of object in object_manager
         std::string name; //!< Name of the object
+        std::string filename;
 };
 
 #endif
