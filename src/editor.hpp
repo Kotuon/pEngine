@@ -45,6 +45,7 @@ class Editor {
     private:
         bool isOpen;            //!< Whether the editor window is open or not
         int selected_object;    //!< Current object selected in the scene window
+        int selected_component; //!< Current component selected
         bool takeKeyboardInput; //!< Whether the program should take keyboard input
 };
 

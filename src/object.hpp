@@ -71,11 +71,21 @@ class Object {
               // Searching for component using the type (enum as int)
             auto found = components.find(T::GetCType());
             if (found == components.end()) {
-                Trace::Message("Component not found." + CNames[T::GetCType()] + "\n");
                 return nullptr;
             }
               // Cast found component into correct type
             return (T*)found->second;
+        }
+
+        template <typename T>
+        void RemoveComponent() {
+            auto found = components.find(T::GetCType());
+            if (found == components.end()) return;
+
+            delete found->second;
+            found->second = nullptr;
+
+            components.erase(found->first);
         }
 
         void SetId(int id_);

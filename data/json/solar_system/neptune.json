@@ -7,5 +7,5 @@
     "acceleration" : [ 0.0, 0.0, 0.0 ],
     "velocity"     : [ 0.0, 0.0, 47.4651664464 ],
     "mass"         : 102.0,
-    "behaviors"    : { "behavior_0" : "GravityBetweenObjects" }
+    "behaviors"    : { "behavior_0" : "GravityBetweenObjects.lua" }
 }

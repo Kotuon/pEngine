@@ -39,6 +39,7 @@ bool Editor::Initialize() {
         return false;
     }
     editor->selected_object = -1;
+    editor->selected_component = -1;
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -164,11 +165,15 @@ void Editor::Display_Scene() {
       // Display all objects
     for (int i = 0; i < Object_Manager::GetSize(); ++i) {
         if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick)) {
+            if (selected_object != i) editor->selected_component = -1;
             selected_object = i;
+            selected_component = -1;
         }
 
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            if (selected_object != i) editor->selected_component = -1;
             selected_object = i;
+            selected_component = -1;
             ImGui::OpenPopup("DeleteObject##2");
         }
     }
@@ -177,6 +182,7 @@ void Editor::Display_Scene() {
         if (ImGui::Selectable("Delete##1")) {
             Object_Manager::RemoveObject(selected_object);
             selected_object = -1;
+            selected_component = -1;
         }
         ImGui::EndPopup();
     }
@@ -338,8 +344,27 @@ void Editor::Display_Camera_Settings() {
 
 void Editor::Display_Scripts(Behavior* behavior) {
     if (!behavior) return;
+    
+    ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
+    if (selected_component == CType::CBehavior) node_flags |= ImGuiTreeNodeFlags_Selected;
+    
+    const bool scripts_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CBehavior, node_flags, "Scripts");
+    if (ImGui::IsItemClicked()) selected_component = CType::CBehavior;
 
-    if (ImGui::TreeNode("Scripts")) {
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        selected_component = CType::CBehavior;
+        ImGui::OpenPopup("DeleteScripts##1");
+    }
+
+    if (ImGui::BeginPopup("DeleteScripts##1")) {
+        if (ImGui::Selectable("Delete##2")) {
+            behavior->GetParent()->RemoveComponent<Behavior>();
+            selected_component = -1;
+        }
+        ImGui::EndPopup();
+    }
+
+    if (scripts_open) {
         std::vector<std::string>& scripts = behavior->GetScripts();
         unsigned scriptNum = 1;
         for (std::string& script : scripts) {
@@ -387,8 +412,27 @@ void Editor::Display_Model(Model* model) {
     
     std::string modelName = model->GetModelName();
     std::string textureName = model->GetTextureName();
+    
+    ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
+    if (selected_component == CType::CModel) node_flags |= ImGuiTreeNodeFlags_Selected;
+    
+    const bool model_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CModel, node_flags, "Model");
+    if (ImGui::IsItemClicked()) selected_component = CType::CModel;
 
-    if (ImGui::TreeNode("Model")) {
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        selected_component = CType::CModel;
+        ImGui::OpenPopup("DeleteModel##1");
+    }
+
+    if (ImGui::BeginPopup("DeleteModel##1")) {
+        if (ImGui::Selectable("Delete##3")) {
+            model->GetParent()->RemoveComponent<Model>();
+            selected_component = -1;
+        }
+        ImGui::EndPopup();
+    }
+
+    if (model_open) {
           // Model that is being used
         ImGui::Text("Model"); ImGui::SameLine(100);
         if (ImGui::Button(modelName.c_str())) {
@@ -433,7 +477,26 @@ void Editor::Display_Physics(Physics* physics) {
     
     glm::vec3 velocity = physics->GetVelocity();
 
-    if (ImGui::TreeNode("Physics")) {
+    ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
+    if (selected_component == CType::CPhysics) node_flags |= ImGuiTreeNodeFlags_Selected;
+    
+    const bool physics_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CPhysics, node_flags, "Physics");
+    if (ImGui::IsItemClicked()) selected_component = CType::CPhysics;
+
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+        selected_component = CType::CPhysics;
+        ImGui::OpenPopup("DeletePhysics##1");
+    }
+
+    if (ImGui::BeginPopup("DeletePhysics##1")) {
+        if (ImGui::Selectable("Delete##4")) {
+            physics->GetParent()->RemoveComponent<Physics>();
+            selected_component = -1;
+        }
+        ImGui::EndPopup();
+    }
+
+    if (physics_open) {
         ImGui::Text("Velocity");
 
         ImGui::PushItemWidth(50);
@@ -459,7 +522,13 @@ void Editor::Display_Transform(Transform* transform) {
     glm::vec3& rotation = transform->GetRotationRef();
     glm::vec3& startPos = transform->GetStartPositionRef();
 
-    if (ImGui::TreeNode("Transform")) {
+    ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
+    if (selected_component == CType::CTransform) node_flags |= ImGuiTreeNodeFlags_Selected;
+    
+    const bool transform_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CTransform, node_flags, "Transform");
+    if (ImGui::IsItemClicked()) selected_component = CType::CTransform;
+
+    if (transform_open) {
         ImGui::Text("Position");
 
         ImGui::PushItemWidth(50);
