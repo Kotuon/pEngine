@@ -17,8 +17,7 @@
 #include <string>
 
 // Library includes //
-#include <json.h>
-#include <reader.h>
+#include <document.h>
 #include <vec3.hpp>
 
 /*! File_Reader class */
@@ -40,7 +39,7 @@ class File_Reader {
         std::string Read_Behavior_Name(std::string valueName);
 
     private:
-        Json::Value root; //!< Holds the data of the json file
+        rapidjson::Document root; //!< Holds the data of the json file
 };
 
 #endif
