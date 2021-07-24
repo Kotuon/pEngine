@@ -42,7 +42,7 @@ void File_Reader::Read_File(std::string filename) {
     std::string fileToOpen = "data/json/" + filename;
     FILE* file = fopen(fileToOpen.c_str(), "r");
 
-    char buffer[131072];
+    char buffer[65536];
     FileReadStream stream(file, buffer, sizeof(buffer));
     root.ParseStream<0, UTF8<>, FileReadStream>(stream);
 

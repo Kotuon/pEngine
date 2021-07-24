@@ -87,8 +87,11 @@ void Model::Draw(glm::mat4 projection, glm::mat4 view) {
 void Model::Read(File_Reader& reader) { Load(reader); }
 
 void Model::Write(File_Writer& writer) {
-    writer.Write_Value("modelToLoad", data->GetModelName());
-    writer.Write_Value("textureToLoad", texture->GetTextureName());
+    std::string modelName = data->GetModelName();
+    std::string textureName = texture->GetTextureName();
+
+    writer.Write_String("modelToLoad", modelName.c_str());
+    writer.Write_String("textureToLoad", textureName.c_str());
 }
 
 /**

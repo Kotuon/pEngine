@@ -1,0 +1,13 @@
+{
+    "name": "particle_8",
+    "modelToLoad": "ball.obj",
+    "textureToLoad": "scratch.dds",
+    "scale": [3.0, 3.0, 3.0],
+    "rotation": [0.0, 0.0, 0.0],
+    "acceleration": [0.0, 0.0, 0.0],
+    "velocity": [0.0, 0.0, 0.0],
+    "mass": 1.0,
+    "behaviors": {
+        "behavior_0": "Idle.lua"
+    }
+}

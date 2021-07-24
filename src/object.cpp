@@ -166,7 +166,7 @@ void Object::Read(std::string objectFilename) {
 
 void Object::Write() {
     File_Writer object_writer;
-    object_writer.Write_Value("name", name);
+    object_writer.Write_String("name", name);
 
     Model* object_model = GetComponent<Model>();
     if (object_model) object_model->Write(object_writer);
