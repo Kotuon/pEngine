@@ -1,0 +1,11 @@
+{
+    "name"         : "mars",
+    "modelToLoad"  : "ball.obj",
+    "textureToLoad" : "uvmap.DDS",
+    "scale"        : [ 6.792, 6.792, 6.792 ],
+    "rotation"     : 0.0,
+    "acceleration" : [ 0.0, 0.0, 0.0 ],
+    "velocity"     : [ 0.0, 0.0, 90.4860461668 ],
+    "mass"         : 0.642,
+    "behaviors"    : { "behavior_0" : "GravityBetweenObjects.lua" }
+}

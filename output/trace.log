@@ -1,138 +1,63 @@
 Reading: settings.json
 Reading: preset/particle_array.json
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_1
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_2
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_3
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_4
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_5
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_6
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_7
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_8
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_9
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_10
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_11
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_12
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_13
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_14
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_15
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_16
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_17
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_18
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_19
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_20
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_21
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_22
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_23
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_24
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_25
-Value name: ball.obj
-Value name: scratch.dds
-Reading: particle_array/particle.json
+Reading: objects/particle.json
 Error reading std::string: behavior_1
-Value name: particle_26
-Value name: ball.obj
-Value name: scratch.dds
 Error reading with object_27
+Reading: objects/earth.json
+Error reading std::string: behavior_1
+Reading: objects/earth.json
+Error reading std::string: behavior_1
+Reading: objects/sun.json
+Error reading std::string: behavior_1

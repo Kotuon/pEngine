@@ -226,6 +226,23 @@ void Editor::Display_Components() {
         object->SetName(std::string(nameBuf));
     }
 
+    
+    ImGui::Text("Template:");
+    ImGui::SameLine(100);
+    if (ImGui::Button(object->GetTemplateName().c_str())) {
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseTemplate##1", "Choose File", ".json", "./data/json/objects/");
+    }
+
+    if (ImGuiFileDialog::Instance()->Display("ChooseTemplate##1")) {
+        if (ImGuiFileDialog::Instance()->IsOk()) {
+            std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
+            //object->Clear();
+            object->ReRead(filePathName);
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+
     Behavior* behavior = object->GetComponent<Behavior>();
     Model* model = object->GetComponent<Model>();
     Physics* physics = object->GetComponent<Physics>();
@@ -377,11 +394,12 @@ void Editor::Display_Scripts(Behavior* behavior) {
             if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
                 if (ImGuiFileDialog::Instance()->IsOk()) {
                     std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                    behavior->SwitchScript(scriptNum, filePathName);
+                    behavior->SwitchScript(scriptNum - 1, filePathName);
                 }
 
                 ImGuiFileDialog::Instance()->Close();
             }
+            ++scriptNum;
         }
 
         ImGui::Text(""); ImGui::SameLine(100);
@@ -392,10 +410,20 @@ void Editor::Display_Scripts(Behavior* behavior) {
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##4")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                behavior->AddScript(filePathName);
+                if (!behavior->AddScript(filePathName))
+                    ImGui::OpenPopup("ExistingScript##1");
             }
 
             ImGuiFileDialog::Instance()->Close();
+        }
+
+        ImVec2 centerPos = ImGui::GetMainViewport()->GetCenter();
+        ImGui::SetNextWindowPos(centerPos);
+        if (ImGui::BeginPopup("ExistingScript##1")) {
+            ImGui::Text(std::string("Script already attached to " +
+                Object_Manager::FindObject(editor->selected_object)->GetName()).c_str(),
+                ImGui::GetFontSize() * 2);
+            ImGui::EndPopup();
         }
 
         ImGui::TreePop();

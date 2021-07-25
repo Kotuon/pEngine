@@ -38,7 +38,6 @@ void File_Writer::Write_Vec3(std::string valueName, glm::vec3 value) {
 }
 
 void File_Writer::Write_String(std::string valueName, std::string value) {
-    Trace::Message("Value name: " + value + "\n");
     Value name(valueName.c_str(), SizeType(valueName.size()), root.GetAllocator());
     Value newValue(value.c_str(), SizeType(value.size()), root.GetAllocator());
     

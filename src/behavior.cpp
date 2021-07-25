@@ -54,6 +54,16 @@ Behavior* Behavior::Clone() const {
     return new Behavior(*this);
 }
 
+Behavior::~Behavior() {
+    for (sol::state* state : states) {
+        if (!state) continue;
+        delete state;
+        state = nullptr;
+    }
+
+    scripts.clear();
+}
+
 /**
  * @brief Update for Behavior object. Calls Behavior manager giving list of its
  *        behaviors
@@ -61,6 +71,7 @@ Behavior* Behavior::Clone() const {
  */
 void Behavior::Update() {
     for (sol::state* state : states) {
+        if (!state) continue;
         (*state)["FixedUpdate"](Engine::GetDt());
     }
 }
@@ -74,7 +85,7 @@ void Behavior::Read(File_Reader& reader) {
     unsigned behavior_num = 0;
 
     while (true) {
-    std::string behavior_name = reader.Read_Behavior_Name("behavior_" + std::to_string(behavior_num));
+        std::string behavior_name = reader.Read_Behavior_Name("behavior_" + std::to_string(behavior_num));
         if (behavior_name.compare("") == 0) break;
 
         scripts.emplace_back(behavior_name);
@@ -153,18 +164,14 @@ void Behavior::ClassSetup(sol::state* state) {
 
 void Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
     sol::state* state = states[scriptNum];
-    delete state;
-    state = new sol::state;
-    state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
-
     scripts[scriptNum] = newScriptName;
-    ClassSetup(state);
 
-    states[scriptNum]->script_file(std::string("data/scripts/" + scripts[scriptNum]).c_str());
-    (*states[scriptNum])["Start"]();
+    state->script_file(std::string("data/scripts/" + scripts[scriptNum]).c_str());
+    (*state)["Start"]();
 }
 
-void Behavior::AddScript(std::string newScriptName) {
+bool Behavior::AddScript(std::string newScriptName) {
+    if (CheckIfCopy(newScriptName)) return false;
     sol::state* state = new sol::state;
     state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
     states.emplace_back(state);
@@ -174,4 +181,27 @@ void Behavior::AddScript(std::string newScriptName) {
 
     states.back()->script_file(std::string("data/scripts/" + scripts.back()).c_str());
     (*states.back())["Start"]();
+
+    return true;
+}
+
+bool Behavior::CheckIfCopy(std::string newScriptName) {
+      // Checking if script is the same as an existing one
+    for (std::string scriptName : scripts) {
+        if (scriptName.compare(newScriptName) == 0) return true;
+    }
+
+      // Script is not a copy
+    return false;
+}
+
+void Behavior::Clear() {
+    for (sol::state* state : states) {
+        if (!state) continue;
+        delete state;
+        state = nullptr;
+    }
+
+    states.clear();
+    scripts.clear();
 }

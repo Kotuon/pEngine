@@ -48,7 +48,9 @@ class Behavior : public Component {
         
         void ClassSetup(sol::state* state);
         void SwitchScript(unsigned scriptNum, std::string newScriptName);
-        void AddScript(std::string newScriptName);
+        bool AddScript(std::string newScriptName);
+        bool CheckIfCopy(std::string newScriptName);
+        void Clear();
     private:
         std::vector<std::string> scripts;
         std::vector<sol::state*> states;

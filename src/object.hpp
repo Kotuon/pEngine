@@ -94,14 +94,20 @@ class Object {
         void SetName(std::string name_);
         std::string GetName() const;
 
+        void SetTemplateName(std::string templateName_);
+        std::string GetTemplateName() const;
+
         void Read(std::string objectFilename);
+        void ReRead(std::string objectFilename);
         void Write();
         std::unordered_map<CType, Component*> GetComponentList();
+
+        void Clear();
     private:
         std::unordered_map<CType, Component*> components; //!< List of components
         int id; //!< Location of object in object_manager
         std::string name; //!< Name of the object
-        std::string filename;
+        std::string templateName;
 };
 
 #endif

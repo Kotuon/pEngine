@@ -135,6 +135,10 @@ void Object::SetName(std::string name_) {
  */
 std::string Object::GetName() const { return name; }
 
+void Object::SetTemplateName(std::string templateName_) { templateName = templateName_; }
+
+std::string Object::GetTemplateName() const { return templateName; }
+
 /**
  * @brief Reads object from file. This includes the components of an object
  * 
@@ -142,10 +146,12 @@ std::string Object::GetName() const { return name; }
  */
 void Object::Read(std::string objectFilename) {
       // Getting data from file
-    File_Reader object_reader(objectFilename);
+    File_Reader object_reader("objects/" + objectFilename);
 
-    SetName(object_reader.Read_String("name"));
-    filename = objectFilename;
+    if (name.compare("") == 0)
+        SetName(object_reader.Read_String("name"));
+
+    templateName = objectFilename;
 
       // Reading Behavior component form file
     Behavior* object_behavior = new Behavior(object_reader);
@@ -164,6 +170,50 @@ void Object::Read(std::string objectFilename) {
     AddComponent(object_transform);
 }
 
+void Object::ReRead(std::string objectFilename) {
+      // Getting data from file
+    File_Reader object_reader("objects/" + objectFilename);
+
+    if (name.compare("") == 0)
+        SetName(object_reader.Read_String("name"));
+
+    templateName = objectFilename;
+
+      // Reading Behavior component form file
+    Behavior* object_behavior = GetComponent<Behavior>();
+    if (object_behavior) object_behavior->Clear();
+    if (!object_behavior) { 
+        object_behavior = new Behavior; 
+        AddComponent(object_behavior); 
+    }
+    object_behavior->Read(object_reader);
+    object_behavior->SetupClassesForLua();
+
+      // Reading Model component from file
+    Model* object_model = GetComponent<Model>();
+    if (!object_model) {
+        object_model = new Model;
+        AddComponent(object_model); 
+    }
+    object_model->Read(object_reader);
+    
+      // Reading Physics component from file
+    Physics* object_physics = GetComponent<Physics>();
+    if (!object_physics) {
+        object_physics = new Physics;
+        AddComponent(object_physics);
+    }
+    object_physics->Read(object_reader);
+    
+      // Reading Transform component from file
+    Transform* object_transform = GetComponent<Transform>();
+    if (!object_transform) {
+        object_transform = new Transform;
+        AddComponent(object_transform);
+    }
+    object_transform->Read(object_reader);
+}
+
 void Object::Write() {
     File_Writer object_writer;
     object_writer.Write_String("name", name);
@@ -180,9 +230,28 @@ void Object::Write() {
     Behavior* object_behavior = GetComponent<Behavior>();
     if (object_behavior) object_behavior->Write(object_writer);
 
-    object_writer.Write_File(std::string(name + ".json"));
+    object_writer.Write_File(std::string("objects/" + name + ".json"));
 }
 
 std::unordered_map<CType, Component*> Object::GetComponentList() {
     return components;
+}
+
+void Object::Clear() {
+    Behavior* behavior = GetComponent<Behavior>();
+    Model* model = GetComponent<Model>();
+    Physics* physics = GetComponent<Physics>();
+
+    if (behavior) {
+        delete behavior;
+        behavior = nullptr;
+    }
+    if (model) {
+        delete model;
+        model = nullptr;
+    }
+    if (physics) {
+        delete physics;
+        physics = nullptr;
+    }
 }

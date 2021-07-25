@@ -1,13 +1,13 @@
 {
     "gravConst" : 6.67,
-    "object_0"  : { "objectName": "solar_system/sun.json"    , "position" : [ 0.0   , 0.0, -2000.0 ] },
-    "object_1"  : { "objectName": "solar_system/mercury.json", "position" : [ 1449.9, 0.0, -2000.0 ] },
-    "object_2"  : { "objectName": "solar_system/venus.json"  , "position" : [ 1500.2, 0.0, -2000.0 ] },
-    "object_3"  : { "objectName": "solar_system/earth.json"  , "position" : [ 1541.6, 0.0, -2000.0 ] },
-    "object_4"  : { "objectName": "solar_system/mars.json"   , "position" : [ 1619.9, 0.0, -2000.0 ] },
-    "object_5"  : { "objectName": "solar_system/jupiter.json", "position" : [ 2170.6, 0.0, -2000.0 ] },
-    "object_6"  : { "objectName": "solar_system/saturn.json" , "position" : [ 2825.5, 0.0, -2000.0 ] },
-    "object_7"  : { "objectName": "solar_system/uranus.json" , "position" : [ 4264.5, 0.0, -2000.0 ] },
-    "object_8"  : { "objectName": "solar_system/neptune.json", "position" : [ 5887.1, 0.0, -2000.0 ] },
-    "object_9"  : { "objectName": "solar_system/pluto.json"  , "position" : [ 7298.4, 0.0, -2000.0 ] }
+    "object_0"  : { "objectName": "sun.json"    , "position" : [ 0.0   , 0.0, -2000.0 ] },
+    "object_1"  : { "objectName": "mercury.json", "position" : [ 1449.9, 0.0, -2000.0 ] },
+    "object_2"  : { "objectName": "venus.json"  , "position" : [ 1500.2, 0.0, -2000.0 ] },
+    "object_3"  : { "objectName": "earth.json"  , "position" : [ 1541.6, 0.0, -2000.0 ] },
+    "object_4"  : { "objectName": "mars.json"   , "position" : [ 1619.9, 0.0, -2000.0 ] },
+    "object_5"  : { "objectName": "jupiter.json", "position" : [ 2170.6, 0.0, -2000.0 ] },
+    "object_6"  : { "objectName": "saturn.json" , "position" : [ 2825.5, 0.0, -2000.0 ] },
+    "object_7"  : { "objectName": "uranus.json" , "position" : [ 4264.5, 0.0, -2000.0 ] },
+    "object_8"  : { "objectName": "neptune.json", "position" : [ 5887.1, 0.0, -2000.0 ] },
+    "object_9"  : { "objectName": "pluto.json"  , "position" : [ 7298.4, 0.0, -2000.0 ] }
 }
