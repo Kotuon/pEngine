@@ -13,7 +13,8 @@
                 "libraries/GLEW/include/GL",
                 "libraries/imgui",
                 "libraries/lua/include",
-                "libraries/sol"
+                "libraries/sol",
+                "libraries/rapidjson/include"
             ],
             "defines": [
                 "_DEBUG",

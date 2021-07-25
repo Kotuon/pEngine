@@ -1,0 +1,11 @@
+{
+    "name"         : "earth",
+    "modelToLoad"  : "ball.obj",
+    "textureToLoad" : "uvmap.DDS",
+    "scale"        : [ 12.756, 12.756, 12.756 ],
+    "rotation"     : 0.0,
+    "acceleration" : [ 0.0, 0.0, 0.0 ],
+    "velocity"     : [ 0.0, 0.0, 92.755541212 ],
+    "mass"         : 5.97,
+    "behaviors"    : { "behavior_0" : "GravityBetweenObjects.lua" }
+}

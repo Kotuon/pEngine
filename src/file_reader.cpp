@@ -13,9 +13,14 @@
 #include <fstream>
 #include <iostream>
 
+// Library includes //
+#include <filereadstream.h>
+
 // Engine includes //
 #include "file_reader.hpp"
 #include "trace.hpp"
+
+using namespace rapidjson;
 
 /**
  * @brief Creates File_Reader object and reads given file
@@ -24,6 +29,7 @@
  */
 File_Reader::File_Reader(std::string filename) {
     Read_File(filename);
+    Trace::Message("Reading: " + filename + "\n");
 }
 
 /**
@@ -34,16 +40,13 @@ File_Reader::File_Reader(std::string filename) {
 void File_Reader::Read_File(std::string filename) {
       // Opening the json file
     std::string fileToOpen = "data/json/" + filename;
-    std::ifstream file(fileToOpen.c_str(), std::ifstream::binary);
+    FILE* file = fopen(fileToOpen.c_str(), "r");
 
-      // Reading data from file into root variable
-    Json::CharReaderBuilder reader;
-    std::string errors;
-    if (!parseFromStream(reader, file, &root, &errors)) {
-        Trace::Message("Unable to read file '" + filename + "': " + errors + "\n");
-    }
+    char buffer[65536];
+    FileReadStream stream(file, buffer, sizeof(buffer));
+    root.ParseStream<0, UTF8<>, FileReadStream>(stream);
 
-    file.close();
+    fclose(file);
 }
 
 /**
@@ -54,11 +57,11 @@ void File_Reader::Read_File(std::string filename) {
  */
 int File_Reader::Read_Int(std::string valueName) {
       // Checking if the value is an int
-    if (!root[valueName].isInt()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading int: " + valueName + "\n");
         return 0;
     }
-    return root[valueName].asInt();
+    return root[valueName.c_str()].GetInt();
 }
 
 /**
@@ -69,11 +72,11 @@ int File_Reader::Read_Int(std::string valueName) {
  */
 std::string File_Reader::Read_String(std::string valueName) {
       // Checking if the value is a std::string
-    if (!root[valueName].isString()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
-    return root[valueName].asString();
+    return root[valueName.c_str()].GetString();
 }
 
 /**
@@ -85,11 +88,11 @@ std::string File_Reader::Read_String(std::string valueName) {
  */
 glm::vec3 File_Reader::Read_Vec3(std::string valueName) {
       // Checking if the value is an array
-    if (!root[valueName].isArray()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading glm::vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
     }
-    return glm::vec3(root[valueName][0].asFloat(), root[valueName][1].asFloat(), root[valueName][2].asFloat());
+    return glm::vec3(root[valueName.c_str()][0].GetFloat(), root[valueName.c_str()][1].GetFloat(), root[valueName.c_str()][2].GetFloat());
 }
 
 /**
@@ -101,11 +104,11 @@ glm::vec3 File_Reader::Read_Vec3(std::string valueName) {
  */
 bool File_Reader::Read_Bool(std::string valueName) {
       // Checking if the value is a bool
-    if (!root[valueName].isBool()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading bool: " + valueName + "\n");
         return false;
     }
-    return root[valueName].asBool();
+    return root[valueName.c_str()].GetBool();
 }
 
 /**
@@ -116,11 +119,11 @@ bool File_Reader::Read_Bool(std::string valueName) {
  */
 float File_Reader::Read_Float(std::string valueName) {
       // Checking if the value is a double (has decimal)
-    if (!root[valueName].isDouble()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading float: " + valueName + "\n");
         return 0.f;
     }
-    return root[valueName].asFloat();
+    return root[valueName.c_str()].GetFloat();
 }
 
 /**
@@ -131,11 +134,11 @@ float File_Reader::Read_Float(std::string valueName) {
  */
 double File_Reader::Read_Double(std::string valueName) {
       // Checking if the value is a double (has decimal)
-    if (!root[valueName].isDouble()) {
+    if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading double: " + valueName + "\n");
         return false;
     }
-    return root[valueName].asDouble();
+    return root[valueName.c_str()].GetDouble();
 }
 
 /**
@@ -145,12 +148,16 @@ double File_Reader::Read_Double(std::string valueName) {
  * @return std::string Name of the object
  */
 std::string File_Reader::Read_Object_Name(std::string valueName) {
-      // Checking if the value is a std::string
-    if (!root[valueName]["objectName"].isString()) {
+    if (!root.HasMember(valueName.c_str())) {
+        Trace::Message("Error reading with " + valueName + "\n");
+        return std::string("");
+    }
+    if (!root[valueName.c_str()].HasMember("objectName")) {
         Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
-    return root[valueName]["objectName"].asString();
+
+    return root[valueName.c_str()]["objectName"].GetString();
 }
 
 /**
@@ -160,12 +167,13 @@ std::string File_Reader::Read_Object_Name(std::string valueName) {
  * @return glm::vec3 Position of object
  */
 glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
-      // Checking if the value is an array (used to construct glm::vec3)
-    if (!root[valueName]["position"].isArray()) {
-        Trace::Message("Error reading std::string: " + valueName + "\n");
+    if (!root[valueName.c_str()].HasMember("position")) {
+        Trace::Message("Error reading vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
     }
-    return glm::vec3(root[valueName]["position"][0].asFloat(), root[valueName]["position"][1].asFloat(), root[valueName]["position"][2].asFloat());
+
+    Value& array = root[valueName.c_str()]["position"];
+    return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
 }
 
 /**
@@ -174,11 +182,12 @@ glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
  * @param valueName Behavior to read
  * @return std::string Name of the behavior
  */
+
 std::string File_Reader::Read_Behavior_Name(std::string valueName) {
-      // Checking if the value is a std::string
-    if (!root["behaviors"][valueName].isString()) {
+    if (!root["behaviors"].HasMember(valueName.c_str())) {
         Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
-    return root["behaviors"][valueName].asString();
+
+    return root["behaviors"][valueName.c_str()].GetString();
 }

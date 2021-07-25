@@ -57,7 +57,8 @@
         "set": "cpp",
         "iomanip": "cpp",
         "forward_list": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "regex": "cpp"
     },
     "spellright.language": [
         "en"

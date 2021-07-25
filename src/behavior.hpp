@@ -24,6 +24,7 @@
 // Engine includes //
 #include "component.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 
 /*! Behavior class */
 class Behavior : public Component {
@@ -37,6 +38,7 @@ class Behavior : public Component {
         void Update();
 
         void Read(File_Reader& reader);
+        void Write(File_Writer& writer);
 
         static CType GetCType();
 
@@ -46,7 +48,9 @@ class Behavior : public Component {
         
         void ClassSetup(sol::state* state);
         void SwitchScript(unsigned scriptNum, std::string newScriptName);
-        void AddScript(std::string newScriptName);
+        bool AddScript(std::string newScriptName);
+        bool CheckIfCopy(std::string newScriptName);
+        void Clear();
     private:
         std::vector<std::string> scripts;
         std::vector<sol::state*> states;

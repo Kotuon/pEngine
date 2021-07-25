@@ -30,6 +30,7 @@
                 "-I", "libraries/lua/include",
                 "-L", "libraries/lua/lib",
                 "-I", "libraries/sol",
+                "-I", "libraries/rapidjson/include",
                 "-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",

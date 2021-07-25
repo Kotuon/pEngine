@@ -52,7 +52,6 @@ bool Object_Manager::Initialize(File_Reader& preset) {
 void Object_Manager::AddObject(Object* object) {
       // Tells object its location in object_manager object list
     object->SetId(object_manager->objects.size());
-    object_manager->CheckName(object);
     object_manager->objects.emplace_back(object);
 }
 
@@ -62,7 +61,7 @@ void Object_Manager::AddObject(Object* object) {
  * @param id Location of object in object_manager object list
  * @return Object* 
  */
-Object* Object_Manager::FindObject(unsigned id) {
+Object* Object_Manager::FindObject(int id) {
     if (id >= object_manager->objects.size()) return nullptr;
     return object_manager->objects[id];
 }
@@ -143,13 +142,32 @@ void Object_Manager::ReadList(File_Reader& preset) {
  * 
  * @param object 
  */
-void Object_Manager::CheckName(Object* object) {
+std::string Object_Manager::CheckName(std::string objectName, int id) {
     int objWithName = 0;
     for (Object* objToCheck : object_manager->objects) {
-        if (objToCheck->GetName().find(object->GetName()) != std::string::npos)
-            ++ objWithName;
+        if (id != -1 && objToCheck->GetId() == id) continue;
+        if (objToCheck->GetName().find(objectName) != std::string::npos)
+            ++objWithName;
     }
 
-    if (objWithName > 0) 
-        object->SetName(object->GetName() + "_" + std::to_string(objWithName));
+    if (objWithName > 0)
+        return objectName + "_" + std::to_string(objWithName);
+    
+    return objectName;
+}
+
+void Object_Manager::RemoveObject(int id) {
+    if (id >= object_manager->objects.size()) return;
+    Object* objectToDelete = object_manager->objects[id];
+
+    unsigned offset = 0;
+    for (unsigned objectNum = id + 1; objectNum < object_manager->objects.size(); ++objectNum) {
+        Object* objectToSwitch = object_manager->objects[objectNum];
+        object_manager->objects[id + offset] = objectToSwitch;
+        objectToSwitch->SetId(id + offset++);
+    }
+
+    delete objectToDelete;
+    objectToDelete = nullptr;
+    object_manager->objects.pop_back();
 }

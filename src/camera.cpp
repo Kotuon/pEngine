@@ -15,6 +15,7 @@
 
 // Engine includes
   // System
+#include "editor.hpp"
 #include "engine.hpp"
 #include "graphics.hpp"
   // Misc
@@ -95,7 +96,7 @@ void Camera::Update() {
         camera->position -= camera->speed * camera->up;
     }
 
-    if (glfwGetMouseButton(Graphics::GetWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+    if (glfwGetMouseButton(Graphics::GetWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->canMoveMouse = true;
     }
     if (glfwGetMouseButton(Graphics::GetWindow(), GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE) {
