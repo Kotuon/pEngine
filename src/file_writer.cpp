@@ -6,6 +6,7 @@
 // Engine includes //
 #include "file_writer.hpp"
 #include "trace.hpp"
+#include "transform.hpp"
 
 using namespace rapidjson;
 
@@ -55,4 +56,28 @@ void File_Writer::Write_Behavior_Name(std::vector<std::string>& behaviorNames) {
     }
 
     root.AddMember("behaviors", behaviors, root.GetAllocator());
+}
+
+void File_Writer::Write_Object_Data(Object* object) {
+    if (!object) return;
+    Transform* transform = object->GetComponent<Transform>();
+    glm::vec3 startPos = { 0.f, 0.f, 0.f };
+    if (transform) startPos = transform->GetStartPosition();
+    Value vector3(kArrayType);
+    vector3.PushBack(startPos.x, root.GetAllocator());
+    vector3.PushBack(startPos.y, root.GetAllocator());
+    vector3.PushBack(startPos.z, root.GetAllocator());
+
+    Value objectData(kObjectType);
+
+    Value objectName(object->GetName().c_str(), SizeType(object->GetName().size()), root.GetAllocator());
+    objectData.AddMember(StringRef("objectName"), objectName, root.GetAllocator());
+    Value templateName(object->GetTemplateName().c_str(), SizeType(object->GetTemplateName().size()), root.GetAllocator());
+    objectData.AddMember(StringRef("templateName"), templateName, root.GetAllocator());
+    objectData.AddMember(StringRef("position"), vector3, root.GetAllocator());
+
+
+    std::string objectIdName = "object_" + std::to_string(object->GetId());
+    Value name(objectIdName.c_str(), SizeType(objectIdName.size()), root.GetAllocator());
+    root.AddMember(name, objectData, root.GetAllocator());
 }

@@ -152,6 +152,7 @@ void Editor::Display_Dockspace() {
     ImGuiID dockspace_id = ImGui::GetID("Editor");
     ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingInCentralNode;
     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+    editor->Display_Menu_Bar();
     ImGui::End();
 }
 
@@ -229,14 +230,20 @@ void Editor::Display_Components() {
     
     ImGui::Text("Template:");
     ImGui::SameLine(100);
-    if (ImGui::Button(object->GetTemplateName().c_str())) {
+    std::string templateName = object->GetTemplateName();
+    if (templateName.empty()) templateName = "No template##1";
+    if (ImGui::Button(templateName.c_str())) {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseTemplate##1", "Choose File", ".json", "./data/json/objects/");
+    }
+
+    ImGui::SameLine();
+    if (ImGui::Button("New Template")) {
+        object->Write();
     }
 
     if (ImGuiFileDialog::Instance()->Display("ChooseTemplate##1")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-            //object->Clear();
             object->ReRead(filePathName);
         }
 
@@ -590,6 +597,20 @@ void Editor::Display_Transform(Transform* transform) {
         ImGui::PopItemWidth();
 
         ImGui::TreePop();
+    }
+}
+
+void Editor::Display_Menu_Bar() {
+    if (ImGui::BeginMenuBar()) {
+        if (ImGui::BeginMenu("File##1")) {
+            if (ImGui::MenuItem("Save##1")) {
+                Engine::Write();
+            }
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMenuBar();
     }
 }
 

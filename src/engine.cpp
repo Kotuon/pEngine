@@ -202,3 +202,13 @@ float& Engine::GetLightPower() { return engine->lightPower; }
  * @return glm::vec3& 
  */
 glm::vec3& Engine::GetLightPos() { return engine->lightPos; }
+
+void Engine::Write() {
+    File_Writer writer;
+
+    writer.Write_Value("gravConst", engine->gravConst);
+    writer.Write_Vec3("lightPos", engine->lightPos);
+    Object_Manager::Write(writer);
+    
+    writer.Write_File(std::string ("preset/" + engine->presetName));
+}

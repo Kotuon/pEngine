@@ -148,11 +148,6 @@ void Object::Read(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader("objects/" + objectFilename);
 
-    if (name.compare("") == 0)
-        SetName(object_reader.Read_String("name"));
-
-    templateName = objectFilename;
-
       // Reading Behavior component form file
     Behavior* object_behavior = new Behavior(object_reader);
     AddComponent(object_behavior);
@@ -179,16 +174,6 @@ void Object::ReRead(std::string objectFilename) {
 
     templateName = objectFilename;
 
-      // Reading Behavior component form file
-    Behavior* object_behavior = GetComponent<Behavior>();
-    if (object_behavior) object_behavior->Clear();
-    if (!object_behavior) { 
-        object_behavior = new Behavior; 
-        AddComponent(object_behavior); 
-    }
-    object_behavior->Read(object_reader);
-    object_behavior->SetupClassesForLua();
-
       // Reading Model component from file
     Model* object_model = GetComponent<Model>();
     if (!object_model) {
@@ -212,11 +197,22 @@ void Object::ReRead(std::string objectFilename) {
         AddComponent(object_transform);
     }
     object_transform->Read(object_reader);
+
+      // Reading Behavior component form file
+    Behavior* object_behavior = GetComponent<Behavior>();
+    if (object_behavior) object_behavior->Clear();
+    if (!object_behavior) { 
+        object_behavior = new Behavior; 
+        AddComponent(object_behavior); 
+    }
+    object_behavior->Read(object_reader);
+    object_behavior->SetupClassesForLua();
 }
 
 void Object::Write() {
     File_Writer object_writer;
     object_writer.Write_String("name", name);
+    templateName = name + ".json";
 
     Model* object_model = GetComponent<Model>();
     if (object_model) object_model->Write(object_writer);

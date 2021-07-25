@@ -42,6 +42,8 @@ class Editor {
         void Display_Model(Model* model);
         void Display_Physics(Physics* physics);
         void Display_Transform(Transform* transform);
+
+        void Display_Menu_Bar();
     private:
         bool isOpen;            //!< Whether the editor window is open or not
         int selected_object;    //!< Current object selected in the scene window
