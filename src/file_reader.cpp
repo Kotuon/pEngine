@@ -188,6 +188,16 @@ glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
     return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
 }
 
+glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
+    if (!root[valueName.c_str()].HasMember("scale")) {
+        Trace::Message("Error reading vec3: " + valueName + "\n");
+        return glm::vec3(0.f, 0.f, 0.f);
+    }
+
+    Value& array = root[valueName.c_str()]["scale"];
+    return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
+}
+
 /**
  * @brief Reads the name of the behavior
  * 

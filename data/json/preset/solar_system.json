@@ -1,13 +1,64 @@
 {
-    "gravConst" : 6.67,
-    "object_0"  : { "objectName": "sun.json"    , "position" : [ 0.0   , 0.0, -2000.0 ] },
-    "object_1"  : { "objectName": "mercury.json", "position" : [ 1449.9, 0.0, -2000.0 ] },
-    "object_2"  : { "objectName": "venus.json"  , "position" : [ 1500.2, 0.0, -2000.0 ] },
-    "object_3"  : { "objectName": "earth.json"  , "position" : [ 1541.6, 0.0, -2000.0 ] },
-    "object_4"  : { "objectName": "mars.json"   , "position" : [ 1619.9, 0.0, -2000.0 ] },
-    "object_5"  : { "objectName": "jupiter.json", "position" : [ 2170.6, 0.0, -2000.0 ] },
-    "object_6"  : { "objectName": "saturn.json" , "position" : [ 2825.5, 0.0, -2000.0 ] },
-    "object_7"  : { "objectName": "uranus.json" , "position" : [ 4264.5, 0.0, -2000.0 ] },
-    "object_8"  : { "objectName": "neptune.json", "position" : [ 5887.1, 0.0, -2000.0 ] },
-    "object_9"  : { "objectName": "pluto.json"  , "position" : [ 7298.4, 0.0, -2000.0 ] }
+    "gravConst": 6.67,
+    "lightPos": [0.0, 0.0, -80.0],
+    "object_0": {
+        "objectName": "sun",
+        "templateName": "sun.json",
+        "position": [0.0, 0.0, -2000.0],
+        "scale": [1392.0, 1392.0, 1392.0]
+    },
+    "object_1": {
+        "objectName": "mercury",
+        "templateName": "mercury.json",
+        "position": [1449.9, 0.0, -2000.0],
+        "scale": [4.879, 4.879, 4.879]
+    },
+    "object_2": {
+        "objectName": "venus",
+        "templateName": "venus.json",
+        "position": [1500.199, 0.0, -2000.0],
+        "scale": [12.104, 12.104, 12.104]
+    },
+    "object_3": {
+        "objectName": "earth",
+        "templateName": "earth.json",
+        "position": [1541.599, 0.0, -2000.0],
+        "scale": [12.755, 12.755, 12.755]
+    },
+    "object_4": {
+        "objectName": "mars",
+        "templateName": "mars.json",
+        "position": [1619.9, 0.0, -2000.0],
+        "scale": [6.791, 6.791, 6.791]
+    },
+    "object_5": {
+        "objectName": "jupiter",
+        "templateName": "jupiter.json",
+        "position": [2170.6, 0.0, -2000.0],
+        "scale": [142.983, 142.983, 142.983]
+    },
+    "object_6": {
+        "objectName": "saturn",
+        "templateName": "saturn.json",
+        "position": [2825.5, 0.0, -2000.0],
+        "scale": [120.536, 120.536, 120.536]
+    },
+    "object_7": {
+        "objectName": "uranus",
+        "templateName": "uranus.json",
+        "position": [4264.5, 0.0, -2000.0],
+        "scale": [51.118, 51.118, 51.118]
+    },
+    "object_8": {
+        "objectName": "neptune",
+        "templateName": "neptune.json",
+        "position": [5887.1, 0.0, -2000.0],
+        "scale": [49.527, 49.527, 49.527]
+    },
+    "object_9": {
+        "objectName": "pluto",
+        "templateName": "pluto.json",
+        "position": [7298.399, 0.0, -2000.0],
+        "scale": [2.369, 2.369, 2.369]
+    }
 }

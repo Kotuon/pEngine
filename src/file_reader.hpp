@@ -36,6 +36,7 @@ class File_Reader {
         std::string Read_Object_Name(std::string valueName);
         std::string Read_Object_Template_Name(std::string valueName);
         glm::vec3 Read_Object_Position(std::string valueName);
+        glm::vec3 Read_Object_Scale(std::string valueName);
 
         std::string Read_Behavior_Name(std::string valueName);
 

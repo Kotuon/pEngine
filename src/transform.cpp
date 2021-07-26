@@ -17,7 +17,7 @@
  * 
  */
 Transform::Transform() : Component(CType::CTransform), 
-    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(0.f) {}
+    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(glm::vec3(0.f, 0.f, 0.f)) {}
 
 /**
  * @brief Copy constructor
@@ -34,7 +34,7 @@ Transform::Transform(const Transform& other) : Component(CType::CTransform) {
  * @param reader File to use for making Transform object
  */
 Transform::Transform(File_Reader& reader) : Component(CType::CTransform), 
-    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(0.f) {
+    position(glm::vec3(0.f, 0.f, 0.f)), scale(glm::vec3(1.f, 1.f, 1.f)), rotation(glm::vec3(0.f, 0.f, 0.f)) {
     Read(reader);
 }
 
@@ -136,12 +136,10 @@ glm::vec3& Transform::GetStartPositionRef() { return startPosition; }
  * @param reader File to read from
  */
 void Transform::Read(File_Reader& reader) {
-    SetScale(reader.Read_Vec3("scale"));
     //SetRotation(reader.Read_Float("rotation"));
 }
 
 void Transform::Write(File_Writer& writer) {
-    writer.Write_Vec3("scale", scale);
     writer.Write_Vec3("rotation", rotation);
 }
 

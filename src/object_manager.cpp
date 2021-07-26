@@ -126,9 +126,11 @@ void Object_Manager::ReadList(File_Reader& preset) {
         object->SetTemplateName(template_name);
           // Reading in the objects position
         glm::vec3 position = preset.Read_Object_Position("object_" + std::to_string(object_num));
+        glm::vec3 scale = preset.Read_Object_Scale("object_" + std::to_string(object_num));
         Transform* transform = object->GetComponent<Transform>();
         transform->SetPosition(position);
         transform->SetStartPosition(position);
+        transform->SetScale(scale);
         Behavior* behavior = object->GetComponent<Behavior>();
         behavior->SetupClassesForLua();
 

@@ -22,6 +22,7 @@ void File_Writer::Write_File(std::string filename) {
     FileWriteStream stream(file, buffer, sizeof(buffer));
 
     PrettyWriter<FileWriteStream> writer(stream);
+    writer.SetMaxDecimalPlaces(3);
     writer.SetFormatOptions(kFormatSingleLineArray);
     root.Accept(writer);
 
@@ -62,11 +63,19 @@ void File_Writer::Write_Object_Data(Object* object) {
     if (!object) return;
     Transform* transform = object->GetComponent<Transform>();
     glm::vec3 startPos = { 0.f, 0.f, 0.f };
+    glm::vec3 startScale = { 1.f, 1.f, 1.f };
     if (transform) startPos = transform->GetStartPosition();
-    Value vector3(kArrayType);
-    vector3.PushBack(startPos.x, root.GetAllocator());
-    vector3.PushBack(startPos.y, root.GetAllocator());
-    vector3.PushBack(startPos.z, root.GetAllocator());
+    if (transform) startScale = transform->GetScale();
+
+    Value pos(kArrayType);
+    pos.PushBack(startPos.x, root.GetAllocator());
+    pos.PushBack(startPos.y, root.GetAllocator());
+    pos.PushBack(startPos.z, root.GetAllocator());
+
+    Value scale(kArrayType);
+    scale.PushBack(startScale.x, root.GetAllocator());
+    scale.PushBack(startScale.y, root.GetAllocator());
+    scale.PushBack(startScale.z, root.GetAllocator());
 
     Value objectData(kObjectType);
 
@@ -74,7 +83,8 @@ void File_Writer::Write_Object_Data(Object* object) {
     objectData.AddMember(StringRef("objectName"), objectName, root.GetAllocator());
     Value templateName(object->GetTemplateName().c_str(), SizeType(object->GetTemplateName().size()), root.GetAllocator());
     objectData.AddMember(StringRef("templateName"), templateName, root.GetAllocator());
-    objectData.AddMember(StringRef("position"), vector3, root.GetAllocator());
+    objectData.AddMember(StringRef("position"), pos, root.GetAllocator());
+    objectData.AddMember(StringRef("scale"), scale, root.GetAllocator());
 
 
     std::string objectIdName = "object_" + std::to_string(object->GetId());

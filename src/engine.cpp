@@ -139,6 +139,7 @@ void Engine::Restart() {
     engine->presetName = settings.Read_String("preset");
 
     File_Reader preset("preset/" + engine->presetName);
+    engine->gravConst = preset.Read_Double("gravConst");
     if (!Object_Manager::Initialize(preset)) return;
 }
 
@@ -156,8 +157,9 @@ void Engine::Restart(std::string presetName) {
       // Initializing object manager
     File_Reader settings("settings.json");
     engine->presetName = presetName;
-
+    
     File_Reader preset("preset/" + engine->presetName);
+    engine->gravConst = preset.Read_Double("gravConst");
     if (!Object_Manager::Initialize(preset)) return;
 }
 
