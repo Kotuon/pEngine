@@ -40,6 +40,7 @@ bool Editor::Initialize() {
     }
     editor->selected_object = -1;
     editor->selected_component = -1;
+    editor->object_to_copy = -1;
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -79,6 +80,29 @@ void Editor::Update() {
     }
     else {
         editor->takeKeyboardInput = false;
+    }
+
+    if (!editor->takeKeyboardInput) {
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_RELEASE) {
+                        Engine::Write();
+                }
+            }
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_PRESS) {
+                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_RELEASE) {
+                    editor->object_to_copy = editor->selected_object;
+                }
+            }
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_PRESS) {
+                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_RELEASE) {
+                    if (editor->object_to_copy != -1) {
+                        Object* object = new Object(*Object_Manager::FindObject(editor->selected_object));
+                        Object_Manager::AddObject(object);
+                    }
+                }
+            }
+        }
     }
     
       // Display the different windows
@@ -601,13 +625,32 @@ void Editor::Display_Transform(Transform* transform) {
 }
 
 void Editor::Display_Menu_Bar() {
+    static bool saveAs = false;
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File##1")) {
             if (ImGui::MenuItem("Save##1")) {
                 Engine::Write();
             }
+            if (ImGui::MenuItem("Save As..##1")) {
+                saveAs = true;
+            }
 
             ImGui::EndMenu();
+        }
+        if (saveAs) {
+            static char nameBuf[128] = "";
+            sprintf(nameBuf, Engine::GetPresetName().c_str());
+            if (ImGui::InputText("Name", nameBuf, 128, ImGuiInputTextFlags_EnterReturnsTrue)) {
+                Engine::SetPresetName(std::string(nameBuf));
+                Engine::Write();
+                saveAs = false;
+            }
+
+            if (ImGui::IsItemDeactivatedAfterEdit()) {
+                Engine::SetPresetName(std::string(nameBuf));
+                Engine::Write();
+                saveAs = false;
+            }
         }
 
         ImGui::EndMenuBar();

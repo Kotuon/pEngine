@@ -49,6 +49,7 @@ class Editor {
         int selected_object;    //!< Current object selected in the scene window
         int selected_component; //!< Current component selected
         bool takeKeyboardInput; //!< Whether the program should take keyboard input
+        int object_to_copy;
 };
 
 #endif

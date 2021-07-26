@@ -214,3 +214,7 @@ void Engine::Write() {
     
     writer.Write_File(std::string ("preset/" + engine->presetName));
 }
+
+void Engine::SetPresetName(std::string presetName_) {
+    engine->presetName = presetName_;
+}
