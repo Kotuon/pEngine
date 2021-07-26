@@ -8,7 +8,6 @@
                 "libraries/GLM",
                 "libraries/GLFW/include",
                 "libraries/GLFW/include/GLFW",
-                "libraries/JSONCPP/include/json",
                 "libraries/GLEW/include",
                 "libraries/GLEW/include/GL",
                 "libraries/imgui",
