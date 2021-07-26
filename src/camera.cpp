@@ -64,8 +64,10 @@ bool Camera::Initialize(File_Reader& settings) {
  */
 void Camera::Update() {
       // Checking if the engine should be closed
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        glfwSetWindowShouldClose(Graphics::GetWindow(), true);
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_ESCAPE) == GLFW_RELEASE) {
+            glfwSetWindowShouldClose(Graphics::GetWindow(), true);
+        }
     }
     
       // Checking if sprint is being used

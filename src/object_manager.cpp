@@ -117,15 +117,20 @@ void Object_Manager::ReadList(File_Reader& preset) {
     while (true) {
           // Getting the name of the objects file
         std::string object_name = preset.Read_Object_Name("object_" + std::to_string(object_num));
-        if (object_name.compare("") == 0) break;
+        std::string template_name = preset.Read_Object_Template_Name("object_" + std::to_string(object_num));
+        if (template_name.compare("") == 0) break;
 
           // Constructing the object 
-        Object* object = new Object(object_name);
+        Object* object = new Object(template_name);
+        object->SetName(object_name);
+        object->SetTemplateName(template_name);
           // Reading in the objects position
         glm::vec3 position = preset.Read_Object_Position("object_" + std::to_string(object_num));
+        glm::vec3 scale = preset.Read_Object_Scale("object_" + std::to_string(object_num));
         Transform* transform = object->GetComponent<Transform>();
         transform->SetPosition(position);
         transform->SetStartPosition(position);
+        transform->SetScale(scale);
         Behavior* behavior = object->GetComponent<Behavior>();
         behavior->SetupClassesForLua();
 
@@ -170,4 +175,10 @@ void Object_Manager::RemoveObject(int id) {
     delete objectToDelete;
     objectToDelete = nullptr;
     object_manager->objects.pop_back();
+}
+
+void Object_Manager::Write(File_Writer& writer) {
+    for (Object* object : object_manager->objects) {
+        writer.Write_Object_Data(object);
+    }
 }

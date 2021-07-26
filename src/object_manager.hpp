@@ -19,6 +19,7 @@
 // Engine includes //
 #include "object.hpp"
 #include "file_reader.hpp"
+#include "file_writer.hpp"
 
 /*! Object_Manager class */
 class Object_Manager {
@@ -32,6 +33,7 @@ class Object_Manager {
         void ReadList(File_Reader& preset);
         static std::string CheckName(std::string objectName, int id);
         static void RemoveObject(int id);
+        static void Write(File_Writer& writer);
     private:
         std::vector<Object*> objects; //!< Current objects being tracked by the engine
 };

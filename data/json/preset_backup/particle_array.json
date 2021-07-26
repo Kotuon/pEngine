@@ -1,0 +1,144 @@
+{
+    "gravConst": 0.0,
+    "lightPos": [0.0, 0.0, -80.0],
+    "object_0": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 0.0, -100.0]
+    },
+    "object_1": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 0.0, -100.0]
+    },
+    "object_2": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 20.0, -100.0]
+    },
+    "object_3": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 0.0, -100.0]
+    },
+    "object_4": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, -20.0, -100.0]
+    },
+    "object_5": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 20.0, -100.0]
+    },
+    "object_6": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, -20.0, -100.0]
+    },
+    "object_7": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 20.0, -100.0]
+    },
+    "object_8": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, -20.0, -100.0]
+    },
+    "object_9": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 0.0, -80.0]
+    },
+    "object_10": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 0.0, -80.0]
+    },
+    "object_11": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 20.0, -80.0]
+    },
+    "object_12": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 0.0, -80.0]
+    },
+    "object_13": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, -20.0, -80.0]
+    },
+    "object_14": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 20.0, -80.0]
+    },
+    "object_15": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, -20.0, -80.0]
+    },
+    "object_16": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 20.0, -80.0]
+    },
+    "object_17": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, -20.0, -80.0]
+    },
+    "object_18": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 0.0, -60.0]
+    },
+    "object_19": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 0.0, -60.0]
+    },
+    "object_20": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 20.0, -60.0]
+    },
+    "object_21": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 0.0, -60.0]
+    },
+    "object_22": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, -20.0, -60.0]
+    },
+    "object_23": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, 20.0, -60.0]
+    },
+    "object_24": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, -20.0, -60.0]
+    },
+    "object_25": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [-20.0, 20.0, -60.0]
+    },
+    "object_26": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [20.0, -20.0, -60.0]
+    },
+    "object_27": {
+        "objectName": "particle",
+        "templateName": "particle.json",
+        "position": [0.0, 0.0, -90.0]
+    }
+}

@@ -29,7 +29,6 @@ using namespace rapidjson;
  */
 File_Reader::File_Reader(std::string filename) {
     Read_File(filename);
-    Trace::Message("Reading: " + filename + "\n");
 }
 
 /**
@@ -160,6 +159,19 @@ std::string File_Reader::Read_Object_Name(std::string valueName) {
     return root[valueName.c_str()]["objectName"].GetString();
 }
 
+std::string File_Reader::Read_Object_Template_Name(std::string valueName) {
+    if (!root.HasMember(valueName.c_str())) {
+        Trace::Message("Error reading with " + valueName + "\n");
+        return std::string("");
+    }
+    if (!root[valueName.c_str()].HasMember("templateName")) {
+        Trace::Message("Error reading std::string: " + valueName + "\n");
+        return std::string("");
+    }
+
+    return root[valueName.c_str()]["templateName"].GetString();
+}
+
 /**
  * @brief Reads the position of an object from an object list (preset folder)
  * 
@@ -173,6 +185,16 @@ glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
     }
 
     Value& array = root[valueName.c_str()]["position"];
+    return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
+}
+
+glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
+    if (!root[valueName.c_str()].HasMember("scale")) {
+        Trace::Message("Error reading vec3: " + valueName + "\n");
+        return glm::vec3(0.f, 0.f, 0.f);
+    }
+
+    Value& array = root[valueName.c_str()]["scale"];
     return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
 }
 

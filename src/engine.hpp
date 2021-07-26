@@ -34,6 +34,8 @@ class Engine {
         static std::string GetPresetName();
         static float& GetLightPower();
         static glm::vec3& GetLightPos();
+        static void Write();
+        static void SetPresetName(std::string presetName_);
     private:
         bool  isRunning;        //!< state of the main loop
         float deltaTime;        //!< time between frames

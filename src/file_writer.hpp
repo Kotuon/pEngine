@@ -13,6 +13,9 @@
 #include <prettywriter.h>
 #include <vec3.hpp>
 
+// Engine includes //
+#include "object.hpp"
+
 class File_Writer {
     public:
         File_Writer();
@@ -30,6 +33,7 @@ class File_Writer {
         // void Write_Object_Name(std::string objectName);
         // void Write_Object_Position(std::string objectName, glm::vec3 objectPosition);
         void Write_Behavior_Name(std::vector<std::string>& behaviorNames);
+        void Write_Object_Data(Object* object);
     private:
         rapidjson::Document root; //!< Holds the data for the json file
 };
