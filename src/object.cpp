@@ -34,6 +34,7 @@ Object::Object() : id(-1) {}
  */
 Object::Object(const Object& other) {
     SetName(other.GetName());
+    SetTemplateName(other.GetTemplateName());
 
       // Copying Behavior component
     Behavior* behavior = other.GetComponent<Behavior>();
