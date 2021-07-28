@@ -9,7 +9,6 @@
                 "-m64",
                 "--std=c++14",
                 "-std=c++17",
-                "-g",
                 "-O2",
                 "src\\*.cpp",
                 "libraries\\imgui\\*.cpp",
@@ -30,7 +29,6 @@
                 "-lmingw32",
                 "-lopengl32",
                 "-lglfw3dll",
-                "-lglu32",
                 "-lglew32",
                 "-limm32",
                 "-llua"

@@ -33,7 +33,11 @@
 
 # Folder
 html/
+latex/
 helpful_folders/
 
 # Output
 output/
+
+# Other
+Makefile
