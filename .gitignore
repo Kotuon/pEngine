@@ -38,3 +38,6 @@ helpful_folders/
 
 # Output
 output/
+
+# Other
+Makefile
