@@ -160,6 +160,13 @@ void Physics::SetMass(float ma) { mass = ma; }
 float Physics::GetMass() const { return mass; }
 
 /**
+ * @brief Returns reference to mass of the object
+ * 
+ * @return float& 
+ */
+float& Physics::GetMassRef() { return mass; }
+
+/**
  * @brief Updates the physics of the object
  * 
  */

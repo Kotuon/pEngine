@@ -180,7 +180,7 @@ void Behavior::ClassSetup(sol::state* state) {
     physics_type.set_function("UpdateGravity", &Physics::UpdateGravity);
 
       // Giving lua transform class
-    (*state)["transform"] = transform;
+    state->set("transform", transform);
     sol::usertype<Transform> transform_type = state->new_usertype<Transform>("Transform",
         sol::constructors<Transform(), Transform(const Transform)>());
       // Giving lua transform class variables

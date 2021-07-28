@@ -45,6 +45,7 @@ class Physics : public Component {
 
         void SetMass(float ma);
         float GetMass() const;
+        float& GetMassRef();
 
         void Update();
 
