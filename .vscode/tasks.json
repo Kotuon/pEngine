@@ -13,7 +13,7 @@
                 "src\\*.cpp",
                 "libraries\\imgui\\*.cpp",
                 "-o",
-                "output\\pEngine.exe",
+                "build\\pEngine.exe",
                 "-I", "libraries/GLM",
                 "-I", "libraries/GLFW/include",
                 "-I", "libraries/GLFW/include/GLFW",
