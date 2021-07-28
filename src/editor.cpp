@@ -606,6 +606,8 @@ void Editor::Display_Physics(Physics* physics) {
         ImGui::SameLine(100); ImGui::InputFloat("x##1", &velocity.x);
         ImGui::SameLine(175); ImGui::InputFloat("y##1", &velocity.y);
         ImGui::SameLine(250); ImGui::InputFloat("z##1", &velocity.z);
+
+        ImGui::InputFloat("Mass##1", &physics->GetMassRef());
         ImGui::PopItemWidth();
 
         ImGui::TreePop();
