@@ -147,6 +147,7 @@ double File_Reader::Read_Double(std::string valueName) {
  * @return std::string Name of the object
  */
 std::string File_Reader::Read_Object_Name(std::string valueName) {
+      // Checking if the value exists
     if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading with " + valueName + "\n");
         return std::string("");
@@ -159,7 +160,14 @@ std::string File_Reader::Read_Object_Name(std::string valueName) {
     return root[valueName.c_str()]["objectName"].GetString();
 }
 
+/**
+ * @brief Reads the name of the template file for object
+ * 
+ * @param valueName 
+ * @return std::string 
+ */
 std::string File_Reader::Read_Object_Template_Name(std::string valueName) {
+      // Checking if the value exists
     if (!root.HasMember(valueName.c_str())) {
         Trace::Message("Error reading with " + valueName + "\n");
         return std::string("");
@@ -188,7 +196,14 @@ glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
     return glm::vec3(array[0].GetFloat(), array[1].GetFloat(), array[2].GetFloat());
 }
 
+/**
+ * @brief Reads the scale of an object
+ * 
+ * @param valueName 
+ * @return glm::vec3 
+ */
 glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
+      // Checking if value exists
     if (!root[valueName.c_str()].HasMember("scale")) {
         Trace::Message("Error reading vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
@@ -204,8 +219,8 @@ glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
  * @param valueName Behavior to read
  * @return std::string Name of the behavior
  */
-
 std::string File_Reader::Read_Behavior_Name(std::string valueName) {
+      // Checking if value exists
     if (!root["behaviors"].HasMember(valueName.c_str())) {
         Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");

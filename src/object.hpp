@@ -77,14 +77,20 @@ class Object {
             return (T*)found->second;
         }
 
+        /**
+         * @brief Removes component from object
+         * 
+         * @tparam T 
+         */
         template <typename T>
         void RemoveComponent() {
+              // Searching for component using the type (enum as int)
             auto found = components.find(T::GetCType());
             if (found == components.end()) return;
-
+              // Delete component
             delete found->second;
             found->second = nullptr;
-
+              // Remove pointer from map
             components.erase(found->first);
         }
 
@@ -105,9 +111,9 @@ class Object {
         void Clear();
     private:
         std::unordered_map<CType, Component*> components; //!< List of components
-        int id; //!< Location of object in object_manager
-        std::string name; //!< Name of the object
-        std::string templateName;
+        int id;                                           //!< Location of object in object_manager
+        std::string name;                                 //!< Name of the object
+        std::string templateName;                         //!< Name  of the template file used
 };
 
 #endif

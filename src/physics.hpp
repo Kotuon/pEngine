@@ -55,12 +55,12 @@ class Physics : public Component {
 
         static CType GetCType();
     private:
-        glm::vec3 acceleration; //!< Acceleration of object
-        glm::vec3 forces;       //!< Forces acting on object (reset at end of each update)
-        glm::vec3 velocity;     //!< Velocity of object
-        glm::vec3 initialVelocity;
-        glm::vec3 initialAcceleration;
-        float mass;        //!< Mass of object
+        glm::vec3 acceleration;        //!< Acceleration of object
+        glm::vec3 forces;              //!< Forces acting on object (reset at end of each update)
+        glm::vec3 velocity;            //!< Velocity of object
+        glm::vec3 initialVelocity;     //!< Starting velocity
+        glm::vec3 initialAcceleration; //!< Starting acceleration
+        float mass;                    //!< Mass of object
 };
 
 #endif

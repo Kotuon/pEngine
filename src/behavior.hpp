@@ -47,13 +47,13 @@ class Behavior : public Component {
         std::vector<std::string>& GetScripts();
         
         void ClassSetup(sol::state* state);
-        void SwitchScript(unsigned scriptNum, std::string newScriptName);
+        bool SwitchScript(unsigned scriptNum, std::string newScriptName);
         bool AddScript(std::string newScriptName);
         bool CheckIfCopy(std::string newScriptName);
         void Clear();
     private:
-        std::vector<std::string> scripts;
-        std::vector<sol::state*> states;
+        std::vector<std::string> scripts; //!< Names of the lua scripts being used
+        std::vector<sol::state*> states;  //!< States of each lua script
 };
 
 #endif

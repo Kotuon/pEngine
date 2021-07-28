@@ -39,7 +39,7 @@ void Trace::Initialize() {
  */
 void Trace::Message(std::string message) {
     if (!trace->trace_stream) return;
-
+    
     trace->trace_stream << message;
     std::cout << message;
 }

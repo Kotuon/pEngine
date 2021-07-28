@@ -124,10 +124,25 @@ glm::vec3 Transform::GetRotation() const { return rotation; }
  */
 glm::vec3& Transform::GetRotationRef() { return rotation; }
 
+/**
+ * @brief Sets the start position of the object
+ * 
+ * @param startPosition_ 
+ */
 void Transform::SetStartPosition(glm::vec3 startPosition_) { startPosition = startPosition_; }
 
+/**
+ * @brief Returns the saved start position of the object
+ * 
+ * @return glm::vec3 
+ */
 glm::vec3 Transform::GetStartPosition() const { return startPosition; }
 
+/**
+ * @brief Returns a reference to the start position of the object
+ * 
+ * @return glm::vec3& 
+ */
 glm::vec3& Transform::GetStartPositionRef() { return startPosition; }
 
 /**
@@ -139,6 +154,11 @@ void Transform::Read(File_Reader& reader) {
     //SetRotation(reader.Read_Float("rotation"));
 }
 
+/**
+ * @brief Gives transform data to writer object
+ * 
+ * @param writer 
+ */
 void Transform::Write(File_Writer& writer) {
     writer.Write_Vec3("rotation", rotation);
 }

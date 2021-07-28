@@ -86,6 +86,11 @@ void Model::Draw(glm::mat4 projection, glm::mat4 view) {
  */
 void Model::Read(File_Reader& reader) { Load(reader); }
 
+/**
+ * @brief Gives name of model and texture to writer
+ * 
+ * @param writer 
+ */
 void Model::Write(File_Writer& writer) {
     std::string modelName = data->GetModelName();
     std::string textureName = texture->GetTextureName();

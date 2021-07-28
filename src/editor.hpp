@@ -49,7 +49,7 @@ class Editor {
         int selected_object;    //!< Current object selected in the scene window
         int selected_component; //!< Current component selected
         bool takeKeyboardInput; //!< Whether the program should take keyboard input
-        int object_to_copy;
+        int object_to_copy;     //!< Object that will be copied if paste is used (doesn't need to be the same as selected_object)
 };
 
 #endif

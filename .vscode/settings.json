@@ -58,7 +58,11 @@
         "iomanip": "cpp",
         "forward_list": "cpp",
         "variant": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "condition_variable": "cpp",
+        "unordered_set": "cpp",
+        "mutex": "cpp",
+        "thread": "cpp"
     },
     "spellright.language": [
         "en"
