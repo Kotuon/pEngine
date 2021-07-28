@@ -145,9 +145,12 @@ void Object_Manager::ReadList(File_Reader& preset) {
  * @brief Checks if the name of the given object is already being used. If it is
  *        being used it applies a number to the back.
  * 
- * @param object 
+ * @param objectName 
+ * @param id 
+ * @return std::string 
  */
 std::string Object_Manager::CheckName(std::string objectName, int id) {
+      // Checking if the name matches any other objects
     int objWithName = 0;
     for (Object* objToCheck : object_manager->objects) {
         if (id != -1 && objToCheck->GetId() == id) continue;
@@ -155,16 +158,24 @@ std::string Object_Manager::CheckName(std::string objectName, int id) {
             ++objWithName;
     }
 
+      // Updating the name
     if (objWithName > 0)
         return objectName + "_" + std::to_string(objWithName);
     
     return objectName;
 }
 
+/**
+ * @brief Removes an object from the object_manager
+ * 
+ * @param id id of object to remove
+ * @return void
+ */
 void Object_Manager::RemoveObject(int id) {
     if (id >= object_manager->objects.size()) return;
     Object* objectToDelete = object_manager->objects[id];
 
+      // Moves all the objects to the right of one being deleted to the left
     unsigned offset = 0;
     for (unsigned objectNum = id + 1; objectNum < object_manager->objects.size(); ++objectNum) {
         Object* objectToSwitch = object_manager->objects[objectNum];
@@ -172,11 +183,18 @@ void Object_Manager::RemoveObject(int id) {
         objectToSwitch->SetId(id + offset++);
     }
 
+      // Deleting the object
     delete objectToDelete;
     objectToDelete = nullptr;
     object_manager->objects.pop_back();
 }
 
+/**
+ * @brief Gives all of the object data to writer for output to file
+ * 
+ * @param writer
+ * @return void
+ */
 void Object_Manager::Write(File_Writer& writer) {
     for (Object* object : object_manager->objects) {
         writer.Write_Object_Data(object);

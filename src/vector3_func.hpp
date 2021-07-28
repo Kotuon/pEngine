@@ -1,3 +1,13 @@
+/**
+ * @file vector3_func.hpp
+ * @author Kelson Wysocki (kelson.wysocki@gmail.com)
+ * @brief 
+ * @version 0.1
+ * @date 2021-07-26
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 
 #pragma once
 #ifndef VECTOR3_FUNC_HPP
@@ -7,6 +17,7 @@
 #include <glm.hpp>
 #include <vec3.hpp>
 
+/*! Vector3_Func class */
 class Vector3_Func {
     public:
         static glm::vec3 normalize(const glm::vec3 vec);

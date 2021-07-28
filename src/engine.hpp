@@ -47,10 +47,10 @@ class Engine {
         std::chrono::steady_clock::time_point newTime;     //!< newest read time
         std::chrono::steady_clock::duration timeTaken;     //!< time between frames
 
-        double gravConst;  //!< gravitational constant (used in physics)
+        double gravConst;       //!< gravitational constant (used in physics)
         std::string presetName; //!< name of the preset being used
 
-        float lightPower; //!< Power of the light in the scene
+        float lightPower;      //!< Power of the light in the scene
         glm::vec3 lightPos;    //!< Position of the light in the scene
 };
 

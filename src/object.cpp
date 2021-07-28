@@ -136,8 +136,18 @@ void Object::SetName(std::string name_) {
  */
 std::string Object::GetName() const { return name; }
 
+/**
+ * @brief Sets the name of the template file
+ * 
+ * @param templateName_ Name of the template file
+ */
 void Object::SetTemplateName(std::string templateName_) { templateName = templateName_; }
 
+/**
+ * @brief Returns the name of the template file
+ * 
+ * @return std::string 
+ */
 std::string Object::GetTemplateName() const { return templateName; }
 
 /**
@@ -166,6 +176,11 @@ void Object::Read(std::string objectFilename) {
     AddComponent(object_transform);
 }
 
+/**
+ * @brief Reading data into object that already exists
+ * 
+ * @param objectFilename Name of template file
+ */
 void Object::ReRead(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader("objects/" + objectFilename);
@@ -210,6 +225,10 @@ void Object::ReRead(std::string objectFilename) {
     object_behavior->SetupClassesForLua();
 }
 
+/**
+ * @brief Writes the data of the object to a template file
+ * 
+ */
 void Object::Write() {
     File_Writer object_writer;
     object_writer.Write_String("name", name);
@@ -230,10 +249,19 @@ void Object::Write() {
     object_writer.Write_File(std::string("objects/" + name + ".json"));
 }
 
+/**
+ * @brief Returns the list of components
+ * 
+ * @return std::unordered_map<CType, Component*> 
+ */
 std::unordered_map<CType, Component*> Object::GetComponentList() {
     return components;
 }
 
+/**
+ * @brief Clears the components from the object
+ * 
+ */
 void Object::Clear() {
     Behavior* behavior = GetComponent<Behavior>();
     Model* model = GetComponent<Model>();

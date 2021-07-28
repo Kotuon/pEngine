@@ -76,6 +76,11 @@ void Physics::SetAcceleration(glm::vec3 accel) { acceleration = accel; }
  */
 glm::vec3 Physics::GetAcceleration() const { return acceleration; }
 
+/**
+ * @brief Returns reference to the acceleration of the object
+ * 
+ * @return glm::vec3& 
+ */
 glm::vec3& Physics::GetAccelerationRef() { return acceleration; }
 
 /**
@@ -99,8 +104,19 @@ void Physics::AddForce(glm::vec3 force) { forces += force; }
  */
 glm::vec3 Physics::GetForces() const { return forces; }
 
+/**
+ * @brief Returns reference to the forces acting on the object
+ * 
+ * @return glm::vec3& 
+ */
 glm::vec3& Physics::GetForcesRef() { return forces; }
 
+/**
+ * @brief Applies force in the given direction using the given power
+ * 
+ * @param direction 
+ * @param power 
+ */
 void Physics::ApplyForce(glm::vec3 direction, float power) {
     direction = glm::normalize(direction);
     direction *= power;
@@ -122,6 +138,11 @@ void Physics::SetVelocity(glm::vec3 vel) { velocity = vel; }
  */
 glm::vec3 Physics::GetVelocity() const { return velocity; }
 
+/**
+ * @brief Returns reference to velocity of the object
+ * 
+ * @return glm::vec3& 
+ */
 glm::vec3& Physics::GetVelocityRef() { return velocity; }
 
 /**
@@ -209,6 +230,11 @@ void Physics::Read(File_Reader& reader) {
     SetMass(reader.Read_Float("mass"));
 }
 
+/**
+ * @brief Gives physics data to the writer object
+ * 
+ * @param writer 
+ */
 void Physics::Write(File_Writer& writer) {
     writer.Write_Vec3("acceleration", initialAcceleration);
     writer.Write_Vec3("velocity", initialVelocity);

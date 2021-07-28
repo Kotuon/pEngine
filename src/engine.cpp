@@ -205,6 +205,12 @@ float& Engine::GetLightPower() { return engine->lightPower; }
  */
 glm::vec3& Engine::GetLightPos() { return engine->lightPos; }
 
+/**
+ * @brief Writes the engine data to a preset file (creates new one if it doesn't
+ *        already exist)
+ * 
+ * @return void
+ */
 void Engine::Write() {
     File_Writer writer;
 
@@ -215,6 +221,12 @@ void Engine::Write() {
     writer.Write_File(std::string ("preset/" + engine->presetName));
 }
 
+/**
+ * @brief Sets the name of the preset file
+ * 
+ * @param presetName_
+ * @return void
+ */
 void Engine::SetPresetName(std::string presetName_) {
     engine->presetName = presetName_;
 }

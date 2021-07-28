@@ -33,6 +33,7 @@ static Editor* editor = nullptr; //!< Editor object
  * @return false 
  */
 bool Editor::Initialize() {
+      // Initializing the editor
     editor = new Editor;
     if (!editor) {
         Trace::Message("Editor failed to initialize.\n");
@@ -45,16 +46,19 @@ bool Editor::Initialize() {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
+      // Setting up ImGui flags
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
+      // Setting style for ImGui
     ImGui::StyleColorsDark();
     if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
         ImGui::GetStyle().WindowRounding = 0.f;
         ImGui::GetStyle().Colors[ImGuiCol_WindowBg].w = 1.f;
     }
 
+      // Setting up ImGui
     ImGui_ImplGlfw_InitForOpenGL(Graphics::GetWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
@@ -72,7 +76,7 @@ void Editor::Update() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
 
       // Updating whether program should ignore keyboard input
     if (!ImGui::GetIO().WantCaptureKeyboard) {
@@ -82,18 +86,22 @@ void Editor::Update() {
         editor->takeKeyboardInput = false;
     }
 
+      // Keyboard shortcuts
     if (!editor->takeKeyboardInput) {
+          // Save current settings as preset
         if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_PRESS) {
                 if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_RELEASE) {
                         Engine::Write();
                 }
             }
+              // Copy current selected object
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_PRESS) {
                 if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_RELEASE) {
                     editor->object_to_copy = editor->selected_object;
                 }
             }
+              // Paste current selected object
             if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_PRESS) {
                 if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_RELEASE) {
                     if (editor->object_to_copy != -1) {
@@ -146,6 +154,11 @@ void Editor::Shutdown() {
     editor = nullptr;
 }
 
+/**
+ * @brief Sets selected object to invalid value
+ * 
+ * @return void
+ */
 void Editor::Reset() {
     editor->selected_object = -1;
 }
@@ -155,24 +168,29 @@ void Editor::Reset() {
  * 
  */
 void Editor::Display_Dockspace() {
+      // Setting up viewport
     ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->Pos);
     ImGui::SetNextWindowSize(viewport->Size);
     ImGui::SetNextWindowViewport(viewport->ID);
     ImGui::SetNextWindowBgAlpha(0.0f);
 
+      // Setting up window flags
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
     window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
     window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
+      // Setting up window style
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
+      // Making the window
     ImGui::SetNextWindowBgAlpha(0.0f);
     ImGui::Begin("Editor Window", &editor->isOpen, window_flags);
     ImGui::PopStyleVar(3);
 
+      // Setting up window settings
     ImGuiID dockspace_id = ImGui::GetID("Editor");
     ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingInCentralNode;
     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
@@ -195,19 +213,32 @@ void Editor::Display_Scene() {
             selected_component = -1;
         }
 
+          // Checking for right click behavior
         if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
             if (selected_object != i) editor->selected_component = -1;
             selected_object = i;
             selected_component = -1;
-            ImGui::OpenPopup("DeleteObject##2");
+            ImGui::OpenPopup("ObjectSettings##1");
         }
     }
 
-    if (ImGui::BeginPopup("DeleteObject##2")) {
+    if (ImGui::BeginPopup("ObjectSettings##1")) {
+          // Removes selected object from scene
         if (ImGui::Selectable("Delete##1")) {
             Object_Manager::RemoveObject(selected_object);
             selected_object = -1;
             selected_component = -1;
+        }
+          // Copies selected object
+        if (ImGui::Selectable("Copy##1")) {
+            editor->object_to_copy = editor->selected_object;
+        }
+          // Pastes copied object into scene
+        if (ImGui::Selectable("Paste##1")) {
+            if (editor->object_to_copy != -1) {
+                Object* object = new Object(*Object_Manager::FindObject(editor->selected_object));
+                Object_Manager::AddObject(object);
+            }
         }
         ImGui::EndPopup();
     }
@@ -251,7 +282,7 @@ void Editor::Display_Components() {
         object->SetName(std::string(nameBuf));
     }
 
-    
+      // Template used by the selected object
     ImGui::Text("Template:");
     ImGui::SameLine(100);
     std::string templateName = object->GetTemplateName();
@@ -274,6 +305,7 @@ void Editor::Display_Components() {
         ImGuiFileDialog::Instance()->Close();
     }
 
+      // Getting all of the components
     Behavior* behavior = object->GetComponent<Behavior>();
     Model* model = object->GetComponent<Model>();
     Physics* physics = object->GetComponent<Physics>();
@@ -292,6 +324,7 @@ void Editor::Display_Components() {
         ImGui::OpenPopup("New Component##1");
     }
 
+      // Add new components to object (only ones that the object doesn't already have)
     if (ImGui::BeginPopup("New Component##1")) {
         if (!physics) {
             if (ImGui::Selectable("Physics##1")) {
@@ -390,15 +423,22 @@ void Editor::Display_Camera_Settings() {
     ImGui::End();
 }
 
+/**
+ * @brief Displays the different lua scripts attached to the selected object
+ * 
+ * @param behavior Contains the script data
+ */
 void Editor::Display_Scripts(Behavior* behavior) {
     if (!behavior) return;
     
+    // Setting up tree flags
     ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
     if (selected_component == CType::CBehavior) node_flags |= ImGuiTreeNodeFlags_Selected;
     
     const bool scripts_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CBehavior, node_flags, "Scripts");
     if (ImGui::IsItemClicked()) selected_component = CType::CBehavior;
 
+      // Right click behavior to delete script component from object
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
         selected_component = CType::CBehavior;
         ImGui::OpenPopup("DeleteScripts##1");
@@ -412,6 +452,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
         ImGui::EndPopup();
     }
 
+      // Displays the currently attached scripts
     if (scripts_open) {
         std::vector<std::string>& scripts = behavior->GetScripts();
         unsigned scriptNum = 1;
@@ -425,7 +466,8 @@ void Editor::Display_Scripts(Behavior* behavior) {
             if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
                 if (ImGuiFileDialog::Instance()->IsOk()) {
                     std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                    behavior->SwitchScript(scriptNum - 1, filePathName);
+                    if (!behavior->SwitchScript(scriptNum - 1, filePathName))
+                        ImGui::OpenPopup("ExistingScript##1");
                 }
 
                 ImGuiFileDialog::Instance()->Close();
@@ -433,6 +475,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
             ++scriptNum;
         }
 
+          // Add new script to the object
         ImGui::Text(""); ImGui::SameLine(100);
         if (ImGui::Button("New Script##1")) {
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", "./data/scripts/");
@@ -448,8 +491,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
             ImGuiFileDialog::Instance()->Close();
         }
 
-        ImVec2 centerPos = ImGui::GetMainViewport()->GetCenter();
-        ImGui::SetNextWindowPos(centerPos);
+          // Popup to say that the selected script to add is already attached to the object
         if (ImGui::BeginPopup("ExistingScript##1")) {
             ImGui::Text(std::string("Script already attached to " +
                 Object_Manager::FindObject(editor->selected_object)->GetName()).c_str(),
@@ -472,12 +514,14 @@ void Editor::Display_Model(Model* model) {
     std::string modelName = model->GetModelName();
     std::string textureName = model->GetTextureName();
     
+      // Setting up tree flags
     ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
     if (selected_component == CType::CModel) node_flags |= ImGuiTreeNodeFlags_Selected;
     
     const bool model_open = ImGui::TreeNodeEx((void*)(intptr_t)CType::CModel, node_flags, "Model");
     if (ImGui::IsItemClicked()) selected_component = CType::CModel;
 
+      // Right click behavior to delete model component from selected object
     if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
         selected_component = CType::CModel;
         ImGui::OpenPopup("DeleteModel##1");
@@ -624,6 +668,10 @@ void Editor::Display_Transform(Transform* transform) {
     }
 }
 
+/**
+ * @brief Displays menu bar that can be used to save the scene
+ * 
+ */
 void Editor::Display_Menu_Bar() {
     static bool saveAs = false;
     if (ImGui::BeginMenuBar()) {

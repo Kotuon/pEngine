@@ -71,7 +71,7 @@ void Camera::Update() {
     }
     
       // Checking if sprint is being used
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->speed = camera->originalSprintSpeed * Engine::GetDeltaTime();
     }
     else {
@@ -79,17 +79,17 @@ void Camera::Update() {
     }
 
       // Checking for movement using W, A, S, D, SPACE, and CTRL
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_W) == GLFW_PRESS) {
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_W) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->position += camera->speed * camera->front;
     }
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_PRESS) {
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_S) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->position -= camera->speed * camera->front;
     }
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_A) == GLFW_PRESS) {
-        camera->position -= normalize(cross(camera->front, camera->up)) * camera->speed;
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_A) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
+        camera->position -= glm::normalize(glm::cross(camera->front, camera->up)) * camera->speed;
     }
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_D) == GLFW_PRESS) {
-        camera->position += normalize(cross(camera->front, camera->up)) * camera->speed;
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_D) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
+        camera->position += glm::normalize(glm::cross(camera->front, camera->up)) * camera->speed;
     }
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
         camera->position += camera->speed * camera->up;
