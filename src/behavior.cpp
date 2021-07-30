@@ -167,7 +167,8 @@ void Behavior::ClassSetup(sol::state* state) {
     state->set_function("get_direction", Vector3_Func::get_direction);
     state->set_function("zero_vec3", Vector3_Func::zero_vec3);
     state->set_function("length", Vector3_Func::length);
-    state->set_function("add", sol::overload(&Vector3_Func::add<float>, &Vector3_Func::add<glm::vec3>));
+    state->set_function("add_float", Vector3_Func::add_float);
+    state->set_function("add_vec3", Vector3_Func::add_vec3);
 
     state->set_function("FindObject", &Object_Manager::FindObject);
 
