@@ -21,7 +21,7 @@
  * @param argv 
  * @return int 
  */
-int main (int argc, char *argv[]) {
+int main (int, char *[]) {
       // Initializing systems
     Trace::Initialize();
     Engine::Initialize();

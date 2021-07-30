@@ -16,6 +16,7 @@
 #include "behavior.hpp"
 #include "engine.hpp"
 #include "object.hpp"
+#include "object_manager.hpp"
 #include "physics.hpp"
 #include "random.hpp"
 #include "transform.hpp"
@@ -92,7 +93,7 @@ void Behavior::Read(File_Reader& reader) {
         ++behavior_num;
     }
       // Creating lua state for each of the scripts that were read in
-    for (std::string& script : scripts) {
+    for (unsigned i = 0; i < scripts.size(); ++i) {
         sol::state* state = new sol::state;
         state->open_libraries(sol::lib::base, sol::lib::math, sol::lib::io, sol::lib::string);
         states.emplace_back(state);
@@ -166,6 +167,17 @@ void Behavior::ClassSetup(sol::state* state) {
     state->set_function("get_direction", Vector3_Func::get_direction);
     state->set_function("zero_vec3", Vector3_Func::zero_vec3);
     state->set_function("length", Vector3_Func::length);
+    state->set_function("add", sol::overload(&Vector3_Func::add<float>, &Vector3_Func::add<glm::vec3>));
+
+    state->set_function("FindObject", &Object_Manager::FindObject);
+
+      // Giving lua object class
+    state->set("object", GetParent());
+    sol::usertype<Object> object_type = state->new_usertype<Object>("Object",
+        sol::constructors<Object(), Object(const Object)>());
+      // Giving lua object class variables
+    object_type.set("name", sol::property(Object::GetNameRef, &Object::SetName));
+    object_type.set("id",   sol::readonly_property(Object::GetId));
 
       // Giving lua physics class
     state->set("physics", physics);

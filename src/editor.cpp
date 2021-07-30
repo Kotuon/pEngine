@@ -206,7 +206,7 @@ void Editor::Display_Scene() {
     ImGui::Begin("Scene");
 
       // Display all objects
-    for (int i = 0; i < Object_Manager::GetSize(); ++i) {
+    for (int i = 0; i < (int)Object_Manager::GetSize(); ++i) {
         if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick)) {
             if (selected_object != i) editor->selected_component = -1;
             selected_object = i;
@@ -476,7 +476,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
         }
 
           // Add new script to the object
-        ImGui::Text(""); ImGui::SameLine(100);
+        ImGui::Indent(71);
         if (ImGui::Button("New Script##1")) {
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", "./data/scripts/");
         }

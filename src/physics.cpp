@@ -175,7 +175,6 @@ void Physics::Update() {
     acceleration = forces / mass;
 
       // Updating velocity
-    glm::vec3 oldVel = velocity;
     velocity += (acceleration * Engine::GetDt());
 
       // Updating position
@@ -202,7 +201,7 @@ void Physics::UpdateGravity() {
 
       // For each object
     for (unsigned i = 0; i < Object_Manager::GetSize(); ++i) {
-        if (i == object->GetId()) continue;
+        if ((int)i == object->GetId()) continue;
           // Gets needed components for the object being checked
         Object* other = Object_Manager::FindObject(i);
         Physics* otherPhysics = other->GetComponent<Physics>();

@@ -221,7 +221,7 @@ void Graphics::Shutdown() {
  * @return void
  */
 void Graphics::ErrorCallback(int error, const char* description) {
-    Trace::Message("Error: " + std::string(description) + "\n");
+    Trace::Message("Error: " + std::string(description) + ": " + std::to_string(error) + "\n");
 }
 
 /**

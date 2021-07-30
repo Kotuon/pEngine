@@ -62,7 +62,7 @@ void Object_Manager::AddObject(Object* object) {
  * @return Object* 
  */
 Object* Object_Manager::FindObject(int id) {
-    if (id >= object_manager->objects.size()) return nullptr;
+    if (id >= (int)object_manager->objects.size()) return nullptr;
     return object_manager->objects[id];
 }
 
@@ -172,7 +172,7 @@ std::string Object_Manager::CheckName(std::string objectName, int id) {
  * @return void
  */
 void Object_Manager::RemoveObject(int id) {
-    if (id >= object_manager->objects.size()) return;
+    if (id >= (int)object_manager->objects.size()) return;
     Object* objectToDelete = object_manager->objects[id];
 
       // Moves all the objects to the right of one being deleted to the left

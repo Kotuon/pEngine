@@ -37,28 +37,28 @@ Object::Object(const Object& other) {
     SetTemplateName(other.GetTemplateName());
 
       // Copying Behavior component
-    Behavior* behavior = other.GetComponent<Behavior>();
+    Behavior* behavior = other.GetComponentConst<Behavior>();
     if (behavior) {
         Behavior* newBehavior = new Behavior(*behavior);
         AddComponent(newBehavior);
     }
 
       // Copying Model component
-    Model* model = other.GetComponent<Model>();
+    Model* model = other.GetComponentConst<Model>();
     if (model) {
         Model* newModel = new Model(*model);
         AddComponent(newModel);
     }
 
       // Copying Physics component
-    Physics* physics = other.GetComponent<Physics>();
+    Physics* physics = other.GetComponentConst<Physics>();
     if (physics) {
         Physics* newPhysics = new Physics(*physics);
         AddComponent(newPhysics);
     }
 
       // Copying transform component
-    Transform* transform = other.GetComponent<Transform>();
+    Transform* transform = other.GetComponentConst<Transform>();
     if (transform) {
         Transform* newTransform = new Transform(*transform);
         AddComponent(newTransform);
@@ -135,6 +135,8 @@ void Object::SetName(std::string name_) {
  * @return string Name of object
  */
 std::string Object::GetName() const { return name; }
+
+std::string& Object::GetNameRef() { return name; }
 
 /**
  * @brief Sets the name of the template file

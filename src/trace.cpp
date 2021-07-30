@@ -27,8 +27,8 @@ void Trace::Initialize() {
     trace = new Trace;
 
       // Opens output file
-    trace->trace_stream.open("output/trace.log", std::ofstream::out);
-    if (!trace->trace_stream) std::cout << "File wasn't opened successfully.";
+    trace->trace_stream.open("trace.log", std::ofstream::out);
+    if (!trace->trace_stream) std::cout << "Trace file wasn't opened successfully.";
 }
 
 /**

@@ -21,13 +21,6 @@
 #include "component.hpp"
 #include "trace.hpp"
 
-/*! unordered_map tp relate CType enum to string (only used in GetComponent) */
-static std::unordered_map<CType, std::string> CNames = {
-    { CType::CModel, "Model" },
-    { CType::CPhysics, "Physics" },
-    { CType::CTransform, "Transform" }
-};
-
 /*! Object class */
 class Object {
     public:
@@ -41,24 +34,6 @@ class Object {
 
         void AddComponent(Component* component);
 
-        /**
-         * @brief Get a component of the object (const)
-         * 
-         * @tparam T Component class to return
-         * @param type Type of component
-         * @return T* Pointer to the component
-         */
-        template <typename T>
-        T* GetComponent() const {
-              // Searching for component using the type (enum as int)
-            auto found = components.find(T::GetCType());
-            if (found == components.end()) {
-                return nullptr;
-            }
-              // Cast found component into correct type
-            return (T*)found->second;
-        }        
-        
         /**
          * @brief Get a component of the object
          * 
@@ -99,6 +74,7 @@ class Object {
 
         void SetName(std::string name_);
         std::string GetName() const;
+        std::string& GetNameRef();
 
         void SetTemplateName(std::string templateName_);
         std::string GetTemplateName() const;
@@ -110,10 +86,28 @@ class Object {
 
         void Clear();
     private:
+            /**
+         * @brief Get a component of the object (const)
+         * 
+         * @tparam T Component class to return
+         * @param type Type of component
+         * @return T* Pointer to the component
+         */
+        template <typename T>
+        T* GetComponentConst() const {
+              // Searching for component using the type (enum as int)
+            auto found = components.find(T::GetCType());
+            if (found == components.end()) {
+                return nullptr;
+            }
+              // Cast found component into correct type
+            return (T*)found->second;
+        }
+    private:
         std::unordered_map<CType, Component*> components; //!< List of components
-        int id;                                           //!< Location of object in object_manager
         std::string name;                                 //!< Name of the object
         std::string templateName;                         //!< Name  of the template file used
+        int id;                                           //!< Location of object in object_manager
 };
 
 #endif

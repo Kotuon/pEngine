@@ -108,7 +108,6 @@ GLuint Texture::LoadDDS(std::string imagepath) {
       // Close the file
     fclose(fp);
 
-    unsigned int components  = (fourCC == FOURCC_DXT1) ? 3 : 4; 
     unsigned int format;
     switch(fourCC) { 
         case FOURCC_DXT1: 

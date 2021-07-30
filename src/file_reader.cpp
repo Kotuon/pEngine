@@ -57,7 +57,6 @@ void File_Reader::Read_File(std::string filename) {
 int File_Reader::Read_Int(std::string valueName) {
       // Checking if the value is an int
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading int: " + valueName + "\n");
         return 0;
     }
     return root[valueName.c_str()].GetInt();
@@ -72,7 +71,6 @@ int File_Reader::Read_Int(std::string valueName) {
 std::string File_Reader::Read_String(std::string valueName) {
       // Checking if the value is a std::string
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
     return root[valueName.c_str()].GetString();
@@ -88,7 +86,6 @@ std::string File_Reader::Read_String(std::string valueName) {
 glm::vec3 File_Reader::Read_Vec3(std::string valueName) {
       // Checking if the value is an array
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading glm::vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
     }
     return glm::vec3(root[valueName.c_str()][0].GetFloat(), root[valueName.c_str()][1].GetFloat(), root[valueName.c_str()][2].GetFloat());
@@ -104,7 +101,6 @@ glm::vec3 File_Reader::Read_Vec3(std::string valueName) {
 bool File_Reader::Read_Bool(std::string valueName) {
       // Checking if the value is a bool
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading bool: " + valueName + "\n");
         return false;
     }
     return root[valueName.c_str()].GetBool();
@@ -119,7 +115,6 @@ bool File_Reader::Read_Bool(std::string valueName) {
 float File_Reader::Read_Float(std::string valueName) {
       // Checking if the value is a double (has decimal)
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading float: " + valueName + "\n");
         return 0.f;
     }
     return root[valueName.c_str()].GetFloat();
@@ -134,7 +129,6 @@ float File_Reader::Read_Float(std::string valueName) {
 double File_Reader::Read_Double(std::string valueName) {
       // Checking if the value is a double (has decimal)
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading double: " + valueName + "\n");
         return false;
     }
     return root[valueName.c_str()].GetDouble();
@@ -149,11 +143,9 @@ double File_Reader::Read_Double(std::string valueName) {
 std::string File_Reader::Read_Object_Name(std::string valueName) {
       // Checking if the value exists
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading with " + valueName + "\n");
         return std::string("");
     }
     if (!root[valueName.c_str()].HasMember("objectName")) {
-        Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
 
@@ -169,11 +161,9 @@ std::string File_Reader::Read_Object_Name(std::string valueName) {
 std::string File_Reader::Read_Object_Template_Name(std::string valueName) {
       // Checking if the value exists
     if (!root.HasMember(valueName.c_str())) {
-        Trace::Message("Error reading with " + valueName + "\n");
         return std::string("");
     }
     if (!root[valueName.c_str()].HasMember("templateName")) {
-        Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
 
@@ -188,7 +178,6 @@ std::string File_Reader::Read_Object_Template_Name(std::string valueName) {
  */
 glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
     if (!root[valueName.c_str()].HasMember("position")) {
-        Trace::Message("Error reading vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
     }
 
@@ -205,7 +194,6 @@ glm::vec3 File_Reader::Read_Object_Position(std::string valueName) {
 glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
       // Checking if value exists
     if (!root[valueName.c_str()].HasMember("scale")) {
-        Trace::Message("Error reading vec3: " + valueName + "\n");
         return glm::vec3(0.f, 0.f, 0.f);
     }
 
@@ -222,7 +210,6 @@ glm::vec3 File_Reader::Read_Object_Scale(std::string valueName) {
 std::string File_Reader::Read_Behavior_Name(std::string valueName) {
       // Checking if value exists
     if (!root["behaviors"].HasMember(valueName.c_str())) {
-        Trace::Message("Error reading std::string: " + valueName + "\n");
         return std::string("");
     }
 

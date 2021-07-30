@@ -150,7 +150,7 @@ glm::vec3& Transform::GetStartPositionRef() { return startPosition; }
  * 
  * @param reader File to read from
  */
-void Transform::Read(File_Reader& reader) {
+void Transform::Read(File_Reader&) {
     //SetRotation(reader.Read_Float("rotation"));
 }
 
