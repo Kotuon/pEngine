@@ -25,10 +25,8 @@ class Vector3_Func {
         static glm::vec3 get_direction(const glm::vec3 vec1, const glm::vec3 vec2);
         static glm::vec3 zero_vec3();
         static float length(const glm::vec3 vec3);
-        template <typename T>
-        glm::vec3 add(glm::vec3 vec, T num) {
-            return vec + num;
-        }
+        static glm::vec3 add_float(const glm::vec3 vec, float num);
+        static glm::vec3 add_vec3(const glm::vec3 vec1, const glm::vec3 vec2);
 };
 
 #endif
