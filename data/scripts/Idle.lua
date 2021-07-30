@@ -3,6 +3,8 @@ local idleRadius = 0.10
 local pushForce = 50.0
 local dirVariation = 0.5
 local pushVariation = 0.2
+local physics = object:GetPhysics()
+local transform = object:GetTransform()
 
 function Idle()
     if (physics.velocity == zero_vec3())

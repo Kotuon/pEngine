@@ -147,8 +147,8 @@ std::vector<std::string>& Behavior::GetScripts() { return scripts; }
  */
 void Behavior::ClassSetup(sol::state* state) {
       // Getting objects components
-    Physics* physics = GetParent()->GetComponent<Physics>();
-    Transform* transform = GetParent()->GetComponent<Transform>();
+    //Physics* physics = GetParent()->GetComponent<Physics>();
+    //Transform* transform = GetParent()->GetComponent<Transform>();
 
       // Giving lua random functions
     state->set_function("random_vec3", Random::random_vec3);
@@ -171,16 +171,7 @@ void Behavior::ClassSetup(sol::state* state) {
 
     state->set_function("FindObject", &Object_Manager::FindObject);
 
-      // Giving lua object class
-    state->set("object", GetParent());
-    sol::usertype<Object> object_type = state->new_usertype<Object>("Object",
-        sol::constructors<Object(), Object(const Object)>());
-      // Giving lua object class variables
-    object_type.set("name", sol::property(Object::GetNameRef, &Object::SetName));
-    object_type.set("id",   sol::readonly_property(Object::GetId));
-
       // Giving lua physics class
-    state->set("physics", physics);
     sol::usertype<Physics> physics_type = state->new_usertype<Physics>("Physics",
         sol::constructors<Physics(), Physics(const Physics)>());
       // Giving lua physics class variables
@@ -192,7 +183,6 @@ void Behavior::ClassSetup(sol::state* state) {
     physics_type.set_function("UpdateGravity", &Physics::UpdateGravity);
 
       // Giving lua transform class
-    state->set("transform", transform);
     sol::usertype<Transform> transform_type = state->new_usertype<Transform>("Transform",
         sol::constructors<Transform(), Transform(const Transform)>());
       // Giving lua transform class variables
@@ -200,6 +190,16 @@ void Behavior::ClassSetup(sol::state* state) {
     transform_type.set("rotation",      sol::property(Transform::GetRotationRef,      &Transform::SetRotation));
     transform_type.set("scale",         sol::property(Transform::GetScaleRef,         &Transform::SetScale));
     transform_type.set("startPosition", sol::property(Transform::GetStartPositionRef, &Transform::SetStartPosition));
+
+      // Giving lua object class
+    state->set("object", GetParent());
+    sol::usertype<Object> object_type = state->new_usertype<Object>("Object",
+        sol::constructors<Object(), Object(const Object)>());
+      // Giving lua object class variables
+    object_type.set("name", sol::property(Object::GetNameRef, &Object::SetName));
+    object_type.set("id",   sol::readonly_property(Object::GetId));
+    object_type.set_function("GetPhysics", &Object::GetComponent<Physics>);
+    object_type.set_function("GetTransform", &Object::GetComponent<Transform>);
 }
 
 /**
