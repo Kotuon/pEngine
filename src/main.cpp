@@ -17,8 +17,6 @@
 /**
  * @brief Main function
  * 
- * @param argc 
- * @param argv 
  * @return int 
  */
 int main (int, char *[]) {

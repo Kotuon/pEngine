@@ -136,6 +136,11 @@ void Object::SetName(std::string name_) {
  */
 std::string Object::GetName() const { return name; }
 
+/**
+ * @brief Returns reference to the name
+ * 
+ * @return std::string& 
+ */
 std::string& Object::GetNameRef() { return name; }
 
 /**

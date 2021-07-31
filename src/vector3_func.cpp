@@ -63,6 +63,13 @@ float Vector3_Func::length(const glm::vec3 vec) {
     return glm::length(vec);
 }
 
+/**
+ * @brief Adds float to each part of a glm::vec3
+ * 
+ * @param vec 
+ * @param num 
+ * @return glm::vec3 
+ */
 glm::vec3 Vector3_Func::add_float(const glm::vec3 vec, float num) {
     glm::vec3 returnVec3;
 
@@ -73,6 +80,13 @@ glm::vec3 Vector3_Func::add_float(const glm::vec3 vec, float num) {
     return vec;
 }
 
+/**
+ * @brief Add two glm::vec3 together
+ * 
+ * @param vec1 
+ * @param vec2 
+ * @return glm::vec3 
+ */
 glm::vec3 Vector3_Func::add_vec3(const glm::vec3 vec1, const glm::vec3 vec2) {
     glm::vec3 returnVec3;
 
