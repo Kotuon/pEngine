@@ -19,6 +19,11 @@ The purpose of this engine was to get more practice with C++ and game engine arc
 ## Requirements
 Built for Windows 10 using MinGW and a MinGW makefile. OpenGL needs to be installed.
 
+MinGW compiler path:
+```
+C:/Program Files/mingw-w64/x86_64-8.1.0-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe
+```
+
 ## Setup
 To build and run this project download and in the main directory run the commands:
 
