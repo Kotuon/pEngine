@@ -36,7 +36,8 @@ $ mingw32-make.exe run
 * Dear Imgui editor inspired by Unity
 * Lua scripting
 
-## Lua Integration
+## Documentation
+[Doxygen documentation for engine](documentation.pdf)
 [Documentation for Lua integration](LuaDocumentation.md)
 
 ## Inspiration
