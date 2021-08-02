@@ -170,7 +170,8 @@ void Behavior::ClassSetup(sol::state* state) {
     state->set_function("add_float", Vector3_Func::add_float);
     state->set_function("add_vec3", Vector3_Func::add_vec3);
 
-    state->set_function("FindObject", &Object_Manager::FindObject);
+    state->set_function("FindObject", sol::overload(sol::resolve<Object*(int)>(&Object_Manager::FindObject), 
+        sol::resolve<Object*(std::string)>(&Object_Manager::FindObject)));
 
       // Giving lua physics class
     sol::usertype<Physics> physics_type = state->new_usertype<Physics>("Physics",

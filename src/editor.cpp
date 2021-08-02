@@ -95,21 +95,6 @@ void Editor::Update() {
                         Engine::Write();
                 }
             }
-              // Copy current selected object
-            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_PRESS) {
-                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_RELEASE) {
-                    editor->object_to_copy = editor->selected_object;
-                }
-            }
-              // Paste current selected object
-            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_PRESS) {
-                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_RELEASE) {
-                    if (editor->object_to_copy != -1) {
-                        Object* object = new Object(*Object_Manager::FindObject(editor->selected_object));
-                        Object_Manager::AddObject(object);
-                    }
-                }
-            }
         }
     }
     
@@ -205,6 +190,26 @@ void Editor::Display_Dockspace() {
 void Editor::Display_Scene() {
     ImGui::Begin("Scene");
 
+    if (!takeKeyboardInput && ImGui::IsWindowFocused()) {
+        if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+              // Copy current selected object
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_PRESS) {
+                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_C) == GLFW_RELEASE) {
+                    editor->object_to_copy = editor->selected_object;
+                }
+            }
+              // Paste current selected object
+            if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_PRESS) {
+                if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_V) == GLFW_RELEASE) {
+                    if (editor->object_to_copy != -1) {
+                        Object* object = new Object(*Object_Manager::FindObject(editor->selected_object));
+                        Object_Manager::AddObject(object);
+                    }
+                }
+            }
+        }
+    }
+
       // Display all objects
     for (int i = 0; i < (int)Object_Manager::GetSize(); ++i) {
         if (ImGui::Selectable(Object_Manager::FindObject(i)->GetName().c_str(), selected_object == i, ImGuiSelectableFlags_AllowDoubleClick)) {
@@ -270,6 +275,8 @@ void Editor::Display_Components() {
     Object* object = Object_Manager::FindObject(selected_object);
     std::string objectName = object->GetName();
 
+    ImGui::Text("Id: %d", object->GetId());
+    
       // Display name box (allows changing the name of an object)
     static char nameBuf[128] = "";
     sprintf(nameBuf, objectName.c_str());
@@ -382,10 +389,10 @@ void Editor::Display_World_Settings() {
 
       // Position of the light being used
     ImGui::Text("Light Position");
-    ImGui::PushItemWidth(50);
+    ImGui::PushItemWidth(65);
     ImGui::SameLine(120); ImGui::InputFloat("x##4", &Engine::GetLightPos().x);
-    ImGui::SameLine(195); ImGui::InputFloat("y##4", &Engine::GetLightPos().y);
-    ImGui::SameLine(270); ImGui::InputFloat("z##4", &Engine::GetLightPos().z);
+    ImGui::SameLine(205); ImGui::InputFloat("y##4", &Engine::GetLightPos().y);
+    ImGui::SameLine(290); ImGui::InputFloat("z##4", &Engine::GetLightPos().z);
     ImGui::PopItemWidth();
 
       // Grav const of the engine
@@ -578,7 +585,8 @@ void Editor::Display_Model(Model* model) {
 void Editor::Display_Physics(Physics* physics) {
     if (!physics) return;
     
-    glm::vec3 velocity = physics->GetVelocity();
+    glm::vec3& velocity = physics->GetVelocityRef();
+    glm::vec3& rotVel = physics->GetRotationalVelocityRef();
 
     ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
     if (selected_component == CType::CPhysics) node_flags |= ImGuiTreeNodeFlags_Selected;
@@ -602,12 +610,20 @@ void Editor::Display_Physics(Physics* physics) {
     if (physics_open) {
         ImGui::Text("Velocity");
 
-        ImGui::PushItemWidth(50);
+        ImGui::PushItemWidth(65);
         ImGui::SameLine(100); ImGui::InputFloat("x##1", &velocity.x);
-        ImGui::SameLine(175); ImGui::InputFloat("y##1", &velocity.y);
-        ImGui::SameLine(250); ImGui::InputFloat("z##1", &velocity.z);
+        ImGui::SameLine(185); ImGui::InputFloat("y##1", &velocity.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##1", &velocity.z);
 
-        ImGui::InputFloat("Mass##1", &physics->GetMassRef());
+        ImGui::Text("RotVel");
+
+        ImGui::PushItemWidth(65);
+        ImGui::SameLine(100); ImGui::InputFloat("x##6", &rotVel.x);
+        ImGui::SameLine(185); ImGui::InputFloat("y##6", &rotVel.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##6", &rotVel.z);
+
+        ImGui::Text("Mass");
+        ImGui::SameLine(100); ImGui::InputFloat("##6", &physics->GetMassRef());
         ImGui::PopItemWidth();
 
         ImGui::TreePop();
@@ -636,34 +652,34 @@ void Editor::Display_Transform(Transform* transform) {
     if (transform_open) {
         ImGui::Text("Position");
 
-        ImGui::PushItemWidth(50);
+        ImGui::PushItemWidth(65);
         ImGui::SameLine(100); ImGui::InputFloat("x##1", &position.x);
-        ImGui::SameLine(175); ImGui::InputFloat("y##1", &position.y);
-        ImGui::SameLine(250); ImGui::InputFloat("z##1", &position.z);
+        ImGui::SameLine(185); ImGui::InputFloat("y##1", &position.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##1", &position.z);
         ImGui::PopItemWidth();
 
         ImGui::Text("Scale");
 
-        ImGui::PushItemWidth(50);
+        ImGui::PushItemWidth(65);
         ImGui::SameLine(100); ImGui::InputFloat("x##2", &scale.x);
-        ImGui::SameLine(175); ImGui::InputFloat("y##2", &scale.y);
-        ImGui::SameLine(250); ImGui::InputFloat("z##2", &scale.z);
+        ImGui::SameLine(185); ImGui::InputFloat("y##2", &scale.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##2", &scale.z);
         ImGui::PopItemWidth();
 
         ImGui::Text("Rotation");
 
-        ImGui::PushItemWidth(50);
+        ImGui::PushItemWidth(65);
         ImGui::SameLine(100); ImGui::InputFloat("x##3", &rotation.x);
-        ImGui::SameLine(175); ImGui::InputFloat("y##3", &rotation.y);
-        ImGui::SameLine(250); ImGui::InputFloat("z##3", &rotation.z);
+        ImGui::SameLine(185); ImGui::InputFloat("y##3", &rotation.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##3", &rotation.z);
         ImGui::PopItemWidth();
         
         ImGui::Text("Start Pos");
 
-        ImGui::PushItemWidth(50);
+        ImGui::PushItemWidth(65);
         ImGui::SameLine(100); ImGui::InputFloat("x##5", &startPos.x);
-        ImGui::SameLine(175); ImGui::InputFloat("y##5", &startPos.y);
-        ImGui::SameLine(250); ImGui::InputFloat("z##5", &startPos.z);
+        ImGui::SameLine(185); ImGui::InputFloat("y##5", &startPos.y);
+        ImGui::SameLine(270); ImGui::InputFloat("z##5", &startPos.z);
         ImGui::PopItemWidth();
 
         ImGui::TreePop();

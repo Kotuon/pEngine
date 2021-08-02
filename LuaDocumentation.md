@@ -25,6 +25,8 @@ Each lua file needs a Start() and FixedUpdate(float) function
     * Adds the two vectors together
 * Object FindObject(int id)
     * Finds object with the given id
+* Object FindObject(string objectName)
+    * Finds object with the given name
 ### Vec3
 3 dimension vector class
 * x, y, z (float)

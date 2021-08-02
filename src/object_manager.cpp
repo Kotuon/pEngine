@@ -67,6 +67,21 @@ Object* Object_Manager::FindObject(int id) {
 }
 
 /**
+ * @brief Finds object with the matching name
+ * 
+ * @param objectName Name to look for
+ * @return Object* 
+ */
+Object* Object_Manager::FindObject(std::string objectName) {
+    for (Object* object : object_manager->objects) {
+        if (objectName.compare(object->GetName()) == 0)
+            return object;
+    }
+
+    return nullptr;
+}
+
+/**
  * @brief Gets the size of the object_manager object list
  * 
  * @return unsigned Size of object list

@@ -43,6 +43,10 @@ class Physics : public Component {
         glm::vec3 GetVelocity() const;
         glm::vec3& GetVelocityRef();
 
+        void SetRotationalVelocity(glm::vec3 rotVel);
+        glm::vec3 GetRotationalVelocity() const;
+        glm::vec3& GetRotationalVelocityRef();
+
         void SetMass(float ma);
         float GetMass() const;
         float& GetMassRef();
@@ -61,6 +65,7 @@ class Physics : public Component {
         glm::vec3 velocity;            //!< Velocity of object
         glm::vec3 initialVelocity;     //!< Starting velocity
         glm::vec3 initialAcceleration; //!< Starting acceleration
+        glm::vec3 rotationalVelocity;  //!< How fast is the object rotating
         float mass;                    //!< Mass of object
 };
 

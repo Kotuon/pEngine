@@ -220,6 +220,9 @@ void Model_Data::Draw(Model* parent, Transform* transform, glm::mat4 projection,
       // Creating the MVP (Model * View * Projection) matrix
     glm::mat4 model = glm::mat4(1.f);
     model = glm::translate(model, transform->GetPosition());
+    model = glm::rotate(model, (transform->GetRotation().x / 180.f) * glm::pi<float>(), glm::vec3(1, 0, 0));
+    model = glm::rotate(model, (transform->GetRotation().y / 180.f) * glm::pi<float>(), glm::vec3(0, 1, 0));
+    model = glm::rotate(model, (transform->GetRotation().z / 180.f) * glm::pi<float>(), glm::vec3(0, 0, 1));
     model = glm::scale(model, transform->GetScale());
 
       // Sending data to the shaders

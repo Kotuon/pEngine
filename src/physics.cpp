@@ -31,7 +31,7 @@
  */
 Physics::Physics() : Component(CType::CPhysics),
     acceleration(glm::vec3(0.f, 0.f, 0.f)), forces(glm::vec3(0.f, 0.f, 0.f)), 
-    velocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {}
+    velocity(glm::vec3(0.f, 0.f, 0.f)), rotationalVelocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {}
 
 /**
  * @brief Copy constructor
@@ -49,7 +49,7 @@ Physics::Physics(const Physics& other) : Component(CType::CPhysics) {
  */
 Physics::Physics(File_Reader& reader) : Component(CType::CPhysics),
     acceleration(glm::vec3(0.f, 0.f, 0.f)), forces(glm::vec3(0.f, 0.f, 0.f)), 
-    velocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {
+    velocity(glm::vec3(0.f, 0.f, 0.f)), rotationalVelocity(glm::vec3(0.f, 0.f, 0.f)), mass(1.f) {
     Read(reader);
 }
 
@@ -167,6 +167,27 @@ float Physics::GetMass() const { return mass; }
 float& Physics::GetMassRef() { return mass; }
 
 /**
+ * @brief Sets rotational velocity
+ * 
+ * @param rotVel New rotational velocity
+ */
+void Physics::SetRotationalVelocity(glm::vec3 rotVel) { rotationalVelocity = rotVel; }
+
+/**
+ * @brief Returns rotational velocity
+ * 
+ * @return glm::vec3 
+ */
+glm::vec3 Physics::GetRotationalVelocity() const { return rotationalVelocity; }
+
+/**
+ * @brief Returns reference to rotational velocity
+ * 
+ * @return glm::vec3& 
+ */
+glm::vec3& Physics::GetRotationalVelocityRef() { return rotationalVelocity; }
+
+/**
  * @brief Updates the physics of the object
  * 
  */
@@ -183,6 +204,11 @@ void Physics::Update() {
     transform->SetOldPosition(position);
     position = (velocity * Engine::GetDt()) + position;
     transform->SetPosition(position);
+
+      // Updating rotation
+    glm::vec3 rotation = transform->GetRotation();
+    rotation = (rotationalVelocity * Engine::GetDt()) + rotation;
+    transform->SetRotation(rotation);
 
       // Resetting the forces acting on the object
     forces = glm::vec3(0.f, 0.f, 0.f);

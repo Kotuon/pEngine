@@ -91,10 +91,10 @@ void Camera::Update() {
     if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_D) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->position += glm::normalize(glm::cross(camera->front, camera->up)) * camera->speed;
     }
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS) {
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_SPACE) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->position += camera->speed * camera->up;
     }
-    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+    if (glfwGetKey(Graphics::GetWindow(), GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS && Editor::GetTakeKeyboardInput()) {
         camera->position -= camera->speed * camera->up;
     }
 
