@@ -36,8 +36,8 @@ $ mingw32-make.exe run
 * Dear Imgui editor inspired by Unity
 * Lua scripting
 
+## Lua Integration
+[Documentation for Lua integration](LuaDocumentation.md)
+
 ## Inspiration
 Parts of the OpenGL and shader code was based on [opengl-tutorials](https://github.com/opengl-tutorials/ogl)
-
-## LuaIntegration
-[Documentation for Lua integration](LuaDocumentation.md)
