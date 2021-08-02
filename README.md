@@ -41,5 +41,14 @@ $ mingw32-make.exe run
 
 [Documentation for Lua integration](LuaDocumentation.md)
 
-## Inspiration
+## Plans
+* More shaders
+* Collision detection
+
+## Sources
 Parts of the OpenGL and shader code was based on [opengl-tutorials](https://github.com/opengl-tutorials/ogl)
+
+## License
+This project is licensed under the terms of the MIT license.
+
+Full license [here](LICENSE.txt)
