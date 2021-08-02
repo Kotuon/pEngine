@@ -1,5 +1,16 @@
 # pEngine
 
+## Table of Contents
+* [Introduction](#introduction)
+* [Technology Used](#technology-used)
+* [Requirements](#requirements)
+* [Setup](#setup)
+* [Features](#features)
+* [Documentation](#documentation)
+* [Plans](#plans)
+* [Sources](#sources)
+* [License](#license)
+
 ## Introduction
 
 pEngine is 3D game engine using a component based structure, lua scripting, and a Dear Imgui editor.
