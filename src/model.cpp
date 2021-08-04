@@ -104,14 +104,24 @@ void Model::Write(File_Writer& writer) {
  * 
  * @param modelName 
  */
-void Model::SwitchModel(std::string modelName) { data = Model_Data_Manager::Get(modelName); }
+void Model::SwitchModel(std::string modelName) {
+    Model_Data* proxy = Model_Data_Manager::Get(modelName);
+    if (!proxy) return;
+
+    data = proxy;
+}
 
 /**
  * @brief Switches the current texture to that of the filename provided
  * 
  * @param textureName 
  */
-void Model::SwitchTexture(std::string textureName) { texture = Texture_Manager::Get(textureName); }
+void Model::SwitchTexture(std::string textureName) {
+    Texture* proxy = Texture_Manager::Get(textureName);
+    if (!proxy) return;
+
+    texture = proxy;
+}
 
 /**
  * @brief Returns the filename of the current model

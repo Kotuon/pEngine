@@ -36,21 +36,25 @@ static Engine* engine = nullptr; //!< Engine object
 /**
  * @brief Initializes the engine and the systems in the engine
  * 
- * @return void
+ * @return true
+ * @return false
  */
-void Engine::Initialize() {
+bool Engine::Initialize() {
       // Initializing engine
     engine = new Engine;
     if (!engine) {
         Trace::Message("Engine was not initialized.\n");
-        return;
+        return false;
     }
 
       // Reading settings from json
-    File_Reader settings("settings.json");
+    File_Reader settings;
+    if (!settings.Read_File("settings.json")) return false;
+
+    File_Reader preset;
+    if (!preset.Read_File("preset/" + settings.Read_String("preset"))) return false;
+
     engine->presetName = settings.Read_String("preset");
-    
-    File_Reader preset("preset/" + engine->presetName);
     engine->gravConst = preset.Read_Double("gravConst");
 
     engine->lightPower = 1000.f;
@@ -60,19 +64,21 @@ void Engine::Initialize() {
     }
 
       // Initializing sub systems
-    if (!Model_Data_Manager::Initialize()) return;
-    if (!Texture_Manager::Initialize()) return;
-    if (!Camera::Initialize(settings)) return;
-    if (!Graphics::Initialize(settings)) return;
-    if (!Object_Manager::Initialize(preset)) return;
-    if (!Random::Initialize()) return;
-    if (!Editor::Initialize()) return;
+    if (!Model_Data_Manager::Initialize()) return false;
+    if (!Texture_Manager::Initialize()) return false;
+    if (!Camera::Initialize(settings)) return false;
+    if (!Graphics::Initialize(settings)) return false;
+    if (!Object_Manager::Initialize(preset)) return false;
+    if (!Random::Initialize()) return false;
+    if (!Editor::Initialize()) return false;
 
       // Setting up variables used for dt
     engine->currentTime = std::chrono::steady_clock::now();
     engine->accumulator = 0.f;
     engine->time = 0.f;
     engine->isRunning = true;
+
+    return true;
 }
 
 /**
@@ -127,40 +133,52 @@ void Engine::Shutdown() {
 /**
  * @brief Resets the objects in the engine
  * 
- * @return void
+ * @return true
+ * @return false
  */
-void Engine::Restart() {
+bool Engine::Restart() {
+      // Initializing object manager
+    File_Reader settings;
+    if (!settings.Read_File("settings.json")) return false;
+
+    File_Reader preset;
+    if (!preset.Read_File("preset/" + engine->presetName)) return false;
+
       // Removing all current objects
     Object_Manager::Shutdown();
     Editor::Reset();
 
-      // Initializing object manager
-    File_Reader settings("settings.json");
     engine->presetName = settings.Read_String("preset");
-
-    File_Reader preset("preset/" + engine->presetName);
     engine->gravConst = preset.Read_Double("gravConst");
-    if (!Object_Manager::Initialize(preset)) return;
+    if (!Object_Manager::Initialize(preset)) return false;
+
+    return true;
 }
 
 /**
  * @brief Resets the engine to the given preset
  * 
  * @param presetName Given preset
- * @return void
+ * @return true
+ * @return false
  */
-void Engine::Restart(std::string presetName) {
+bool Engine::Restart(std::string presetName) {
+      // Initializing object manager
+    File_Reader settings;
+    if (!settings.Read_File("settings.json")) return false;
+
+    File_Reader preset;
+    if (!preset.Read_File("preset/" + presetName)) return false;
+
       // Removing all current objects
     Object_Manager::Shutdown();
     Editor::Reset();
 
-      // Initializing object manager
-    File_Reader settings("settings.json");
     engine->presetName = presetName;
-    
-    File_Reader preset("preset/" + engine->presetName);
     engine->gravConst = preset.Read_Double("gravConst");
-    if (!Object_Manager::Initialize(preset)) return;
+    if (!Object_Manager::Initialize(preset)) return false;
+
+    return true;
 }
 
 /**

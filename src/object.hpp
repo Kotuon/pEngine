@@ -26,7 +26,6 @@ class Object {
     public:
         Object();
         Object(const Object& other);
-        Object(std::string filename);
 
         Object* Clone() const;
     
@@ -79,8 +78,8 @@ class Object {
         void SetTemplateName(std::string templateName_);
         std::string GetTemplateName() const;
 
-        void Read(std::string objectFilename);
-        void ReRead(std::string objectFilename);
+        bool Read(std::string objectFilename);
+        bool ReRead(std::string objectFilename);
         void Write();
         std::unordered_map<CType, Component*> GetComponentList();
 

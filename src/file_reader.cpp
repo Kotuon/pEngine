@@ -23,29 +23,22 @@
 using namespace rapidjson;
 
 /**
- * @brief Creates File_Reader object and reads given file
- * 
- * @param filename Name of the file to be read
- */
-File_Reader::File_Reader(std::string filename) {
-    Read_File(filename);
-}
-
-/**
  * @brief Reads the json file data into the root variable
  * 
  * @param filename Name of the file to be read
  */
-void File_Reader::Read_File(std::string filename) {
+bool File_Reader::Read_File(std::string filename) {
       // Opening the json file
     std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/" + filename;
     FILE* file = fopen(fileToOpen.c_str(), "r");
-
+    if (!file) return false;
+    
     char buffer[65536];
     FileReadStream stream(file, buffer, sizeof(buffer));
     root.ParseStream<0, UTF8<>, FileReadStream>(stream);
 
     fclose(file);
+    return true;
 }
 
 /**

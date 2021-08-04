@@ -66,15 +66,6 @@ Object::Object(const Object& other) {
 }
 
 /**
- * @brief Creating object from a file
- * 
- * @param filename Name of file used to create object
- */
-Object::Object(std::string filename) {
-    Read(filename);
-}
-
-/**
  * @brief Clones this object
  * 
  * @return Object* 
@@ -160,11 +151,14 @@ std::string Object::GetTemplateName() const { return templateName; }
 /**
  * @brief Reads object from file. This includes the components of an object
  * 
- * @param objectFilename 
+ * @param objectFilename
+ * @return true
+ * @return false
  */
-void Object::Read(std::string objectFilename) {
+bool Object::Read(std::string objectFilename) {
       // Getting data from file
-    File_Reader object_reader("objects/" + objectFilename);
+    File_Reader object_reader;
+    if (!object_reader.Read_File("objects/" + objectFilename)) return false;
 
       // Reading Behavior component form file
     Behavior* object_behavior = new Behavior(object_reader);
@@ -181,16 +175,21 @@ void Object::Read(std::string objectFilename) {
       // Reading Transform component from file
     Transform* object_transform = new Transform(object_reader);
     AddComponent(object_transform);
+
+    return true;
 }
 
 /**
  * @brief Reading data into object that already exists
  * 
  * @param objectFilename Name of template file
+ * @return true
+ * @return false
  */
-void Object::ReRead(std::string objectFilename) {
+bool Object::ReRead(std::string objectFilename) {
       // Getting data from file
-    File_Reader object_reader("objects/" + objectFilename);
+    File_Reader object_reader;
+    if (!object_reader.Read_File("objects/" + objectFilename)) return false;
 
     if (name.compare("") == 0)
         SetName(object_reader.Read_String("name"));
@@ -230,6 +229,8 @@ void Object::ReRead(std::string objectFilename) {
     }
     object_behavior->Read(object_reader);
     object_behavior->SetupClassesForLua();
+
+    return true;
 }
 
 /**

@@ -295,7 +295,7 @@ void Editor::Display_Components() {
     std::string templateName = object->GetTemplateName();
     if (templateName.empty()) templateName = "No template##1";
     if (ImGui::Button(templateName.c_str())) {
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseTemplate##1", "Choose File", ".json", "./data/json/objects/");
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseTemplate##1", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/objects/");
     }
 
     ImGui::SameLine();
@@ -368,14 +368,13 @@ void Editor::Display_World_Settings() {
       // Allows user to change the preset that is loaded
     ImGui::Text("Presets"); ImGui::SameLine(120);
     if (ImGui::Button(presetName.c_str())) {
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".json", "./data/json/preset/");
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/preset/");
     }
 
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-            selected_object = -1;
-            Engine::Restart(filePathName);
+            if (Engine::Restart(filePathName)) selected_object = -1;
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -467,14 +466,13 @@ void Editor::Display_Scripts(Behavior* behavior) {
             ImGui::Text(std::string("Script " + std::to_string(scriptNum) + ":").c_str());
             ImGui::SameLine(100);
             if (ImGui::Button(script.c_str())) {
-                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".lua", "./data/scripts/");
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".lua", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/");
             }
 
             if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
                 if (ImGuiFileDialog::Instance()->IsOk()) {
                     std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                    if (!behavior->SwitchScript(scriptNum - 1, filePathName))
-                        ImGui::OpenPopup("ExistingScript##1");
+                    behavior->SwitchScript(scriptNum - 1, filePathName);
                 }
 
                 ImGuiFileDialog::Instance()->Close();
@@ -485,14 +483,13 @@ void Editor::Display_Scripts(Behavior* behavior) {
           // Add new script to the object
         ImGui::Indent(71);
         if (ImGui::Button("New Script##1")) {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", "./data/scripts/");
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##4", "Choose File", ".lua", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/");
         }
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##4")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                if (!behavior->AddScript(filePathName))
-                    ImGui::OpenPopup("ExistingScript##1");
+                behavior->AddScript(filePathName);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -500,8 +497,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
 
           // Popup to say that the selected script to add is already attached to the object
         if (ImGui::BeginPopup("ExistingScript##1")) {
-            ImGui::Text(std::string("Script already attached to " +
-                Object_Manager::FindObject(editor->selected_object)->GetName()).c_str(),
+            ImGui::Text(std::string("Script already being used or doesn't exist").c_str(),
                 ImGui::GetFontSize() * 2);
             ImGui::EndPopup();
         }
@@ -520,6 +516,9 @@ void Editor::Display_Model(Model* model) {
     
     std::string modelName = model->GetModelName();
     std::string textureName = model->GetTextureName();
+
+    if (modelName.compare("") == 0) modelName = "no model";
+    if (textureName.compare("") == 0) textureName = "no texture";
     
       // Setting up tree flags
     ImGuiTreeNodeFlags node_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
@@ -546,7 +545,7 @@ void Editor::Display_Model(Model* model) {
           // Model that is being used
         ImGui::Text("Model"); ImGui::SameLine(100);
         if (ImGui::Button(modelName.c_str())) {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##1", "Choose File", ".obj", "./data/models/");
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##1", "Choose File", ".obj", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/models/");
         }
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##1")) {
@@ -561,7 +560,7 @@ void Editor::Display_Model(Model* model) {
           // Texture that is being used
         ImGui::Text("Texture"); ImGui::SameLine(100);
         if (ImGui::Button(textureName.c_str())) {
-            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##2", "Choose File", ".dds,.DDS", "./data/textures/");
+            ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##2", "Choose File", ".dds,.DDS", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/textures/");
         }
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##2")) {
