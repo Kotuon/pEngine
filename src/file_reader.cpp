@@ -26,6 +26,8 @@ using namespace rapidjson;
  * @brief Reads the json file data into the root variable
  * 
  * @param filename Name of the file to be read
+ * @return true
+ * @return false
  */
 bool File_Reader::Read_File(std::string filename) {
       // Opening the json file
