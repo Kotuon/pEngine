@@ -472,8 +472,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
             if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
                 if (ImGuiFileDialog::Instance()->IsOk()) {
                     std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                    if (!behavior->SwitchScript(scriptNum - 1, filePathName))
-                        ImGui::OpenPopup("ExistingScript##1");
+                    behavior->SwitchScript(scriptNum - 1, filePathName);
                 }
 
                 ImGuiFileDialog::Instance()->Close();
@@ -490,8 +489,7 @@ void Editor::Display_Scripts(Behavior* behavior) {
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##4")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
                 std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                if (!behavior->AddScript(filePathName))
-                    ImGui::OpenPopup("ExistingScript##1");
+                behavior->AddScript(filePathName);
             }
 
             ImGuiFileDialog::Instance()->Close();
