@@ -31,7 +31,7 @@ Texture::~Texture() {
  */
 void Texture::Load(std::string textureName_) {
     textureName = textureName_;
-    textureNum = Texture::LoadDDS("data/textures/" + textureName);
+    textureNum = Texture::LoadDDS(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/textures/" + textureName);
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
     hasBeenSet = true;
 }

@@ -128,7 +128,7 @@ void Behavior::SetupClassesForLua() {
     }
 
     for (unsigned i = 0; i < states.size(); ++i) {
-        states[i]->script_file(std::string("data/scripts/" + scripts[i]).c_str());
+        states[i]->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts[i]).c_str());
         (*states[i])["Start"]();
     }
 }
@@ -218,7 +218,7 @@ bool Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
     sol::state* state = states[scriptNum];
     scripts[scriptNum] = newScriptName;
       // Setting up new lua script
-    state->script_file(std::string("data/scripts/" + scripts[scriptNum]).c_str());
+    state->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts[scriptNum]).c_str());
     (*state)["Start"]();
 
     return true;
@@ -242,7 +242,7 @@ bool Behavior::AddScript(std::string newScriptName) {
     scripts.emplace_back(newScriptName);
     ClassSetup(state);
       // Setting up lua script to run
-    states.back()->script_file(std::string("data/scripts/" + scripts.back()).c_str());
+    states.back()->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts.back()).c_str());
     (*states.back())["Start"]();
 
     return true;

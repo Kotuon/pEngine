@@ -103,7 +103,7 @@ bool Model_Data::Read(std::string modelName_) {
     std::vector<glm::vec3> temp_normals;
 
       // Opening the file
-    std::string fileToOpen = "data/models/" + modelName;
+    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/models/" + modelName;
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
         Trace::Message("File '" + modelName + "' was not successfully opened.\n");

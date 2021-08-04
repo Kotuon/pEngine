@@ -38,7 +38,7 @@ File_Reader::File_Reader(std::string filename) {
  */
 void File_Reader::Read_File(std::string filename) {
       // Opening the json file
-    std::string fileToOpen = "data/json/" + filename;
+    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/" + filename;
     FILE* file = fopen(fileToOpen.c_str(), "r");
 
     char buffer[65536];

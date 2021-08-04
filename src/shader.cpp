@@ -36,8 +36,8 @@ bool Shader::Initialize(File_Reader& settings) {
     }
 
     //LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
-    LoadShader("src/shaders/" + settings.Read_String("vertexShader") + ".glsl", 
-        "src/shaders/" + settings.Read_String("fragShader") + ".glsl");
+    LoadShader(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/shaders/" + settings.Read_String("vertexShader") + ".glsl", 
+        std::string(getenv("USERPROFILE")) + "/Documents/pEngine/shaders/" + settings.Read_String("fragShader") + ".glsl");
     return true;
 }
 

@@ -41,3 +41,4 @@ output/
 # Other
 Makefile
 imgui.ini
+installer/
