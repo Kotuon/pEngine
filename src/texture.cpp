@@ -29,6 +29,8 @@ Texture::~Texture() {
  * @brief Loads in texture with given filename
  * 
  * @param textureName_ Filename of texture
+ * @return true
+ * @return false
  */
 bool Texture::Load(std::string textureName_) {
     FILE *fp;
