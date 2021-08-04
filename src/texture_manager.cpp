@@ -78,7 +78,10 @@ Texture* Texture_Manager::Get(std::string textureName) {
 
       // Creating new texture
     Texture* texture = new Texture;
-    texture->Load(textureName);
+    if (!texture->Load(textureName)) {
+        delete texture; 
+        return nullptr;
+    }
     texture_manager->textures.emplace_back(texture);
 
     return texture;

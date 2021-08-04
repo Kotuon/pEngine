@@ -136,7 +136,12 @@ void Object_Manager::ReadList(File_Reader& preset) {
         if (template_name.compare("") == 0) break;
 
           // Constructing the object 
-        Object* object = new Object(template_name);
+        Object* object = new Object;
+        if (!object->Read(template_name)) {
+            delete object; 
+            continue;
+        }
+
         object->SetName(object_name);
         object->SetTemplateName(template_name);
           // Reading in the objects position

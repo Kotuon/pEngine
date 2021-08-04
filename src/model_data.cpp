@@ -93,6 +93,13 @@ bool Model_Data::Load(std::string modelName_) { return Read(modelName_); }
  * @return false 
  */
 bool Model_Data::Read(std::string modelName_) {
+      // Opening the file
+    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/models/" + modelName_;
+    FILE* file = fopen(fileToOpen.c_str(), "r");
+    if (!file) {
+        return false;
+    }
+
       // Setting the name of the file (used in model_data_manager)
     modelName = modelName_;
 
@@ -101,14 +108,6 @@ bool Model_Data::Read(std::string modelName_) {
     std::vector<glm::vec3> temp_vertices;
     std::vector<glm::vec2> temp_uvs;
     std::vector<glm::vec3> temp_normals;
-
-      // Opening the file
-    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/models/" + modelName;
-    FILE* file = fopen(fileToOpen.c_str(), "r");
-    if (!file) {
-        Trace::Message("File '" + modelName + "' was not successfully opened.\n");
-        return false;
-    }
 
       // Until the whole file is read
     while (true) {

@@ -15,6 +15,7 @@
 // Engine includes //
 #include "shader.hpp"
 #include "texture.hpp"
+#include "trace.hpp"
 
 /**
  * @brief Deletes texture data
@@ -29,11 +30,20 @@ Texture::~Texture() {
  * 
  * @param textureName_ Filename of texture
  */
-void Texture::Load(std::string textureName_) {
+bool Texture::Load(std::string textureName_) {
+    FILE *fp;
+    std::string filename = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/textures/" + textureName_;
+
+      // Opening the file
+    fp = fopen(filename.c_str(), "rb");
+    if (!fp) return false;
+
+    textureNum = Texture::LoadDDS(fp);
     textureName = textureName_;
-    textureNum = Texture::LoadDDS(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/textures/" + textureName);
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
     hasBeenSet = true;
+
+    return true;
 }
 
 /**
@@ -68,18 +78,11 @@ GLuint Texture::GetTextureNum() const { return textureNum; }
 /**
  * @brief Loads in the given dds file
  * 
- * @param imagepath DDS filename
+ * @param fp The file stream
  * @return GLuint 
  */
-GLuint Texture::LoadDDS(std::string imagepath) {
+GLuint Texture::LoadDDS(FILE* fp) {
     unsigned char header[124];
-
-    FILE *fp;
-
-      // Opening the file
-    fp = fopen(imagepath.c_str(), "rb");
-    if (fp == nullptr)
-        return 0;
 
       // Making sure it is a dds
     char filecode[4];

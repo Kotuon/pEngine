@@ -23,12 +23,12 @@
 class Texture {
     public:
         ~Texture();
-        void Load(std::string textureName_);
+        bool Load(std::string textureName_);
         void Display();
         std::string GetTextureName() const;
         GLuint GetTextureNum() const;
     private:
-        static GLuint LoadDDS(std::string filename);
+        static GLuint LoadDDS(FILE* fp);
     private:
         std::string textureName; //!< Name of texture
         GLuint textureNum;  //!< Loaded texture data id

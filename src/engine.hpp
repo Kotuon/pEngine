@@ -23,11 +23,11 @@
 /*! Engine class */
 class Engine {
     public:
-        static void Initialize();
+        static bool Initialize();
         static void Update();
         static void Shutdown();
-        static void Restart();
-        static void Restart(std::string presetName);
+        static bool Restart();
+        static bool Restart(std::string presetName);
         static float GetDeltaTime();
         static float GetDt();
         static double& GetGravConst();

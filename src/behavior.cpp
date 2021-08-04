@@ -215,6 +215,7 @@ void Behavior::ClassSetup(sol::state* state) {
 bool Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
       // Checking if this script is already attached
     if (CheckIfCopy(newScriptName)) return false;
+    if (newScriptName.compare(".lua") == 0) return false;
     sol::state* state = states[scriptNum];
     scripts[scriptNum] = newScriptName;
       // Setting up new lua script

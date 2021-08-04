@@ -23,8 +23,7 @@
 /*! File_Reader class */
 class File_Reader {
     public:
-        File_Reader(std::string filename);
-        void Read_File(std::string filename);
+        bool Read_File(std::string filename);
 
         int Read_Int(std::string valueName);
         std::string Read_String(std::string valueName);

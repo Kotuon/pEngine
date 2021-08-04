@@ -76,7 +76,10 @@ Model_Data* Model_Data_Manager::Get(std::string modelName) {
 
       // Creates new Model_Data object, then adds it to list
     Model_Data* data = new Model_Data;
-    data->Load(modelName);
+    if (!data->Load(modelName)) {
+        delete data;
+        return nullptr;
+    }
     model_data_manager->models.emplace_back(data);
 
     return data;
