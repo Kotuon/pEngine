@@ -107,6 +107,58 @@ bool Graphics::Initialize(File_Reader& settings) {
 }
 
 /**
+ * @brief Initializes the Graphics system using default values
+ * 
+ * @return true 
+ * @return false 
+ */
+bool Graphics::Initialize() {
+      // Initializing graphics
+    graphics = new Graphics(1920, 1080);
+    if (!graphics) {
+        Trace::Message("Graphics was not initialized.");
+        return false;
+    }
+
+      // Setting up error recording with graphics
+    glfwSetErrorCallback(ErrorCallback);
+
+    if (!glfwInit()) {
+        Trace::Message("Could not initialize GLFW.\n");
+        return false;
+    }
+
+      // Setting up the graphics window
+    graphics->window = glfwCreateWindow(graphics->windowSize.first, graphics->windowSize.second, 
+        "pEngine", nullptr, nullptr);
+    if (!graphics->window) {
+        Trace::Message("Error creating window.\n");
+        return false;
+    }
+
+      // Setting up callback functions
+    glfwSetCursorPosCallback(graphics->window, Camera::MouseUpdate);
+
+    glfwMakeContextCurrent(graphics->window);
+    //glfwSwapInterval(1);
+    InitializeGL();
+
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+      // Setting up input for keyboard and mouse using glfw library
+    glfwSetInputMode(graphics->window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetInputMode(graphics->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+    glGenVertexArrays(1, &graphics->vertexArrayId);
+    glBindVertexArray(graphics->vertexArrayId);
+
+    if (!Shader::Initialize()) return false;
+    
+    return true;
+}
+
+/**
  * @brief Initializes the settings of the graphics system
  * 
  * @return true 

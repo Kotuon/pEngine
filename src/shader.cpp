@@ -42,6 +42,25 @@ bool Shader::Initialize(File_Reader& settings) {
 }
 
 /**
+ * @brief Initialize shader with default values
+ * 
+ * @return true 
+ * @return false 
+ */
+bool Shader::Initialize() {
+    shader = new Shader;
+    if (!shader) {
+        Trace::Message("Shader failed to initialize.\n");
+        return false;
+    }
+
+    //LoadShader("src/shaders/vertex.glsl", "src/shaders/fragment.glsl");
+    LoadShader(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/shaders/vertex.glsl", 
+        std::string(getenv("USERPROFILE")) + "/Documents/pEngine/shaders/fragment.glsl");
+    return true;
+}
+
+/**
  * @brief Tells program to use shader
  * 
  * @return void

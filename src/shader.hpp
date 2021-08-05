@@ -26,6 +26,7 @@
 class Shader {
     public:
         static bool Initialize(File_Reader& settings);
+        static bool Initialize();
         static void Update();
         static void Shutdown();
 

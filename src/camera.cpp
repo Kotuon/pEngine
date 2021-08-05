@@ -58,6 +58,28 @@ bool Camera::Initialize(File_Reader& settings) {
 }
 
 /**
+ * @brief Initialize the camera with default values
+ * 
+ * @return true 
+ * @return false 
+ */
+bool Camera::Initialize() {
+      // Initializing the camera
+    camera = new Camera(1920, 1080);
+    if (!camera) {
+        Trace::Message("Camera was not initialized.");
+        return false;
+    }
+
+      // Getting data from settings file
+    camera->originalMoveSpeed = 10.f;
+    camera->originalSprintSpeed = 30.f;
+    camera->originalSensitivity = 150.f;
+
+    return true;
+}
+
+/**
  * @brief Moves the camera and checks for some other inputs
  * 
  * @return void

@@ -29,6 +29,7 @@ class Graphics {
     public:
         Graphics(int width, int height);
         static bool Initialize(File_Reader& settings);
+        static bool Initialize();
         static bool InitializeGL();
         static void Update();
         static void Render();

@@ -27,6 +27,7 @@ class Camera {
     public:
         Camera(int width, int height);
         static bool Initialize(File_Reader& settings);
+        static bool Initialize();
         static void Update();
         static void MouseUpdate(GLFWwindow*, double xpos, double ypos);
         static void Shutdown();

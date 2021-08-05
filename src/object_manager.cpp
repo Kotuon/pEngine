@@ -44,6 +44,26 @@ bool Object_Manager::Initialize(File_Reader& preset) {
 }
 
 /**
+ * @brief Initialize object manager with default values
+ * 
+ * @return true 
+ * @return false 
+ */
+bool Object_Manager::Initialize() {
+      // Initializing object_manager
+    object_manager = new Object_Manager;
+    if (!object_manager) {
+        Trace::Message("Object Manager was not initialized.");
+        return false; // Failed to initialize
+    }
+
+      // Adding objects from preset into engine
+    object_manager->objects.reserve(10);
+
+    return true; // Successful initialization
+}
+
+/**
  * @brief Adds object to object_manager
  * 
  * @param object Object to be added

@@ -46,30 +46,55 @@ bool Engine::Initialize() {
         Trace::Message("Engine was not initialized.\n");
         return false;
     }
+    
+      // Initializing random
+    if (!Random::Initialize()) return false;
 
       // Reading settings from json
     File_Reader settings;
-    if (!settings.Read_File("settings.json")) return false;
+    if (settings.Read_File("settings.json")) {
+          // Setting up sub systems
+        if (!Camera::Initialize(settings)) return false;
+        if (!Graphics::Initialize(settings)) return false;
+        if (!Model_Data_Manager::Initialize()) return false;
+        if (!Texture_Manager::Initialize()) return false;
 
-    File_Reader preset;
-    if (!preset.Read_File("preset/" + settings.Read_String("preset"))) return false;
+        File_Reader preset;
+        if (preset.Read_File("preset/" + settings.Read_String("preset"))) {
+            engine->presetName = settings.Read_String("preset");
+            engine->gravConst = preset.Read_Double("gravConst");
+            engine->lightPos = preset.Read_Vec3("lightPos");
+            if (engine->lightPos == glm::vec3(0.f)) {
+                engine->lightPos = glm::vec3(4, 4, 0);
+            }
+            if (!Object_Manager::Initialize(preset)) return false;
+        }
+        else {
+            if (!Object_Manager::Initialize()) return false;
+        }
 
-    engine->presetName = settings.Read_String("preset");
-    engine->gravConst = preset.Read_Double("gravConst");
+        engine->presetName = "no preset";
+        engine->gravConst = 0.0;
 
-    engine->lightPower = 1000.f;
-    engine->lightPos = preset.Read_Vec3("lightPos");
-    if (engine->lightPos == glm::vec3(0.f)) {
-        engine->lightPos = glm::vec3(4, 4, 0);
+        engine->lightPower = 1000.f;
     }
+    else {
+        engine->presetName = "no preset";
+        engine->gravConst = 0.0;
 
-      // Initializing sub systems
-    if (!Model_Data_Manager::Initialize()) return false;
-    if (!Texture_Manager::Initialize()) return false;
-    if (!Camera::Initialize(settings)) return false;
-    if (!Graphics::Initialize(settings)) return false;
-    if (!Object_Manager::Initialize(preset)) return false;
-    if (!Random::Initialize()) return false;
+        engine->lightPower = 1000.f;
+        engine->lightPos = glm::vec3(4, 4, 0);
+
+          // Setting up sub systems
+        if (!Camera::Initialize()) return false;
+        if (!Graphics::Initialize()) return false;
+        if (!Model_Data_Manager::Initialize()) return false;
+        if (!Texture_Manager::Initialize()) return false;
+        if (!Object_Manager::Initialize()) return false;
+    }
+    Trace::Message("Here 3\n");
+
+      // Initializing the editor
     if (!Editor::Initialize()) return false;
 
       // Setting up variables used for dt

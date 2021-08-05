@@ -25,6 +25,7 @@
 class Object_Manager {
     public:
         static bool Initialize(File_Reader& preset);
+        static bool Initialize();
         static void AddObject(Object* object);
         static Object* FindObject(int id);
         static Object* FindObject(std::string objectName);
