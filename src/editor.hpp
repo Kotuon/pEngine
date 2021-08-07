@@ -44,6 +44,7 @@ class Editor {
         void Display_Transform(Transform* transform);
 
         void Display_Menu_Bar();
+        static std::string Make_Display_String(std::string inputString);
     private:
         bool isOpen;            //!< Whether the editor window is open or not
         int selected_object;    //!< Current object selected in the scene window

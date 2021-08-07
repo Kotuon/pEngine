@@ -31,7 +31,7 @@ using namespace rapidjson;
  */
 bool File_Reader::Read_File(std::string filename) {
       // Opening the json file
-    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/" + filename;
+    std::string fileToOpen = filename;
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) return false;
 

@@ -52,7 +52,7 @@ bool Engine::Initialize() {
 
       // Reading settings from json
     File_Reader settings;
-    if (settings.Read_File("settings.json")) {
+    if (settings.Read_File(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/settings.json")) {
           // Setting up sub systems
         if (!Camera::Initialize(settings)) return false;
         if (!Graphics::Initialize(settings)) return false;
@@ -60,8 +60,9 @@ bool Engine::Initialize() {
         if (!Texture_Manager::Initialize()) return false;
 
         File_Reader preset;
-        if (preset.Read_File("preset/" + settings.Read_String("preset"))) {
-            engine->presetName = settings.Read_String("preset");
+
+        engine->presetName = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/preset/" + settings.Read_String("preset");
+        if (preset.Read_File(engine->presetName)) {
             engine->gravConst = preset.Read_Double("gravConst");
             engine->lightPos = preset.Read_Vec3("lightPos");
             if (engine->lightPos == glm::vec3(0.f)) {
@@ -70,10 +71,10 @@ bool Engine::Initialize() {
             if (!Object_Manager::Initialize(preset)) return false;
         }
         else {
+            engine->presetName = "no preset";
             if (!Object_Manager::Initialize()) return false;
         }
 
-        engine->presetName = "no preset";
         engine->gravConst = 0.0;
 
         engine->lightPower = 1000.f;
@@ -92,7 +93,6 @@ bool Engine::Initialize() {
         if (!Texture_Manager::Initialize()) return false;
         if (!Object_Manager::Initialize()) return false;
     }
-    Trace::Message("Here 3\n");
 
       // Initializing the editor
     if (!Editor::Initialize()) return false;
@@ -164,10 +164,10 @@ void Engine::Shutdown() {
 bool Engine::Restart() {
       // Initializing object manager
     File_Reader settings;
-    if (!settings.Read_File("settings.json")) return false;
+    if (! settings.Read_File(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/settings.json")) return false;
 
     File_Reader preset;
-    if (!preset.Read_File("preset/" + engine->presetName)) return false;
+    if (!preset.Read_File(engine->presetName)) return false;
 
       // Removing all current objects
     Object_Manager::Shutdown();
@@ -190,10 +190,10 @@ bool Engine::Restart() {
 bool Engine::Restart(std::string presetName) {
       // Initializing object manager
     File_Reader settings;
-    if (!settings.Read_File("settings.json")) return false;
-
+    settings.Read_File(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/settings.json");
+    Trace::Message(presetName + "\n");
     File_Reader preset;
-    if (!preset.Read_File("preset/" + presetName)) return false;
+    if (!preset.Read_File(presetName)) return false;
 
       // Removing all current objects
     Object_Manager::Shutdown();
@@ -261,7 +261,7 @@ void Engine::Write() {
     writer.Write_Vec3("lightPos", engine->lightPos);
     Object_Manager::Write(writer);
     
-    writer.Write_File(std::string ("preset/" + engine->presetName));
+    writer.Write_File(engine->presetName);
 }
 
 /**

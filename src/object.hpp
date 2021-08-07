@@ -80,7 +80,7 @@ class Object {
 
         bool Read(std::string objectFilename);
         bool ReRead(std::string objectFilename);
-        void Write();
+        void Write(std::string filePath);
         std::unordered_map<CType, Component*> GetComponentList();
 
         void Clear();
