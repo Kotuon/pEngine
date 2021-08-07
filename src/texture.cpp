@@ -35,13 +35,21 @@ Texture::~Texture() {
 bool Texture::Load(std::string textureName_) {
     FILE *fp;
     std::string filename = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/textures/" + textureName_;
+    textureName = filename ;
 
       // Opening the file
     fp = fopen(filename.c_str(), "rb");
-    if (!fp) return false;
+    if (!fp) {
+        fp = fopen(textureName_.c_str(), "rb");
+        if (!fp) {
+            return false;
+        }
+        else {
+            textureName = textureName_;
+        }
+    }
 
     textureNum = Texture::LoadDDS(fp);
-    textureName = textureName_;
     textureId = glGetUniformLocation(Shader::GetProgram(), "myTextureSampler");
     hasBeenSet = true;
 

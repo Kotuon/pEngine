@@ -158,7 +158,7 @@ std::string Object::GetTemplateName() const { return templateName; }
 bool Object::Read(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader;
-    if (!object_reader.Read_File("objects/" + objectFilename)) return false;
+    if (!object_reader.Read_File(objectFilename)) return false;
 
       // Reading Behavior component form file
     Behavior* object_behavior = new Behavior(object_reader);
@@ -237,10 +237,11 @@ bool Object::ReRead(std::string objectFilename) {
  * @brief Writes the data of the object to a template file
  * 
  */
-void Object::Write() {
+void Object::Write(std::string filePath) {
     File_Writer object_writer;
     object_writer.Write_String("name", name);
-    templateName = name + ".json";
+    templateName = filePath + "/" + name + ".json";
+    Trace::Message(templateName + "\n");
 
     Model* object_model = GetComponent<Model>();
     if (object_model) object_model->Write(object_writer);
@@ -254,7 +255,7 @@ void Object::Write() {
     Behavior* object_behavior = GetComponent<Behavior>();
     if (object_behavior) object_behavior->Write(object_writer);
 
-    object_writer.Write_File(std::string("objects/" + name + ".json"));
+    object_writer.Write_File(templateName);
 }
 
 /**

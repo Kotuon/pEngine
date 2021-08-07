@@ -288,25 +288,38 @@ void Editor::Display_Components() {
     if (ImGui::IsItemDeactivatedAfterEdit()) {
         object->SetName(std::string(nameBuf));
     }
-
+    
       // Template used by the selected object
     ImGui::Text("Template:");
     ImGui::SameLine(100);
     std::string templateName = object->GetTemplateName();
     if (templateName.empty()) templateName = "No template##1";
+    else templateName = Editor::Make_Display_String(templateName);
+
     if (ImGui::Button(templateName.c_str())) {
         ImGuiFileDialog::Instance()->OpenDialog("ChooseTemplate##1", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/objects/");
     }
 
     ImGui::SameLine();
     if (ImGui::Button("New Template")) {
-        object->Write();
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##6", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/objects/");
+    }
+
+    
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##6")) {
+        if (ImGuiFileDialog::Instance()->IsOk()) {
+            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+            object->Write(filePath);
+        }
+
+       ImGuiFileDialog::Instance()->Close();
     }
 
     if (ImGuiFileDialog::Instance()->Display("ChooseTemplate##1")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
-            std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-            object->ReRead(filePathName);
+            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+            filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+            object->ReRead(filePath);
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -364,17 +377,25 @@ void Editor::Display_Components() {
 void Editor::Display_World_Settings() {
     ImGui::Begin("World Settings");
     std::string presetName = Engine::GetPresetName();
+    if (presetName.compare("no preset") != 0)
+        presetName = Editor::Make_Display_String(presetName);
 
       // Allows user to change the preset that is loaded
     ImGui::Text("Presets"); ImGui::SameLine(120);
     if (ImGui::Button(presetName.c_str())) {
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/preset/");
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##5", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/preset/");
     }
 
-    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##5")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
-            std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-            if (Engine::Restart(filePathName)) selected_object = -1;
+            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+            filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+
+            if (Engine::Restart(filePath)) {
+                selected_object = -1;
+                selected_component = -1;
+                object_to_copy = -1;
+            }
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -465,14 +486,15 @@ void Editor::Display_Scripts(Behavior* behavior) {
         for (std::string& script : scripts) {
             ImGui::Text(std::string("Script " + std::to_string(scriptNum) + ":").c_str());
             ImGui::SameLine(100);
-            if (ImGui::Button(script.c_str())) {
+            if (ImGui::Button(Editor::Make_Display_String(script).c_str())) {
                 ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##3", "Choose File", ".lua", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/");
             }
 
             if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##3")) {
                 if (ImGuiFileDialog::Instance()->IsOk()) {
-                    std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                    behavior->SwitchScript(scriptNum - 1, filePathName);
+                    std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                    filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+                    behavior->SwitchScript(scriptNum - 1, filePath);
                 }
 
                 ImGuiFileDialog::Instance()->Close();
@@ -488,8 +510,9 @@ void Editor::Display_Scripts(Behavior* behavior) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##4")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                behavior->AddScript(filePathName);
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+                behavior->AddScript(filePath);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -514,8 +537,8 @@ void Editor::Display_Scripts(Behavior* behavior) {
 void Editor::Display_Model(Model* model) {
     if (!model) return;
     
-    std::string modelName = model->GetModelName();
-    std::string textureName = model->GetTextureName();
+    std::string modelName = Editor::Make_Display_String(model->GetModelName());
+    std::string textureName = Editor::Make_Display_String(model->GetTextureName());
 
     if (modelName.compare("") == 0) modelName = "no model";
     if (textureName.compare("") == 0) textureName = "no texture";
@@ -550,8 +573,9 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##1")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                model->SwitchModel(filePathName);
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+                model->SwitchModel(filePath);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -565,8 +589,9 @@ void Editor::Display_Model(Model* model) {
 
         if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##2")) {
             if (ImGuiFileDialog::Instance()->IsOk()) {
-                std::string filePathName = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                model->SwitchTexture(filePathName);
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName();
+                model->SwitchTexture(filePath);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -690,32 +715,26 @@ void Editor::Display_Transform(Transform* transform) {
  * 
  */
 void Editor::Display_Menu_Bar() {
-    static bool saveAs = false;
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("File##1")) {
             if (ImGui::MenuItem("Save##1")) {
                 Engine::Write();
             }
             if (ImGui::MenuItem("Save As..##1")) {
-                saveAs = true;
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey##7", "Choose File", ".json", std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/preset");
             }
 
             ImGui::EndMenu();
         }
-        if (saveAs) {
-            static char nameBuf[128] = "";
-            sprintf(nameBuf, Engine::GetPresetName().c_str());
-            if (ImGui::InputText("Name", nameBuf, 128, ImGuiInputTextFlags_EnterReturnsTrue)) {
-                Engine::SetPresetName(std::string(nameBuf));
-                Engine::Write();
-                saveAs = false;
-            }
 
-            if (ImGui::IsItemDeactivatedAfterEdit()) {
-                Engine::SetPresetName(std::string(nameBuf));
+        if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey##7")) {
+            if (ImGuiFileDialog::Instance()->IsOk()) {
+                std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                filePath += "/" + ImGuiFileDialog::Instance()->GetCurrentFileName() + ".json";
+                Engine::SetPresetName(std::string(filePath));
                 Engine::Write();
-                saveAs = false;
             }
+            ImGuiFileDialog::Instance()->Close();
         }
 
         ImGui::EndMenuBar();
@@ -729,3 +748,15 @@ void Editor::Display_Menu_Bar() {
  * @return false 
  */
 bool Editor::GetTakeKeyboardInput() { return editor->takeKeyboardInput; }
+
+std::string Editor::Make_Display_String(std::string inputString) {
+    size_t slashLoc = inputString.find_last_of("/");
+    size_t dotLoc = inputString.find_last_of(".");
+
+    if (slashLoc == std::string::npos || dotLoc == std::string::npos)
+        return inputString;
+
+    std::string newString = inputString.substr(slashLoc + 1, dotLoc);
+
+    return newString;
+}

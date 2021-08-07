@@ -95,13 +95,19 @@ bool Model_Data::Load(std::string modelName_) { return Read(modelName_); }
 bool Model_Data::Read(std::string modelName_) {
       // Opening the file
     std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/models/" + modelName_;
+      // Setting the name of the file (used in model_data_manager)
+    modelName = fileToOpen;
+    
     FILE* file = fopen(fileToOpen.c_str(), "r");
     if (!file) {
-        return false;
+        file = fopen(modelName_.c_str(), "r");
+        if (!file) {
+            return false;
+        }
+        else {
+            modelName = modelName_;
+        }
     }
-
-      // Setting the name of the file (used in model_data_manager)
-    modelName = modelName_;
 
       // Creating variables for reading
     std::vector<unsigned> vertex_indices, uv_indices, normal_indices;

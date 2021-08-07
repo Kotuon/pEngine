@@ -23,7 +23,6 @@ int main (int, char *[]) {
       // Initializing systems
     Trace::Initialize();
     if (!Engine::Initialize()) return -1;
-
       // Engine update loop
     Graphics::Update();
 

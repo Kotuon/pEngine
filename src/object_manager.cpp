@@ -157,13 +157,13 @@ void Object_Manager::ReadList(File_Reader& preset) {
 
           // Constructing the object 
         Object* object = new Object;
-        if (!object->Read(template_name)) {
+        if (!object->Read(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/objects/" + template_name)) {
             delete object; 
             continue;
         }
 
         object->SetName(object_name);
-        object->SetTemplateName(template_name);
+        object->SetTemplateName(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/objects/" + template_name);
           // Reading in the objects position
         glm::vec3 position = preset.Read_Object_Position("object_" + std::to_string(object_num));
         glm::vec3 scale = preset.Read_Object_Scale("object_" + std::to_string(object_num));

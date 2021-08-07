@@ -34,7 +34,7 @@ File_Writer::File_Writer() {
  * @param filename 
  */
 void File_Writer::Write_File(std::string filename) {
-    std::string fileToOpen = std::string(getenv("USERPROFILE")) + "/Documents/pEngine/json/" + filename;
+    std::string fileToOpen = filename;
     FILE* file = fopen(fileToOpen.c_str(), "w");
 
     char buffer[65536];

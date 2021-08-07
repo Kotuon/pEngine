@@ -88,8 +88,9 @@ void Behavior::Read(File_Reader& reader) {
           // Getting the name of the next lua file
         std::string behavior_name = reader.Read_Behavior_Name("behavior_" + std::to_string(behavior_num));
         if (behavior_name.compare("") == 0) break;
+        if (behavior_name.find(".lua") == std::string::npos) continue;
           // Adding lua filename to list
-        scripts.emplace_back(behavior_name);
+        scripts.emplace_back(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + behavior_name);
         ++behavior_num;
     }
       // Creating lua state for each of the scripts that were read in
@@ -128,7 +129,7 @@ void Behavior::SetupClassesForLua() {
     }
 
     for (unsigned i = 0; i < states.size(); ++i) {
-        states[i]->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts[i]).c_str());
+        states[i]->script_file(scripts[i]);
         (*states[i])["Start"]();
     }
 }
@@ -146,10 +147,6 @@ std::vector<std::string>& Behavior::GetScripts() { return scripts; }
  * @param state 
  */
 void Behavior::ClassSetup(sol::state* state) {
-      // Getting objects components
-    //Physics* physics = GetParent()->GetComponent<Physics>();
-    //Transform* transform = GetParent()->GetComponent<Transform>();
-
       // Giving lua random functions
     state->set_function("random_vec3", Random::random_vec3);
     state->set_function("random_float", Random::random_float);
@@ -216,10 +213,11 @@ bool Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
       // Checking if this script is already attached
     if (CheckIfCopy(newScriptName)) return false;
     if (newScriptName.compare(".lua") == 0) return false;
+    if (newScriptName.find(".lua") == std::string::npos) return false;
     sol::state* state = states[scriptNum];
     scripts[scriptNum] = newScriptName;
       // Setting up new lua script
-    state->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts[scriptNum]).c_str());
+    state->script_file(scripts[scriptNum]);
     (*state)["Start"]();
 
     return true;
@@ -234,6 +232,7 @@ bool Behavior::SwitchScript(unsigned scriptNum, std::string newScriptName) {
  */
 bool Behavior::AddScript(std::string newScriptName) {
       // Checking if this script is already attached
+    if (newScriptName.find(".lua") == std::string::npos) return false;
     if (CheckIfCopy(newScriptName)) return false;
       // Setting up new lua state
     sol::state* state = new sol::state;
@@ -243,7 +242,7 @@ bool Behavior::AddScript(std::string newScriptName) {
     scripts.emplace_back(newScriptName);
     ClassSetup(state);
       // Setting up lua script to run
-    states.back()->script_file(std::string(std::string(getenv("USERPROFILE")) + "/Documents/pEngine/scripts/" + scripts.back()).c_str());
+    states.back()->script_file(scripts.back());
     (*states.back())["Start"]();
 
     return true;
