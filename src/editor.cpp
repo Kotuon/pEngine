@@ -749,6 +749,12 @@ void Editor::Display_Menu_Bar() {
  */
 bool Editor::GetTakeKeyboardInput() { return editor->takeKeyboardInput; }
 
+/**
+ * @brief Removes the filepath from a filename
+ * 
+ * @param inputString Original filename (with filepath)
+ * @return std::string 
+ */
 std::string Editor::Make_Display_String(std::string inputString) {
     size_t slashLoc = inputString.find_last_of("/");
     size_t dotLoc = inputString.find_last_of(".");

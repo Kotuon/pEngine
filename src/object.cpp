@@ -189,7 +189,7 @@ bool Object::Read(std::string objectFilename) {
 bool Object::ReRead(std::string objectFilename) {
       // Getting data from file
     File_Reader object_reader;
-    if (!object_reader.Read_File("objects/" + objectFilename)) return false;
+    if (!object_reader.Read_File(objectFilename)) return false;
 
     if (name.compare("") == 0)
         SetName(object_reader.Read_String("name"));
@@ -236,6 +236,7 @@ bool Object::ReRead(std::string objectFilename) {
 /**
  * @brief Writes the data of the object to a template file
  * 
+ * @param filePath Filepath for the object being written
  */
 void Object::Write(std::string filePath) {
     File_Writer object_writer;
