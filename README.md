@@ -13,7 +13,7 @@
 
 ## Introduction
 
-pEngine is 3D game engine using a component based structure, lua scripting, and a Dear Imgui editor.
+pEngine is 3D game engine built in C++ using a component based structure, lua scripting, and a Dear Imgui editor.
 
 The purpose of this engine was to get more practice with C++ and game engine architecture.
 
