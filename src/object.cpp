@@ -236,6 +236,7 @@ bool Object::ReRead(std::string objectFilename) {
 /**
  * @brief Writes the data of the object to a template file
  * 
+ * @param filePath Filepath for the object being written
  */
 void Object::Write(std::string filePath) {
     File_Writer object_writer;
