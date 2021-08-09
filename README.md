@@ -28,7 +28,7 @@ The purpose of this engine was to get more practice with C++ and game engine arc
 * Sol2
 
 ## Requirements
-Built for Windows 10 using MinGW and a MinGW makefile. OpenGL needs to be installed.
+Built for Windows 10 using MinGW and a MinGW makefile.
 
 MinGW compiler path:
 ```
