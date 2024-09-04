@@ -1,4 +1,5 @@
 # pEngine
+![](https://github.com/Kotuon/pengine/blob/main/pengine.gif)
 
 ## Table of Contents
 * [Introduction](#introduction)
